@@ -32,6 +32,18 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
+            'locale' => app()->getLocale(),
+            'language' => function () {
+                $json = lang_path(app()->getLocale() .'.json');
+                
+                // Debug the file path
+               // dd($json); // This will dump the path during the request lifecycle
+                
+                if (!file_exists($json)) {
+                    return [];
+                }
+                return json_decode(file_get_contents($json), true);
+            },
             'auth' => [
                 'user' => $request->user(),
             ],

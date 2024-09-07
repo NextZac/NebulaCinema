@@ -13,7 +13,7 @@ Route::get('/', function () {
 });
 
 Route::get('/lang/{lang}', function ($language) {
-    Session()->put('locale' -> $language);
+    Session::put('locale', $language);
     return redirect()->back();
 });
 
