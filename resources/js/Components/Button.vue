@@ -1,40 +1,65 @@
 <script setup>
-import { computed } from "vue";
+import { computed } from 'vue';
+
 const props = defineProps({
-    size: {
-        type: String,
-        default: "lg",
-    },
     type: {
-        default: null,
+        type: String,
+        default: 'default'
     },
-    icon: {
-        default: null,
+    color: {
+        type: String,
+        default: 'brand-600'
     },
+    class: String
 });
+
+console.log(props.color)
+
+const baseColor = computed(() => props.color);
+const activeColor = computed(() => {
+    const [prefix, shade] = props.color.split('-');
+    const activeShade = parseInt(shade) + 100;
+    return `${prefix}-${activeShade}`;
+});
+
+const typeClass = computed(() => {
+    switch (props.type) {
+        case 'outline':
+            return {
+                'border': true,
+                [`border-${baseColor.value}`]: true,
+                [`text-${baseColor.value}`]: true,
+                [`hover:bg-${activeColor.value}/10`]: true,
+                [`hover:border-${activeColor.value}`]: true,
+                [`hover:text-${activeColor.value}`]: true,
+                'focus:outline-none': true,
+                [`focus:bg-${activeColor.value}/10`]: true
+            };
+        default:
+            return {
+                'border-transparent': true,
+                [`bg-${baseColor.value}`]: true,
+                [`hover:bg-${activeColor.value}`]: true,
+                'focus:outline-none': true,
+                [`focus:bg-${activeColor.value}`]: true,
+                'text-white': true
+            };
+    }
+});
+
+// switch (props.type) {
+//     case 'outline':
+//         typeClass = `border border-${color} text-${color} hover:bg-${activeColor}/10 hover:border-${activeColor} hover:text-${activeColor} focus:outline-none focus:bg-${activeColor}/10`
+//         break;
+//     default:
+//         typeClass = "border-transparent bg-brand-600 hover:bg-brand-700 focus:outline-none focus:bg-brand-700 text-brand-white"
+// }
+
 </script>
 
 <template>
-    <button
-        type="button"
-        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-        :class="{
-            'px-4 py-3 text-base': size === 'lg',
-            'px-2 py-1 text-xs': size === 'sm',
-            'py-3 px-4 text-lg': size === 'md',
-            'bg-gray-300 text-gray-800 hover:bg-gray-400 focus:bg-gray-400':
-                type === 'secondary',
-            'bg-red-600 hover:bg-red-700 focus:bg-red-700': type === 'danger',
-            'bg-green-600 hover:bg-green-700 focus:bg-green-700':
-                type === 'success',
-            'bg-yellow-600 hover:bg-yellow-700 focus:bg-yellow-700':
-                type === 'warning',
-            'bg-gray-600 hover:bg-gray-700 focus:bg-gray-700': type === 'dark',
-            'bg-white text-gray-800 hover:bg-gray-100 focus:bg-gray-100':
-                type === 'light',
-            'bg-blue-600 text-white hover:bg-blue-700 focus:bg-blue-700': !type,
-        }"
-    >
+    <button type="button"
+        :class="[typeClass, props.class, 'py-[14px] px-[16px] rounded w-min h-min flex content-center items-center text-center drop-shadow-lg text-nowrap disabled:opacity-50 disabled:pointer-events-none hover:scale-105 active:scale-100 transition duration-100']">
         <slot />
     </button>
 </template>

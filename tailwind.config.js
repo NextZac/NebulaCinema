@@ -97,7 +97,7 @@ export default {
                 "brand-300": "#a5b4fc",
                 "brand-400": "#818cf8",
                 "brand-500": "#6366f1",
-                "brand-600": "#4f46e5",
+                "brand-600": "#4F46E5",
                 "brand-700": "#4338ca",
                 "brand-800": "#3730a3",
                 "brand-900": "#312e81",
@@ -143,9 +143,9 @@ export default {
                 main1: ["2rem", { lineHeight: "1.5rem" }], // 32px with 24px line height
                 main2: ["2.375rem", { lineHeight: "1.5rem" }], // 38px with 24px line height
                 main3: ["2.625rem", { lineHeight: "1.5rem" }], // 42px with 24px line height
-                display1: ["3.75rem", { lineHeight: "1.5rem" }], // 60px with 24px line height
-                display2: ["4.5rem", { lineHeight: "1.5rem" }], // 72px with 24px line height
-                display3: ["5rem", { lineHeight: "1.5rem" }], // 80px with 24px line height
+                display1: ["3.75rem", { lineHeight: "3.375rem" }], // 60px with 24px line height
+                display2: ["4.5rem", { lineHeight: "3.375rem" }], // 72px with 24px line height
+                display3: ["5rem", { lineHeight: "3.375rem" }], // 80px with 24px line height
             },
             container: {
                 center: true,
