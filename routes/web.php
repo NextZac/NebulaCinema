@@ -10,7 +10,7 @@ Route::get("/", function () {
         "laravelVersion" => Application::VERSION,
         "phpVersion" => PHP_VERSION,
     ]);
-});
+})->name("Home");
 
 Route::get("/lang/{lang}", function ($language) {
     Session::put("locale", $language);
@@ -19,7 +19,7 @@ Route::get("/lang/{lang}", function ($language) {
 
 Route::get("/components", function () {
     return Inertia::render("Components");
-});
+})->name("Components");
 
 Route::get("/dashboard", function () {
     return Inertia::render("Dashboard");
