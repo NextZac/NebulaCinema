@@ -1,7 +1,8 @@
 <script setup>
 import { ChevronDown } from "lucide-vue-next";
+import { Search } from "lucide-vue-next";
 import ApplicationLogo from "@/Components/inertia/ApplicationLogo.vue";
-import Input from "@/Components/inertia/Input.vue";
+import Input from "@/Components/Input.vue";
 import { Link } from "@inertiajs/vue3";
 </script>
 
@@ -31,7 +32,9 @@ import { Link } from "@inertiajs/vue3";
             <!-- Avatar + Search -->
             <div class="flex w-full justify-end items-center gap-[40px]">
                 <!-- Search -->
-                <Input type="text" placeholder="Otsing" />
+                <Input type="text" placeholder="Otsing">
+                    <Search class="w-5 h-5 text-brand-white" />
+                </Input>
                 <!-- Avatar -->
                 <div class="flex-shrink-0">
                     <img src="https://via.placeholder.com/40" alt="User Avatar"
