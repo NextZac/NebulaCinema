@@ -143,7 +143,7 @@ export default {
                 main1: ["2rem", { lineHeight: "1.5rem" }], // 32px with 24px line height
                 main2: ["2.375rem", { lineHeight: "1.5rem" }], // 38px with 24px line height
                 main3: ["2.625rem", { lineHeight: "1.5rem" }], // 42px with 24px line height
-                display1: ["3.75rem", { lineHeight: "3.375rem" }], // 60px with 24px line height
+                display1: ["3.75rem", { lineHeight: "3.5rem" }], // 60px with 24px line height
                 display2: ["4.5rem", { lineHeight: "3.375rem" }], // 72px with 24px line height
                 display3: ["5rem", { lineHeight: "3.375rem" }], // 80px with 24px line height
             },

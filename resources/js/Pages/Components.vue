@@ -74,7 +74,7 @@ import { Head, usePage } from "@inertiajs/vue3";
                 <h2 class="text-brand-white">Top Movie</h2>
                 <TopMovie
                     image="https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg"
-                    engTitle="Monsters, INC." title="Legend fantastilistest olenditest">
+                    engTitle="Monsters, INC." title="Kollide Kompanii">
                     <template #badges>
                         <Badge type="solid">Komöödia</Badge>
                         <Badge type="solid">Seiklus</Badge>
