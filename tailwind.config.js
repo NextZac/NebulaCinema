@@ -82,7 +82,6 @@ export default {
                 },
             }),
             colors: {
-                brand: "#4F46E5",
                 "brand-silver": "#ACAFB9",
                 "brand-gray": "#34404B",
                 "brand-dark-gray": "#222931",

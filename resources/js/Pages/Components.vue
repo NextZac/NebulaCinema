@@ -27,8 +27,26 @@ import { Head, usePage } from "@inertiajs/vue3";
             <!-- Buttons -->
             <div class="flex gap-2 flex-col">
                 <h2 class="text-brand-white">Buttons</h2>
-                <Button>Solid</Button>
-                <Button type="outline">Outlined</Button>
+                <Button>Solid Default</Button>
+                <Button type="outline">Outlined Default</Button>
+                <Button color="brand-100">Solid 100</Button>
+                <Button type="outline" color="brand-100">Outlined 100</Button>
+                <Button color="brand-200">Solid 200</Button>
+                <Button type="outline" color="brand-200">Outlined 200</Button>
+                <Button color="brand-300">Solid 300</Button>
+                <Button type="outline" color="brand-300">Outlined 300</Button>
+                <Button color="brand-400">Solid 400</Button>
+                <Button type="outline" color="brand-400">Outlined 400</Button>
+                <Button color="brand-500">Solid 500</Button>
+                <Button type="outline" color="brand-500">Outlined 500</Button>
+                <Button color="brand-600">Solid 600</Button>
+                <Button type="outline" color="brand-600">Outlined 600</Button>
+                <Button color="brand-700">Solid 700</Button>
+                <Button type="outline" color="brand-700">Outlined 700</Button>
+                <Button color="brand-800">Solid 800</Button>
+                <Button type="outline" color="brand-800">Outlined 800</Button>
+                <Button color="brand-900">Solid 900</Button>
+                <Button type="outline" color="brand-900">Outlined 900</Button>
             </div>
 
             <!-- Datepicker -->
