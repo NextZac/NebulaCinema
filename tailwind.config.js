@@ -170,5 +170,21 @@ export default {
         },
     },
 
-    plugins: [forms, require("preline/plugin")],
+    plugins: [
+        forms,
+        require("preline/plugin"),
+        function ({ addUtilities }) {
+            addUtilities({
+                ".scrollbar-hide": {
+                    /* For Webkit browsers (Chrome, Safari) */
+                    "::-webkit-scrollbar": {
+                        display: "none",
+                    },
+                    /* For Firefox */
+                    "-ms-overflow-style": "none" /* IE and Edge */,
+                    "scrollbar-width": "none" /* Firefox */,
+                },
+            });
+        },
+    ],
 };
