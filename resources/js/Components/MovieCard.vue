@@ -23,7 +23,7 @@ const props = defineProps({
 
         <!--Title-->
         <div
-            :class="['flex flex-col gap-[5px] h-min overflow-hidden', props.animated ? 'transition-all delay-100 duration-[0.65s] ease-in-out max-h-0 group-hover:max-h-[500px]' : '' ]">
+            :class="[props.animated ? 'max-h-0 group-hover:max-h-[100%] absolute top-[100%] mt-[15px]' : '', 'flex flex-col gap-[5px] h-min overflow-hidden transition-all delay-100 duration-[0.65s] ease-in' ]">
             <p class="text-brand-white text-title2 group-hover:text-brand-400 group-hover:underline"
                 v-html="props.title"></p>
             <p class="text-brand-white/50 text-subtitle group-hover:text-brand-400/50 group-hover:underline"
