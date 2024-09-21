@@ -567,6 +567,19 @@ const movies = [
                         <Badge>Animatsioon</Badge>
                     </template>
                 </MovieCard>
+
+                <MovieCard image="https://via.placeholder.com/300" title="Title" titleEng="Title English" href="#" animated="true">
+                    <template #imageBadges>
+                        <Badge type="solid">3D</Badge>
+                        <Badge>12+</Badge>
+                    </template>
+
+                    <template #badges>
+                        <Badge>Komöödia</Badge>
+                        <Badge>Seiklus</Badge>
+                        <Badge>Animatsioon</Badge>
+                    </template>
+                </MovieCard>
             </div>
 
             <!-- Top Movie -->
@@ -615,7 +628,9 @@ const movies = [
                 <Button @click="toggleModal">Show Modal</Button>
                 <Modal v-model:isOpen="modalOpen" title="Modal">
                     <template #content>
-                        <p class="text-brand-100/75">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione iusto deserunt at est, et nostrum modi quia ullam incidunt illum similique rerum recusandae repellat ducimus sint. Impedit quae soluta iure.</p>
+                        <p class="text-brand-100/75">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+                            iusto deserunt at est, et nostrum modi quia ullam incidunt illum similique rerum recusandae
+                            repellat ducimus sint. Impedit quae soluta iure.</p>
                     </template>
 
                     <template #buttons>
