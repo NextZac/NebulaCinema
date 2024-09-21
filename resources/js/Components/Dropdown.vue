@@ -58,7 +58,7 @@ const isSelected = (option) => {
             :class="['pl-[12px] py-[8px] gap-4 flex items-center justify-center text-center bg-transparent text-brand-white focus:outline-none w-full h-full']"
             aria-haspopup="listbox" :aria-expanded="isOpen">
             <span class="">{{ selectedOptionLabel }}</span>
-            <ChevronDown class="w-4 h-4 mr-[12px]"></ChevronDown>
+            <ChevronDown :class="['w-4 h-4 mr-[12px] transition-transform duration-100', isOpen ? 'rotate-180' : '']"></ChevronDown>
         </button>
 
         <transition enter-active-class="transition ease-out duration-100"
@@ -66,7 +66,7 @@ const isSelected = (option) => {
             leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
             leave-to-class="transform opacity-0 scale-95">
             <div v-if="isOpen"
-                class="absolute top-10 z-10 mt-1 w-full bg-brand-700 shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm scroll-smooth scrollbar-hide">
+                class="absolute top-10 z-10 mt-1 w-full bg-brand-700 shadow-lg max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm scroll-smooth scrollbar-hide">
                 <ul tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                     aria-activedescendant="listbox-option-0">
                     <li v-for="(option, index) in props.options" :key="index"

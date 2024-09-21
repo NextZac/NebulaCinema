@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
+import { ChevronLeft, ChevronRight } from 'lucide-vue-next';
 
 const props = defineProps({
   length: {
@@ -10,20 +11,19 @@ const props = defineProps({
 
 const sliderContainer = ref(null);
 const currentIndex = ref(0);
-const visibleMovies = ref(0);
-const totalPages = ref(1);
+const visibleMovies = ref(1);
+const totalPages = computed(() => Math.ceil(props.length / visibleMovies.value));
 
 const calculateVisibleMovies = () => {
   if (sliderContainer.value) {
     const containerWidth = sliderContainer.value.offsetWidth;
-    const movieWidth = 272; // 256px (w-64) + 16px (2 * mx-2)
-    visibleMovies.value = Math.floor(containerWidth / movieWidth);
-    totalPages.value = Math.ceil(props.length / visibleMovies.value);
+    const movieWidth = 365; // Adjust this value based on your card width
+    const gap = 35; // Gap between cards
+    visibleMovies.value = Math.floor((containerWidth + gap) / (movieWidth + gap));
   }
 };
 
 onMounted(() => {
-  console.log(props.length);
   calculateVisibleMovies();
   window.addEventListener('resize', calculateVisibleMovies);
 });
@@ -31,48 +31,50 @@ onMounted(() => {
 watch(() => props.length, calculateVisibleMovies);
 
 const nextSlide = () => {
-  currentIndex.value = (currentIndex.value + 1) % totalPages.value;
+  if (currentIndex.value < totalPages.value - 1) {
+    currentIndex.value++;
+  }
 };
 
 const prevSlide = () => {
-  currentIndex.value = (currentIndex.value - 1 + totalPages.value) % totalPages.value;
+  if (currentIndex.value > 0) {
+    currentIndex.value--;
+  }
 };
+
+const translateX = computed(() => {
+  const itemWidth = 365 + 35; // Card width + gap
+  return `translateX(-${currentIndex.value * itemWidth * visibleMovies.value}px)`;
+});
 </script>
 
 <template>
-    <div class="relative w-full overflow-hidden" ref="sliderContainer">
-      <div
-        class="flex transition-transform duration-300 ease-in-out pl-4 pr-4"
-        :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
-      >
-        <slot class="" name="cards" />
-      </div>
-      <button
-        @click="prevSlide"
-        class="absolute top-1/2 left-2 transform -translate-y-1/2 text-white"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <button
-        @click="nextSlide"
-        class="absolute top-1/2 right-2 transform -translate-y-1/2 text-white"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-      <div class="flex justify-center mt-4">
-      <div
-        v-for="index in totalPages"
-        :key="index"
-        :class="[
-          'h-1 w-8 mx-1 rounded-full',
-          index - 1 === currentIndex ? 'bg-blue-500' : 'bg-gray-600'
-        ]"
-      />
+  <!-- Slider Page Indicators -->
+  <div class="w-full flex">
+    <div class="flex w-full content-end justify-end h-[6px] gap-2">
+      <div v-for="index in totalPages" :key="index" class="h-full w-full max-w-[30px] flex flex-col justify-end group"
+        @click="currentIndex = index - 1">
+        <div :class="[
+          'h-full w-full transition-all duration-100 max-w-[30px]',
+          index - 1 === currentIndex ? 'bg-brand-white max-h-full cursor-default' : 'bg-brand-white/50 max-h-[2px] group-hover:bg-brand-600 group-hover:max-h-full cursor-pointer'
+        ]">
+        </div>
       </div>
     </div>
-  </template>
-  
+  </div>
+
+  <!-- Slider Container -->
+  <div class="relative w-full" ref="sliderContainer">
+    <div class="flex transition-transform duration-300 ease-in-out gap-[35px]" :style="{ transform: translateX }">
+      <slot name="cards" />
+    </div>
+    <button @click="prevSlide" v-if="currentIndex > 0"
+      class="absolute flex justify-center items-center z-20 -left-6 top-0 w-16 h-full transition duration-100 group text-brand-white hover:bg-gradient-to-r from-black/50 to-transparent">
+      <ChevronLeft class="h-6 w-6 transition duration-100 group-hover:scale-125"></ChevronLeft>
+    </button>
+    <button @click="nextSlide" v-if="currentIndex < totalPages - 1"
+      class="absolute flex justify-center items-center z-20 -right-6 top-0 w-16 h-full transition duration-100 group text-brand-white hover:bg-gradient-to-l from-black/50 to-transparent">
+      <ChevronRight class="h-6 w-6 transition duration-100 group-hover:scale-125"></ChevronRight>
+    </button>
+  </div>
+</template>
