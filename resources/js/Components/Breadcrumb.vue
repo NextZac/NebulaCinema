@@ -1,27 +1,25 @@
 <script setup>
+import { ChevronRight } from 'lucide-vue-next';
+
+const props = defineProps({
+  crumbs: Array
+});
+
+console.log(props.crumbs);
+
+const crumbActive = 'text-brand-white bg-brand-white font-medium cursor-default'
+const crumbInactive = 'text-brand-white/50 hover:text-brand-600 cursor-pointer'
 
 </script>
 
 <template>
-    <ol class="flex items-center whitespace-nowrap">
-  <li class="inline-flex items-center">
-    <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500" href="#">
-      {{__('link.home')}}
-    </a>
-    <svg class="shrink-0 mx-2 size-4 text-gray-400 dark:text-neutral-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="m9 18 6-6-6-6"></path>
-    </svg>
-  </li>
-  <li class="inline-flex items-center">
-    <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500" href="#">
-      App Center
-      <svg class="shrink-0 mx-2 size-4 text-gray-400 dark:text-neutral-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m9 18 6-6-6-6"></path>
-      </svg>
-    </a>
-  </li>
-  <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate dark:text-neutral-200" aria-current="page">
-    Application
-  </li>
-</ol>
+  <ol class="flex items-center whitespace-nowrap gap-2">
+    <li v-for="(crumb, index) in props.crumbs" :key="index" class="inline-flex items-center gap-2">
+      <ChevronRight v-if="index != 0" class="w-4 h-4 text-brand-white/50" />
+      <a v-if="index < props.crumbs.length - 1" href="#"
+        class="text-sm text-brand-white/50 hover:text-brand-600 cursor-pointer"> {{ crumb }}</a>
+      <p v-if="index === props.crumbs.length - 1" class="text-sm text-brand-white font-medium cursor-default"> {{ crumb
+        }} </p>
+    </li>
+  </ol>
 </template>
