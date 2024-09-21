@@ -11,7 +11,6 @@ const weekdays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 const years = Array.from({ length: 10 }, (_, i) => new Date().getFullYear() + i);
 
 const calendarButton = "size-10 flex justify-center items-center border rounded-full disabled:opacity-50 disabled:pointer-events-none focus:outline-none border-brand-600 text-brand-600 hover:bg-brand-700/10 hover:border-brand-700 hover:text-brand-700 hover:scale-105 active:scale-100 transition duration-100 focus:bg-brand-700/10"
-const calendarSelect = "bg-transparent first:!rounded-s-lg first:!ms-0 last:!rounded-e-lg border border-brand-600 text-brand-white focus:outline-none"
 const calendarDay = "m-px size-10 flex justify-center items-center border border-transparent text-sm text-brand-white rounded-full hover:border-brand-600 hover:text-brand-600 hover:scale-105 active:scale-95 transition duration-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-none"
 
 

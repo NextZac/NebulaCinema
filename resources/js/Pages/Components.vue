@@ -21,7 +21,7 @@ import { Head, usePage } from "@inertiajs/vue3";
             <!-- Breadcrumb -->
             <div class="flex gap-2 flex-col">
                 <h2 class="text-brand-white">Breadcrumb</h2>
-                <Breadcrumb />
+                <Breadcrumb :crumbs="[ __('link.home'), 'Components', 'Application']"/>
             </div>
 
             <!-- Buttons -->
