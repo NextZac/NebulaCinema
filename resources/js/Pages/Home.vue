@@ -484,7 +484,9 @@ const movies = [
   <Head title="Kodu" />
 
   <GuestLayout>
-    <div class="py-2 flex flex-col gap-[40px]">
+    <div class="py-2 flex flex-col gap-[60px]">
+
+      <!-- Top Movie -->
       <TopMovie
         image="https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg"
         engTitle="Monsters, INC." title="Kollide Kompanii">
@@ -501,6 +503,7 @@ const movies = [
         </template>
       </TopMovie>
 
+      <!-- Top Movies -->
       <div class="flex flex-col gap-[15px]">
         <p class="text-brand-white text-main1">Top Filmid</p>
         <Slider :length="movies.length">
@@ -518,6 +521,45 @@ const movies = [
           </template>
         </Slider>
       </div>
+
+      <!-- Current Movies -->
+      <div class="flex flex-col gap-[15px]">
+        <p class="text-brand-white text-main1">Hetkel Kinos</p>
+        <Slider :length="movies.length">
+          <template #cards>
+            <MovieCard v-for="i in movies" :image="i.image" :title="i.title" :titleEng="i.titleEng" href="#">
+              <template #imageBadges>
+                <Badge type="solid">3D</Badge>
+                <Badge>12+</Badge>
+              </template>
+
+              <template #badges>
+                <Badge type="solid" v-for="cat in i.categories">{{ cat.name }}</Badge>
+              </template>
+            </MovieCard>
+          </template>
+        </Slider>
+      </div>
+
+      <!-- Upcoming Movies -->
+      <div class="flex flex-col gap-[15px]">
+        <p class="text-brand-white text-main1">Varsti Kinos</p>
+        <Slider :length="movies.length">
+          <template #cards>
+            <MovieCard v-for="i in movies" :image="i.image" :title="i.title" :titleEng="i.titleEng" href="#">
+              <template #imageBadges>
+                <Badge type="solid">3D</Badge>
+                <Badge>12+</Badge>
+              </template>
+
+              <template #badges>
+                <Badge type="solid" v-for="cat in i.categories">{{ cat.name }}</Badge>
+              </template>
+            </MovieCard>
+          </template>
+        </Slider>
+      </div>
+
     </div>
   </GuestLayout>
 </template>
