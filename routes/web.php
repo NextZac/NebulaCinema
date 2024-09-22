@@ -21,6 +21,14 @@ Route::get("/components", function () {
     return Inertia::render("Components");
 })->name("Components");
 
+Route::get("/films", function () {
+    return Inertia::render("Films");
+})->name("Films");
+
+Route::get("/giftcards", function () {
+    return Inertia::render("Giftcards");
+})->name("Giftcards");
+
 Route::get("/dashboard", function () {
     return Inertia::render("Dashboard");
 })

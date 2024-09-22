@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import ApplicationLogo from '@/Components/inertia/ApplicationLogo.vue';
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/inertia/Dropdown.vue';
 import DropdownLink from '@/Components/inertia/DropdownLink.vue';
 import NavLink from '@/Components/inertia/NavLink.vue';

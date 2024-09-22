@@ -5,8 +5,6 @@ const props = defineProps({
   crumbs: Array
 });
 
-console.log(props.crumbs);
-
 </script>
 
 <template>

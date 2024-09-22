@@ -2,7 +2,7 @@
 import { ref, computed, onMounted } from 'vue';
 
 import { ChevronLeft, ChevronRight } from 'lucide-vue-next';
-import Dropdown from './Dropdown.vue';
+import SelectOption from './SelectOption.vue';
 
 const currentDate = ref(new Date());
 const selectedDate = ref(null);
@@ -92,9 +92,6 @@ const isSelectedDate = (day) => {
         currentYear.value === selectedDate.value.getFullYear();
 };
 
-console.log(currentMonth.value);
-console.log(currentYear.value);
-
 onMounted(() => {
     selectedDate.value = new Date();
 });
@@ -111,9 +108,9 @@ onMounted(() => {
 
             <!-- Month and Year Selects -->
             <div class="col-span-3 flex justify-center items-center gap-x-1">
-                <Dropdown :options="months" v-model="currentMonth" @change="updateCalendar"
+                <SelectOption :options="months" v-model="currentMonth" @change="updateCalendar"
                     class="!rounded-none first:!rounded-s-lg first:!ms-0 last:!rounded-e-lg" />
-                <Dropdown :options="years" v-model="currentYear" @change="updateCalendar"
+                <SelectOption :options="years" v-model="currentYear" @change="updateCalendar"
                     class="!rounded-none first:!rounded-s-lg first:!ms-0 last:!rounded-e-lg" />
             </div>
 

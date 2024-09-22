@@ -11,6 +11,8 @@ import MovieCard from "@/Components/MovieCard.vue";
 import TopMovie from "@/Components/TopMovie.vue";
 import Slider from "@/Components/Slider.vue";
 import Modal from "@/Components/Modal.vue";
+import Dropdown from "@/Components/Dropdown.vue";
+import SelectOption from "@/Components/SelectOption.vue";
 
 import { Search } from "lucide-vue-next";
 import { Head, usePage } from "@inertiajs/vue3";
@@ -20,6 +22,27 @@ const modalOpen = ref(false);
 const toggleModal = () => {
     modalOpen.value = !modalOpen.value;
 }
+
+const dropdowns = ref({
+    test: false,
+});
+
+const toggleDropdown = (key) => {
+    dropdowns.value[key] = !dropdowns.value[key];
+};
+
+const dropdownOptions = {
+    test: [
+        { title: "Ülemiste Keskus", href: "#" },
+        { title: "T1 Keskus", href: "#" },
+        { title: "Viru Keskus", href: "#" },
+        { title: "Tasku Keskus", href: "#" },
+    ],
+};
+
+const options = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+const selectedOption = ref(options[0]);
 
 const movies = [
     {
@@ -495,9 +518,10 @@ const movies = [
 
 <template>
 
-    <Head title="Dashboard" />
+    <Head title="Components" />
+
     <GuestLayout>
-        <div class="py-12 w-full flex flex-col gap-12">
+        <div class="w-full flex flex-col gap-12">
 
             <!-- Breadcrumb -->
             <div class="flex gap-2 flex-col">
@@ -568,7 +592,8 @@ const movies = [
                     </template>
                 </MovieCard>
 
-                <MovieCard image="https://via.placeholder.com/300" title="Title" titleEng="Title English" href="#" animated="true">
+                <MovieCard image="https://via.placeholder.com/300" title="Title" titleEng="Title English" href="#"
+                    :animated="true">
                     <template #imageBadges>
                         <Badge type="solid">3D</Badge>
                         <Badge>12+</Badge>
@@ -637,6 +662,20 @@ const movies = [
                         <Button @click="toggleModal" class="py-[5px]">Close</Button>
                     </template>
                 </Modal>
+            </div>
+
+            <!-- Select Option -->
+            <div class="flex gap-2 flex-col">
+                <h2 class="text-brand-white">Select Option</h2>
+                <SelectOption v-model="selectedOption" :options="options"></SelectOption>
+            </div>
+
+            <!-- Dropdown  -->
+            <div class="flex gap-2 flex-col">
+                <h2 class="text-brand-white">Dropdown</h2>
+                <Button @click="toggleDropdown('test')">Dropdown</Button>
+                <Dropdown class="top-[110%] relative" v-model:isOpen="dropdowns.test"
+                    :options="dropdownOptions.test" />
             </div>
         </div>
     </GuestLayout>
