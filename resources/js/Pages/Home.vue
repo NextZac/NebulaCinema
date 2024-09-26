@@ -7,474 +7,29 @@ import MovieCard from '@/Components/MovieCard.vue';
 import Badge from "@/Components/Badge.vue";
 import { Head } from "@inertiajs/vue3";
 
-const movies = [
+const topMovies = [
   {
     categories: [
       { name: "Komöödia" },
       { name: "Seiklus" },
       { name: "Animatsioon" },
-    ], title: "Kollide Kompanii",
+    ],
+    title: "Kollide Kompanii",
+    titleEng: "Monster's INC.",
     image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Monster's INC."
+    rating: "PERE"
   },
   {
     categories: [
       { name: "Komöödia" },
       { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
-  },
-  {
-    categories: [
-      { name: "Komöödia" },
-      { name: "Seiklus" },
-      { name: "Animatsioon" },
-    ], title: "Another Movie",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
-    titleEng: "Another Movie English"
+      { name: "Märul" },
+    ],
+    title: "Deadpool & Wolverine",
+    titleEng: "Deadpool & Wolverine",
+    image: "https://lumiere-a.akamaihd.net/v1/images/deadpool_wolverine_mobile_640x480_ad8020fd.png",
+    rating: "14+",
+    starting: "24.10.2024"
   },
 ];
 </script>
@@ -506,12 +61,11 @@ const movies = [
       <!-- Top Movies -->
       <div class="flex flex-col gap-[15px]">
         <p class="text-brand-white text-main1">Top Filmid</p>
-        <Slider :length="movies.length">
+        <Slider :length="topMovies.length">
           <template #cards>
-            <MovieCard v-for="i in movies" :image="i.image" :title="i.title" :titleEng="i.titleEng" href="#">
+            <MovieCard v-for="i in topMovies" :image="i.image" :title="i.title" :titleEng="i.titleEng" :starting="i.starting" href="#">
               <template #imageBadges>
-                <Badge type="solid">3D</Badge>
-                <Badge>12+</Badge>
+                <Badge>{{ i.rating }}</Badge>
               </template>
 
               <template #badges>
@@ -525,12 +79,11 @@ const movies = [
       <!-- Current Movies -->
       <div class="flex flex-col gap-[15px]">
         <p class="text-brand-white text-main1">Hetkel Kinos</p>
-        <Slider :length="movies.length">
+        <Slider :length="topMovies.length">
           <template #cards>
-            <MovieCard v-for="i in movies" :image="i.image" :title="i.title" :titleEng="i.titleEng" href="#">
+            <MovieCard v-for="i in topMovies" :image="i.image" :title="i.title" :titleEng="i.titleEng" href="#">
               <template #imageBadges>
-                <Badge type="solid">3D</Badge>
-                <Badge>12+</Badge>
+                <Badge>{{ i.rating }}</Badge>
               </template>
 
               <template #badges>
@@ -544,12 +97,11 @@ const movies = [
       <!-- Upcoming Movies -->
       <div class="flex flex-col gap-[15px]">
         <p class="text-brand-white text-main1">Varsti Kinos</p>
-        <Slider :length="movies.length">
+        <Slider :length="topMovies.length">
           <template #cards>
-            <MovieCard v-for="i in movies" :image="i.image" :title="i.title" :titleEng="i.titleEng" href="#">
+            <MovieCard v-for="i in topMovies" :image="i.image" :title="i.title" :titleEng="i.titleEng" href="#">
               <template #imageBadges>
-                <Badge type="solid">3D</Badge>
-                <Badge>12+</Badge>
+                <Badge>{{ i.rating }}</Badge>
               </template>
 
               <template #badges>

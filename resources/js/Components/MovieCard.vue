@@ -1,13 +1,17 @@
 <script setup>
 
+import Badge from './Badge.vue';
+
 const props = defineProps({
     image: String,
     title: String,
     titleEng: String,
     href: String,
+    starting: String,
     animated: Boolean
 })
 
+console.log(props.starting)
 </script>
 
 <template>
@@ -16,6 +20,9 @@ const props = defineProps({
         <!--Image with badge-->
         <div class="flex justify-end align-end drop-shadow-lg">
             <img class="rounded-[10px] w-full h-[260px] object-fill" :src="props.image" alt="Movie Poster">
+            <span v-if="props.starting" class="flex absolute left-[5px] top-[5px]">
+                <Badge type="solid">Linastused alates {{ props.starting }}</Badge>
+            </span>
             <span class="flex gap-[5px] absolute right-[5px] bottom-[5px]">
                 <slot name="imageBadges"></slot>
             </span>

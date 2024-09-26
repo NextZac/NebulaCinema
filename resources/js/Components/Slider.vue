@@ -52,7 +52,7 @@ const translateX = computed(() => {
   <!-- Slider Page Indicators -->
   <div class="w-full flex">
     <div class="flex w-full content-end justify-end h-[6px] gap-2">
-      <div v-for="index in totalPages" :key="index" class="h-full w-full max-w-[30px] flex flex-col justify-end group"
+      <div v-if="totalPages > 1" v-for="index in totalPages" :key="index" class="h-full w-full max-w-[30px] flex flex-col justify-end group"
         @click="currentIndex = index - 1">
         <div :class="[
           'h-full w-full transition-all duration-100 max-w-[30px]',
