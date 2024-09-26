@@ -1,5 +1,7 @@
 <script setup>
 
+import { ref, computed } from 'vue';
+
 import Badge from './Badge.vue';
 
 const props = defineProps({
@@ -11,17 +13,34 @@ const props = defineProps({
     animated: Boolean
 })
 
-console.log(props.starting)
+const isHovered = ref(false);
+
+let animationStyle
+
+if (props.animated) {
+    animationStyle = computed(() => ({
+        transform: isHovered.value ? 'translateY(0px)' : 'translateY(-20px)',
+        opacity: isHovered.value ? '1' : '0',
+        overflow: 'hidden',
+        transition: 'transform 150ms ease-in-out, opacity 150ms ease-in-out',
+        pointerEvents: isHovered.value ? 'auto' : 'none',
+    }));
+} else { 
+    animationStyle = "";
+}
+
+
 </script>
 
 <template>
     <a :href="props.href"
-        class="flex flex-col gap-[15px] w-min h-min group min-w-[365px] hover:scale-105 active:scale-100 transition duration-100">
+        class="flex flex-col gap-[15px] w-min h-min group min-w-[365px] hover:scale-105 active:scale-100 transition-all duration-100"
+        @mouseover="isHovered = true" @mouseleave="isHovered = false">
         <!--Image with badge-->
         <div class="flex justify-end align-end drop-shadow-lg">
-            <img class="rounded-[10px] w-full h-[260px] object-fill" :src="props.image" alt="Movie Poster">
+            <img class="rounded-[10px] w-full h-[500px] object-cover" :src="props.image" alt="Movie Poster">
             <span v-if="props.starting" class="flex absolute left-[5px] top-[5px]">
-                <Badge type="solid">Linastused alates {{ props.starting }}</Badge>
+                <Badge type="bordered">Linastused alates {{ props.starting }}</Badge>
             </span>
             <span class="flex gap-[5px] absolute right-[5px] bottom-[5px]">
                 <slot name="imageBadges"></slot>
@@ -29,15 +48,13 @@ console.log(props.starting)
         </div>
 
         <!--Title-->
-        <div
-            :class="[props.animated ? 'max-h-0 group-hover:max-h-[100%] absolute top-[100%] mt-[15px]' : '', 'flex flex-col gap-[5px] h-min overflow-hidden transition-all delay-100 duration-[0.65s] ease-in' ]">
-            <p class="text-brand-white text-title2 group-hover:text-brand-400 group-hover:underline"
-                v-html="props.title"></p>
-            <p class="text-brand-white/50 text-subtitle group-hover:text-brand-400/50 group-hover:underline"
-                v-html="props.titleEng"></p>
+        <div :class="['flex flex-col gap-[5px] h-min overflow-hidden' ]"
+            :style="animationStyle">
+            <p class="text-brand-white text-title2 group-hover:text-brand-400" v-html="props.title"></p>
+            <p class="text-brand-white/50 text-subtitle group-hover:text-brand-400/50" v-html="props.titleEng"></p>
 
             <!--Badges-->
-            <div class="flex gap-[10px] pt-[5px]">
+            <div class="flex gap-[10px] pt-[5px] flex-wrap">
                 <slot name="badges"></slot>
             </div>
         </div>

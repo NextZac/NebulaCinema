@@ -13,7 +13,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="relative w-full h-min p-[10px] overflow-hidden group drop-shadow-lg">
+    <div class="relative w-full h-[500px] p-[10px] overflow-hidden group drop-shadow-lg">
         <!-- Gradient and Image Background -->
         <div :style="{
                 background: `linear-gradient(98deg, rgba(23, 21, 50, 1) 0%, rgba(23, 21, 50, 1) 31.21%, rgba(0, 0, 0, 0) 56.26%), url(${image}) no-repeat`,

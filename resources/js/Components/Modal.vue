@@ -30,7 +30,7 @@ const closeModal = () => {
 
 <template>
     <Transition name="modal">
-        <div v-if="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div v-if="isModalOpen" class="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
             <div class="bg-brand-975 rounded-lg shadow-xl max-w-md w-full border border-brand-900 drop-shadow-lg">
                 <div class="flex justify-between items-center p-4 border-b border-brand-900">
                     <h3 class="text-xl font-medium text-brand-white">

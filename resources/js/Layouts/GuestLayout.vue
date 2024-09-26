@@ -31,7 +31,7 @@ const dropdownOptions = ref({
     ],
     avatar: [
         { title: "Profile", href: "#" },
-        { title: "Log out", href: "#", color: "brand-error" },
+        { title: "Log out", href: "#", color: "error" },
     ],
     language: [
         { title: "Estonian", href: "#" },

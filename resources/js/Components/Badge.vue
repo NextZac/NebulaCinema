@@ -9,6 +9,9 @@ switch (props.type) {
     case 'solid':
         typeClass = "bg-brand-900 "
         break;
+    case 'bordered':
+        typeClass = "border border-brand-white bg-brand-975 "
+        break;
     default:
         typeClass = "bg-black/30 border border-brand-white "
 }

@@ -1,10 +1,10 @@
 import defaultTheme from "tailwindcss/defaultTheme";
 import forms from "@tailwindcss/forms";
 const round = (num) =>
-  num
-    .toFixed(7)
-    .replace(/(\.[0-9]+?)0+$/, "$1")
-    .replace(/\.0$/, "");
+    num
+        .toFixed(7)
+        .replace(/(\.[0-9]+?)0+$/, "$1")
+        .replace(/\.0$/, "");
 const rem = (px) => `${round(px / 16)}rem`;
 /** @type {import('tailwindcss').Config} */
 export default {

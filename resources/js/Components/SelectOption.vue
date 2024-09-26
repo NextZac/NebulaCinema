@@ -54,7 +54,7 @@ const isSelected = (option) => {
 const animationStyle = computed(() => ({
     transform: isOpen.value ? 'translateY(0px)' : 'translateY(-20px)',
     opacity: isOpen.value ? '1' : '0',
-    maxHeight: isOpen.value ? '300px' : '0px',
+    maxHeight: isOpen.value ? '' : '0px',
     overflow: 'hidden',
     transition: 'transform 100ms ease-in-out, max-height 100ms ease-in-out, opacity 100ms ease-in-out',
 }));
@@ -66,11 +66,13 @@ const animationStyle = computed(() => ({
             :class="['pl-[12px] py-[8px] gap-4 flex items-center justify-center text-center bg-transparent text-brand-white focus:outline-none w-full h-full']"
             aria-haspopup="listbox" :aria-expanded="isOpen">
             <span class="">{{ selectedOptionLabel }}</span>
-            <ChevronDown :class="['w-4 h-4 mr-[12px] transition-transform duration-100', isOpen ? 'rotate-180' : '']"></ChevronDown>
+            <ChevronDown :class="['w-4 h-4 mr-[12px] transition-transform duration-100', isOpen ? 'rotate-180' : '']">
+            </ChevronDown>
         </button>
 
-            <div
-                class="absolute top-[110%] z-10 mt-1 w-full bg-brand-700 shadow-lg max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm scroll-smooth scrollbar-hide" :style="animationStyle">
+        <div class="absolute top-[110%] z-10 mt-1 w-full bg-brand-700 shadow-lg rounded-md py-1 text-base focus:outline-none"
+            :style="animationStyle">
+            <div class="w-full h-full max-h-60 scroll-smooth overflow-auto sm:text-sm scrollbar-hide">
                 <ul tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                     aria-activedescendant="listbox-option-0">
                     <li v-for="(option, index) in props.options" :key="index"
@@ -86,5 +88,6 @@ const animationStyle = computed(() => ({
                     </li>
                 </ul>
             </div>
+        </div>
     </div>
 </template>

@@ -4,6 +4,11 @@ import { ref, computed, onMounted } from 'vue';
 import { ChevronLeft, ChevronRight } from 'lucide-vue-next';
 import SelectOption from './SelectOption.vue';
 
+const props = defineProps({
+    selector: Boolean,
+    hidePrevious: Boolean
+});
+
 const currentDate = ref(new Date());
 const selectedDate = ref(null);
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -31,13 +36,15 @@ const calendarDays = computed(() => {
         const prevMonthLastDay = new Date(currentYear.value, currentMonth.value, 0).getDate();
         currentWeek.push({
             date: prevMonthLastDay - startingDayOfWeek + i + 1,
-            isCurrentMonth: false
+            isCurrentMonth: false,
+            isNextMonth: false,
+            isPreviousMonth: true
         });
     }
 
     // Current month's days
     for (let i = 1; i <= daysInMonth; i++) {
-        currentWeek.push({ date: i, isCurrentMonth: true });
+        currentWeek.push({ date: i, isCurrentMonth: true, isNextMonth: false, isPreviousMonth: false });
         if (currentWeek.length === 7) {
             calendarArray.push(currentWeek);
             currentWeek = [];
@@ -47,7 +54,7 @@ const calendarDays = computed(() => {
     // Next month's days
     if (currentWeek.length > 0) {
         for (let i = 1; currentWeek.length < 7; i++) {
-            currentWeek.push({ date: i, isCurrentMonth: false });
+            currentWeek.push({ date: i, isCurrentMonth: false, isNextMonth: true, isPreviousMonth: false });
         }
         calendarArray.push(currentWeek);
     }
@@ -80,10 +87,11 @@ const nextMonth = () => {
 };
 
 const selectDate = (day) => {
-    if (day.isCurrentMonth) {
+    if (day.isCurrentMonth ) {
         selectedDate.value = new Date(currentYear.value, currentMonth.value, day.date);
     }
 };
+
 
 const isSelectedDate = (day) => {
     return selectedDate.value &&
@@ -100,7 +108,7 @@ onMounted(() => {
 <template>
     <div class="flex flex-col gap-2 w-min">
         <!-- Calendar Header -->
-        <div class="grid grid-cols-5 items-center gap-x-3 mx-1.5 pb-3">
+        <div v-if="props.selector" class="grid grid-cols-5 items-center gap-x-3 mx-1.5 pb-3">
             <!-- Previous Month Button -->
             <button @click="previousMonth" :class="[calendarButton, 'col-span-1']" aria-label="Previous">
                 <ChevronLeft class="w-4 h-4"></ChevronLeft>
@@ -129,10 +137,12 @@ onMounted(() => {
         </div>
 
         <!-- Calendar Grid -->
+
+        <!-- The hidePrevious function is still in development, if we even want to create it in the end... -->
         <div v-for="week in calendarDays" :key="week[0].date" class="flex gap-2">
             <button v-for="day in week" :key="day.date" @click="selectDate(day)"
-                :class="[calendarDay, { 'bg-brand-600 text-brand-white hover:text-brand-white': isSelectedDate(day) },{ 'text-brand-white bg-transparent': !day.isCurrentMonth }]"
-                :disabled="!day.isCurrentMonth">
+                :class="[calendarDay, { 'bg-brand-600 text-brand-white hover:text-brand-white': isSelectedDate(day) }, { 'text-brand-white bg-transparent': !day.isCurrentMonth }]"
+                :disabled="(props.hidePrevious ? (day.date < currentDate.getDate() && day.isCurrentMonth && !day.isNextMonth || day.isPreviousMonth) : !day.isCurrentMonth)">
                 {{ day.date }}
             </button>
         </div>

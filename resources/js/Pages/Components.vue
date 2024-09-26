@@ -559,6 +559,8 @@ const movies = [
             <div class="flex gap-2 flex-col">
                 <h2 class="text-brand-white">DatePicker</h2>
                 <DatePicker />
+                <DatePicker :selector="true"/>
+                <DatePicker :hidePrevious="true"/>
             </div>
 
             <!-- Input -->
@@ -674,8 +676,7 @@ const movies = [
             <div class="flex gap-2 flex-col">
                 <h2 class="text-brand-white">Dropdown</h2>
                 <Button @click="toggleDropdown('test')">Dropdown</Button>
-                <Dropdown class="top-[110%] relative" v-model:isOpen="dropdowns.test"
-                    :options="dropdownOptions.test" />
+                <Dropdown class="top-[110%] relative" v-model:isOpen="dropdowns.test" :options="dropdownOptions.test" />
             </div>
         </div>
     </GuestLayout>
