@@ -24,15 +24,37 @@ const toggleModal = () => {
 }
 
 const dropdowns = ref({
-    test: false,
+    test1: false,
+    test2: false,
+    test3: false,
+    test4: false
 });
 
 const toggleDropdown = (key) => {
     dropdowns.value[key] = !dropdowns.value[key];
+    console.log(dropdowns.value[key]);
 };
 
 const dropdownOptions = {
-    test: [
+    test1: [
+        { title: "Ülemiste Keskus", href: "#" },
+        { title: "T1 Keskus", href: "#" },
+        { title: "Viru Keskus", href: "#" },
+        { title: "Tasku Keskus", href: "#" },
+    ],
+    test2: [
+        { title: "Ülemiste Keskus", href: "#" },
+        { title: "T1 Keskus", href: "#" },
+        { title: "Viru Keskus", href: "#" },
+        { title: "Tasku Keskus", href: "#" },
+    ],
+    test3: [
+        { title: "Ülemiste Keskus", href: "#" },
+        { title: "T1 Keskus", href: "#" },
+        { title: "Viru Keskus", href: "#" },
+        { title: "Tasku Keskus", href: "#" },
+    ],
+    test4: [
         { title: "Ülemiste Keskus", href: "#" },
         { title: "T1 Keskus", href: "#" },
         { title: "Viru Keskus", href: "#" },
@@ -42,7 +64,7 @@ const dropdownOptions = {
 
 const options = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
-const selectedOption = ref(options[0]);
+const selectedOption = ref(0);
 
 const movies = [
     {
@@ -524,14 +546,14 @@ const movies = [
         <div class="w-full flex flex-col gap-12">
 
             <!-- Breadcrumb -->
-            <div class="flex gap-2 flex-col">
+            <div class="flex gap-8 flex-col">
                 <h2 class="text-brand-white">Breadcrumb</h2>
                 <Breadcrumb
                     :crumbs="[{ title: __('link.home'), href: route('Home') }, { title: 'Components', href: route('Home') }, { title: 'Breadcrumb', href: route('Home') }]" />
             </div>
 
             <!-- Buttons -->
-            <div class="flex gap-2 flex-col">
+            <div class="flex gap-8 flex-col">
                 <h2 class="text-brand-white">Buttons</h2>
                 <Button>Solid Default</Button>
                 <Button type="outline">Outlined Default</Button>
@@ -556,15 +578,15 @@ const movies = [
             </div>
 
             <!-- Datepicker -->
-            <div class="flex gap-2 flex-col">
+            <div class="flex gap-8 flex-col">
                 <h2 class="text-brand-white">DatePicker</h2>
                 <DatePicker />
-                <DatePicker :selector="true"/>
-                <DatePicker :hidePrevious="true"/>
+                <DatePicker :selector="true" />
+                <DatePicker :hidePrevious="true" />
             </div>
 
             <!-- Input -->
-            <div class="flex gap-2 flex-col">
+            <div class="flex gap-8 flex-col">
                 <h2 class="text-brand-white">Input</h2>
                 <Input type="text" placeholder="Otsing" class="bg-brand-975">
                 <Search class="w-5 h-5 text-brand-white" />
@@ -572,14 +594,14 @@ const movies = [
             </div>
 
             <!-- Badges -->
-            <div class="flex gap-2 flex-col">
+            <div class="flex gap-8 flex-col">
                 <h2 class="text-brand-white">Badge</h2>
                 <Badge>Outline/Default</Badge>
                 <Badge type="solid">Solid</Badge>
             </div>
 
             <!-- Movie Card -->
-            <div class="flex gap-2 flex-col">
+            <div class="flex gap-8 flex-col">
                 <h2 class="text-brand-white">Movie Card</h2>
                 <MovieCard image="https://via.placeholder.com/300" title="Title" titleEng="Title English" href="#">
                     <template #imageBadges>
@@ -610,7 +632,7 @@ const movies = [
             </div>
 
             <!-- Top Movie -->
-            <div class="flex gap-2 flex-col">
+            <div class="flex gap-8 flex-col">
                 <h2 class="text-brand-white">Top Movie</h2>
                 <TopMovie
                     image="https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg"
@@ -630,7 +652,7 @@ const movies = [
             </div>
 
             <!-- Slider -->
-            <div class="flex gap-2 flex-col">
+            <div class="flex gap-8 flex-col">
                 <h2 class="text-brand-white">Slider</h2>
                 <Slider :length="movies.length">
                     <template #cards>
@@ -650,7 +672,7 @@ const movies = [
             </div>
 
             <!-- Modal -->
-            <div class="flex gap-2 flex-col">
+            <div class="flex gap-8 flex-col">
                 <h2 class="text-brand-white">Modal</h2>
                 <Button @click="toggleModal">Show Modal</Button>
                 <Modal v-model:isOpen="modalOpen" title="Modal">
@@ -667,16 +689,29 @@ const movies = [
             </div>
 
             <!-- Select Option -->
-            <div class="flex gap-2 flex-col">
+            <div class="flex gap-8 flex-col w-[15%]">
                 <h2 class="text-brand-white">Select Option</h2>
-                <SelectOption v-model="selectedOption" :options="options"></SelectOption>
+                <SelectOption :options="options" v-model="selectedOption" align="top"></SelectOption>
+                <SelectOption :options="options" v-model="selectedOption" align="right"></SelectOption>
+                <SelectOption :options="options" v-model="selectedOption" align="left"></SelectOption>
+                <SelectOption :options="options" v-model="selectedOption" align="bottom"></SelectOption>
             </div>
 
             <!-- Dropdown  -->
-            <div class="flex gap-2 flex-col">
+            <div class="flex gap-8 flex-col relative">
                 <h2 class="text-brand-white">Dropdown</h2>
-                <Button @click="toggleDropdown('test')">Dropdown</Button>
-                <Dropdown class="top-[110%] relative" v-model:isOpen="dropdowns.test" :options="dropdownOptions.test" />
+                <Button @click="toggleDropdown('test2')">Dropdown Top
+                    <Dropdown v-model:isOpen="dropdowns.test2" :options="dropdownOptions.test2" align="top" />
+                </Button>
+                <Button @click="toggleDropdown('test3')">Dropdown Right
+                    <Dropdown v-model:isOpen="dropdowns.test3" :options="dropdownOptions.test3" align="right" />
+                </Button>
+                <Button @click="toggleDropdown('test4')">Dropdown Left
+                    <Dropdown v-model:isOpen="dropdowns.test4" :options="dropdownOptions.test4" align="left" />
+                </Button>
+                <Button @click="toggleDropdown('test1')">Dropdown Bottom
+                    <Dropdown v-model:isOpen="dropdowns.test1" :options="dropdownOptions.test1" />
+                </Button>
             </div>
         </div>
     </GuestLayout>

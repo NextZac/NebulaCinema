@@ -21,6 +21,100 @@ const topMovies = [
   },
   {
     categories: [
+      { name: "Õudus" },
+      { name: "Seiklus" },
+      { name: "Märul" },
+      { name: "Ulme & Fantaasia" }
+    ],
+    title: "Viimased meie hulgas",
+    titleEng: "The Last of Us",
+    image: "https://m.media-amazon.com/images/M/MV5BY2JiNjU3NWYtMTRlYS00NzY3LWE2NDQtZGFkNWE2MDU4OTExXkEyXkFqcGc@._V1_.jpg",
+    rating: "16+",
+  },
+  {
+    categories: [
+      { name: "Märul" },
+      { name: "Seiklus" },
+      { name: "Põnevus" },
+    ],
+    title: "Spiderman: Pole Koduteed",
+    titleEng: "Spiderman: No Way Home",
+    image: "https://resizing.flixster.com/8PNiwC2bpe9OecfYZSOVkvYC5vk=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2U5NGM0Y2Q1LTAyYTItNGFjNC1hNWZhLWMzYjJjOTdjMTFhOS5qcGc=",
+    rating: "14+",
+  },
+  {
+    categories: [
+      { name: "Komöödia" },
+      { name: "Seiklus" },
+      { name: "Põnevus" },
+    ],
+    title: "Nüüd Sa Näed Mind 2",
+    titleEng: "Now You See Me 2",
+    image: "https://m.media-amazon.com/images/M/MV5BOTVjNTA0ZWEtNzU2Ny00Njg1LWE1MmEtZTUyZGQzYTVlY2Q5XkEyXkFqcGc@._V1_.jpg",
+    rating: "12+",
+  },
+  {
+    categories: [
+      { name: "Komöödia" },
+      { name: "Seiklus" },
+      { name: "Animatsioon" },
+    ],
+    title: "Kollide Kompanii",
+    titleEng: "Monster's INC.",
+    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
+    rating: "PERE"
+  },
+  {
+    categories: [
+      { name: "Õudus" },
+      { name: "Seiklus" },
+      { name: "Märul" },
+      { name: "Ulme & Fantaasia" }
+    ],
+    title: "Viimased meie hulgas",
+    titleEng: "The Last of Us",
+    image: "https://m.media-amazon.com/images/M/MV5BY2JiNjU3NWYtMTRlYS00NzY3LWE2NDQtZGFkNWE2MDU4OTExXkEyXkFqcGc@._V1_.jpg",
+    rating: "16+",
+  },
+  {
+    categories: [
+      { name: "Märul" },
+      { name: "Seiklus" },
+      { name: "Põnevus" },
+    ],
+    title: "Spiderman: Pole Koduteed",
+    titleEng: "Spiderman: No Way Home",
+    image: "https://resizing.flixster.com/8PNiwC2bpe9OecfYZSOVkvYC5vk=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2U5NGM0Y2Q1LTAyYTItNGFjNC1hNWZhLWMzYjJjOTdjMTFhOS5qcGc=",
+    rating: "14+",
+  },
+  {
+    categories: [
+      { name: "Komöödia" },
+      { name: "Seiklus" },
+      { name: "Põnevus" },
+    ],
+    title: "Nüüd Sa Näed Mind 2",
+    titleEng: "Now You See Me 2",
+    image: "https://m.media-amazon.com/images/M/MV5BOTVjNTA0ZWEtNzU2Ny00Njg1LWE1MmEtZTUyZGQzYTVlY2Q5XkEyXkFqcGc@._V1_.jpg",
+    rating: "12+",
+  },
+];
+
+const upcomingMovies = [
+  {
+    categories: [
+      { name: "Komöödia" },
+      { name: "Seiklus" },
+      { name: "Animatsioon" },
+    ],
+    title: "Transformerid: Üks",
+    titleEng: "Transformers One",
+    image: "https://resizing.flixster.com/Nf9rlbQUjzuMQ-vXdRGMScWkcs8=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzU4MDZhYjI1LTFiNTQtNDc0Ni04OTI2LWI0Nzc4OWJiNDYxYy5qcGc=",
+    rating: "14+",
+    starting: "22.10.2024"
+  },
+  {
+    categories: [
       { name: "Komöödia" },
       { name: "Seiklus" },
       { name: "Märul" },
@@ -29,10 +123,31 @@ const topMovies = [
     titleEng: "Deadpool & Wolverine",
     image: "https://lumiere-a.akamaihd.net/v1/images/deadpool_wolverine_mobile_640x480_ad8020fd.png",
     rating: "14+",
+    starting: "24.10.2024"
   },
-];
-
-const upcomingMovies = [
+  {
+    categories: [
+      { name: "Õudus" },
+      { name: "Seiklus" },
+      { name: "Märul" },
+    ],
+    title: "Tulnukas: Romulus",
+    titleEng: "Alien: Romulus",
+    image: "https://m.media-amazon.com/images/M/MV5BMDU0NjcwOGQtNjNjOS00NzQ3LWIwM2YtYWVmODZjMzQzN2ExXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    rating: "16+",
+    starting: "05.10.2024"
+  },
+  {
+    categories: [
+      { name: "Seiklus" },
+      { name: "Märul" },
+    ],
+    title: "John Wick 4",
+    titleEng: "John Wick 4",
+    image: "https://m.media-amazon.com/images/I/81fk-N7tvbL._AC_UF894,1000_QL80_.jpg",
+    rating: "14+",
+    starting: "14.10.2024"
+  },
   {
     categories: [
       { name: "Komöödia" },
@@ -68,6 +183,64 @@ const upcomingMovies = [
     image: "https://m.media-amazon.com/images/M/MV5BMDU0NjcwOGQtNjNjOS00NzQ3LWIwM2YtYWVmODZjMzQzN2ExXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
     rating: "16+",
     starting: "05.10.2024"
+  },
+  {
+    categories: [
+      { name: "Seiklus" },
+      { name: "Märul" },
+    ],
+    title: "John Wick 4",
+    titleEng: "John Wick 4",
+    image: "https://m.media-amazon.com/images/I/81fk-N7tvbL._AC_UF894,1000_QL80_.jpg",
+    rating: "14+",
+    starting: "14.10.2024"
+  },
+  {
+    categories: [
+      { name: "Komöödia" },
+      { name: "Seiklus" },
+      { name: "Animatsioon" },
+    ],
+    title: "Transformerid: Üks",
+    titleEng: "Transformers One",
+    image: "https://resizing.flixster.com/Nf9rlbQUjzuMQ-vXdRGMScWkcs8=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzU4MDZhYjI1LTFiNTQtNDc0Ni04OTI2LWI0Nzc4OWJiNDYxYy5qcGc=",
+    rating: "14+",
+    starting: "22.10.2024"
+  },
+  {
+    categories: [
+      { name: "Komöödia" },
+      { name: "Seiklus" },
+      { name: "Märul" },
+    ],
+    title: "Deadpool & Wolverine",
+    titleEng: "Deadpool & Wolverine",
+    image: "https://lumiere-a.akamaihd.net/v1/images/deadpool_wolverine_mobile_640x480_ad8020fd.png",
+    rating: "14+",
+    starting: "24.10.2024"
+  },
+  {
+    categories: [
+      { name: "Õudukas" },
+      { name: "Seiklus" },
+      { name: "Märul" },
+    ],
+    title: "Tulnukas: Romulus",
+    titleEng: "Alien: Romulus",
+    image: "https://m.media-amazon.com/images/M/MV5BMDU0NjcwOGQtNjNjOS00NzQ3LWIwM2YtYWVmODZjMzQzN2ExXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    rating: "16+",
+    starting: "05.10.2024"
+  },
+  {
+    categories: [
+      { name: "Seiklus" },
+      { name: "Märul" },
+    ],
+    title: "John Wick 4",
+    titleEng: "John Wick 4",
+    image: "https://m.media-amazon.com/images/I/81fk-N7tvbL._AC_UF894,1000_QL80_.jpg",
+    rating: "14+",
+    starting: "14.10.2024"
   },
 ];
 </script>
@@ -138,7 +311,8 @@ const upcomingMovies = [
         <p class="text-brand-white text-main1">Varsti Kinos</p>
         <Slider :length="upcomingMovies.length">
           <template #cards>
-            <MovieCard v-for="i in upcomingMovies" :image="i.image" :title="i.title" :titleEng="i.titleEng" href="#">
+            <MovieCard v-for="i in upcomingMovies" :image="i.image" :title="i.title" :titleEng="i.titleEng"
+              :starting="i.starting" href="#">
               <template #imageBadges>
                 <Badge>{{ i.rating }}</Badge>
               </template>

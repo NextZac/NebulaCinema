@@ -22,6 +22,8 @@ const calendarDay = "m-px size-10 flex justify-center items-center border border
 const currentMonth = ref(currentDate.value.getMonth());
 const currentYear = ref(currentDate.value.getFullYear());
 
+console.log(currentMonth.value, currentYear.value)
+
 const calendarDays = computed(() => {
     const firstDay = new Date(currentYear.value, currentMonth.value, 1);
     const lastDay = new Date(currentYear.value, currentMonth.value + 1, 0);
@@ -106,16 +108,16 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="flex flex-col gap-2 w-min">
+    <div class="flex flex-col gap-2 w-min justify-center items-center">
         <!-- Calendar Header -->
-        <div v-if="props.selector" class="grid grid-cols-5 items-center gap-x-3 mx-1.5 pb-3">
+        <div v-if="props.selector" class="flex justify-center items-center gap-3 mx-1.5 pb-3">
             <!-- Previous Month Button -->
             <button @click="previousMonth" :class="[calendarButton, 'col-span-1']" aria-label="Previous">
                 <ChevronLeft class="w-4 h-4"></ChevronLeft>
             </button>
 
             <!-- Month and Year Selects -->
-            <div class="col-span-3 flex justify-center items-center gap-x-1">
+            <div class="flex items-center justify-center">
                 <SelectOption :options="months" v-model="currentMonth" @change="updateCalendar"
                     class="!rounded-none first:!rounded-s-lg first:!ms-0 last:!rounded-e-lg" />
                 <SelectOption :options="years" v-model="currentYear" @change="updateCalendar"

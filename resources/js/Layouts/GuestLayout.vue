@@ -5,6 +5,7 @@ import { ChevronDown, Search, Github } from "lucide-vue-next";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Input from "@/Components/Input.vue";
 import Dropdown from "@/Components/Dropdown.vue";
+import SelectOption from "@/Components/SelectOption.vue";
 
 const dropdowns = ref({
     kinod: false,
@@ -30,14 +31,25 @@ const dropdownOptions = ref({
         { title: "Lasteaed/kool kinno", href: "#" },
     ],
     avatar: [
-        { title: "Profile", href: "#" },
-        { title: "Log out", href: "#", color: "error" },
+        { title: "Profiil", href: "#" },
+        { title: "Ostu ajalugu", href: "#" },
+        { title: "Logi välja", href: "#", color: "error" },
     ],
     language: [
-        { title: "Estonian", href: "#" },
-        { title: "English", href: "#" },
+        { title: "Estonian", href: "/lang/et" },
+        { title: "English", href: "/lang/en" },
     ],
 });
+
+const htmlLang = document.documentElement.lang;
+
+const selectedLanguage = ref(dropdownOptions.value.language[1].title);
+
+if (htmlLang === 'et') {
+    selectedLanguage.value = dropdownOptions.value.language[0].title;
+} else if (htmlLang === 'en') {
+    selectedLanguage.value = dropdownOptions.value.language[1].title;
+}
 
 const navLinks = [
     { name: 'Kinokava', route: 'Components' },
@@ -103,6 +115,8 @@ const navLinks = [
                     class="font-light text-brand-white/50 hover:text-brand-400 underline underline-offset-2">Privacy</a>
             </div>
             <div class="flex w-full justify-end items-center gap-6">
+                <SelectOption :options="dropdownOptions.language" v-model="selectedLanguage"
+                    align="top" class="w-min rounded-lg"/>
                 <div class="flex gap-2">
                     <a class="group" :href="route('Home')">
                         <svg class="w-6 h-6 text-brand-white/50 group-hover:text-brand-600"

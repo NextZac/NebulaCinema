@@ -17,6 +17,16 @@ Route::get("/lang/{lang}", function ($language) {
     return redirect()->back();
 });
 
+Route::get("/lang/en", function () {
+    Session::put("locale", "en");
+    return redirect()->back();
+})->name("toEnglish");
+
+Route::get("/lang/et", function () {
+    Session::put("locale", "et");
+    return redirect()->back();
+})->name("toEstonian");
+
 Route::get("/components", function () {
     return Inertia::render("Components");
 })->name("Components");
