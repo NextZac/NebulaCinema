@@ -62,9 +62,9 @@ const navLinks = [
 </script>
 
 <template>
-    <div class="min-h-screen bg-[#1E1B4B]">
+    <div class="min-h-screen bg-brand-950">
         <header
-            class="flex sticky top-0 w-full items-center gap-[40px] px-[25px] py-[15px] bg-[#171532] border-b border-brand-900 z-50">
+            class="flex sticky top-0 w-full items-center gap-[40px] px-[25px] py-[15px] bg-brand-975 border-b border-brand-900 z-50">
             <a :href="route('Home')" class="h-full">
                 <ApplicationLogo class="w-40 h-20" />
             </a>
