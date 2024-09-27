@@ -16,7 +16,7 @@ const topMovies = [
     ],
     title: "Kollide Kompanii",
     titleEng: "Monster's INC.",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
+    image: "https://lumiere-a.akamaihd.net/v1/images/p_monstersinc_19751_55afa07a.jpeg?region=0%2C0%2C540%2C810",
     rating: "PERE"
   },
   {
@@ -61,7 +61,7 @@ const topMovies = [
     ],
     title: "Kollide Kompanii",
     titleEng: "Monster's INC.",
-    image: "https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg",
+    image: "https://lumiere-a.akamaihd.net/v1/images/p_monstersinc_19751_55afa07a.jpeg?region=0%2C0%2C540%2C810",
     rating: "PERE"
   },
   {
@@ -250,7 +250,7 @@ const upcomingMovies = [
   <Head title="Kodu" />
 
   <GuestLayout>
-    <div class="py-2 flex flex-col gap-[60px]">
+    <div class="py-2 px-[20rem] flex flex-col gap-[60px]">
 
       <!-- Top Movie -->
       <TopMovie

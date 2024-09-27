@@ -52,8 +52,8 @@ const translateX = computed(() => {
   <!-- Slider Page Indicators -->
   <div class="w-full flex">
     <div class="flex w-full content-end justify-end h-[6px] gap-2">
-      <div v-if="totalPages > 1" v-for="index in totalPages" :key="index" class="h-full w-full max-w-[30px] flex flex-col justify-end group"
-        @click="currentIndex = index - 1">
+      <div v-if="totalPages > 1" v-for="index in totalPages" :key="index"
+        class="h-full w-full max-w-[30px] flex flex-col justify-end group" @click="currentIndex = index - 1">
         <div :class="[
           'h-full w-full transition-all duration-100 max-w-[30px]',
           index - 1 === currentIndex ? 'bg-brand-white max-h-full cursor-default' : 'bg-brand-white/50 max-h-[2px] group-hover:bg-brand-600 group-hover:max-h-full cursor-pointer'
@@ -64,17 +64,32 @@ const translateX = computed(() => {
   </div>
 
   <!-- Slider Container -->
-  <div class="relative w-full" ref="sliderContainer">
-    <div class="flex transition-transform duration-300 ease-in-out gap-[35px]" :style="{ transform: translateX }">
-      <slot name="cards" />
+  <div class="fader py-4">
+    <div class="relative w-full group/slider" ref="sliderContainer">
+      <div class="flex w-full transition-transform duration-300 ease-in-out gap-[35px] mx-4"
+        :style="{ transform: translateX }">
+        <slot name="cards" />
+      </div>
+      <button @click="prevSlide" v-if="currentIndex > 0"
+        class="absolute flex justify-center items-center z-20 -left-2 top-0 w-20 h-[100%] transition duration-100 group text-brand-white invisible group-hover/slider:visible bg-gradient-to-r from-black to-transparent">
+        <ChevronLeft class="size-10 transition duration-100 group-hover:scale-125 text-brand-white"></ChevronLeft>
+      </button>
+      <button @click="nextSlide" v-if="currentIndex < totalPages - 1"
+        class="absolute flex justify-center items-center z-20 -right-2 top-0 w-20 h-[100%] transition duration-100 group text-brand-white invisible group-hover/slider:visible bg-gradient-to-l from-black to-transparent">
+        <ChevronRight class="size-10 transition duration-100 group-hover:scale-125 text-brand-white"></ChevronRight>
+      </button>
     </div>
-    <button @click="prevSlide" v-if="currentIndex > 0"
-      class="absolute flex justify-center items-center z-20 -left-6 top-0 w-16 h-full transition duration-100 group text-brand-white hover:bg-gradient-to-r from-black/50 to-transparent">
-      <ChevronLeft class="h-6 w-6 transition duration-100 group-hover:scale-125"></ChevronLeft>
-    </button>
-    <button @click="nextSlide" v-if="currentIndex < totalPages - 1"
-      class="absolute flex justify-center items-center z-20 -right-6 top-0 w-16 h-full transition duration-100 group text-brand-white hover:bg-gradient-to-l from-black/50 to-transparent">
-      <ChevronRight class="h-6 w-6 transition duration-100 group-hover:scale-125"></ChevronRight>
-    </button>
   </div>
 </template>
+
+<style scoped>
+.fader {
+  mask-image: linear-gradient(to right, transparent 0%, white 2%, white 98%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, white 2%, white 98%, transparent 100%);
+}
+
+.faderDown {
+  mask-image: linear-gradient(to bottom, transparent 0%, white 1%, white 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, white 2%, white 98%, transparent 100%);
+}
+</style>

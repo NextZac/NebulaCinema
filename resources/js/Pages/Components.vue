@@ -13,8 +13,10 @@ import Slider from "@/Components/Slider.vue";
 import Modal from "@/Components/Modal.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import SelectOption from "@/Components/SelectOption.vue";
+import MovieSchedule from "@/Components/MovieSchedule.vue";
+import Alert from "@/Components/Alert.vue";
 
-import { Search } from "lucide-vue-next";
+import { Search, Check, Info, OctagonAlert } from "lucide-vue-next";
 import { Head, usePage } from "@inertiajs/vue3";
 
 const modalOpen = ref(false);
@@ -543,7 +545,7 @@ const movies = [
     <Head title="Components" />
 
     <GuestLayout>
-        <div class="w-full flex flex-col gap-12">
+        <div class="py-2 w-full flex flex-col gap-12">
 
             <!-- Breadcrumb -->
             <div class="flex gap-8 flex-col">
@@ -631,6 +633,25 @@ const movies = [
                 </MovieCard>
             </div>
 
+            <!-- Movie Schedule -->
+            <div class="flex gap-8 flex-col">
+                <h2 class="text-brand-white">Movie Schedule</h2>
+                <MovieSchedule image="https://via.placeholder.com/300" title="Title" titleEng="Title English" href="#"
+                    startingTime="10:00" cinema="Nebula Ülemiste" cinemaRoom="Room 1" freeSeats="5"
+                    subtitles="Eesti, Vene" language="Eesti">
+                    <template #imageBadges>
+                        <Badge type="solid">3D</Badge>
+                        <Badge>12+</Badge>
+                    </template>
+
+                    <template #badges>
+                        <Badge>Komöödia</Badge>
+                        <Badge>Seiklus</Badge>
+                        <Badge>Animatsioon</Badge>
+                    </template>
+                </MovieSchedule>
+            </div>
+
             <!-- Top Movie -->
             <div class="flex gap-8 flex-col">
                 <h2 class="text-brand-white">Top Movie</h2>
@@ -713,6 +734,74 @@ const movies = [
                     <Dropdown v-model:isOpen="dropdowns.test1" :options="dropdownOptions.test1" />
                 </Button>
             </div>
+
+            <!-- Alert -->
+            <div class="flex gap-8 flex-col">
+                <h2 class="text-brand-white">Alert</h2>
+                <Alert>
+                    <template #title>
+                        Warning
+                    </template>
+                    <template #description>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+                        iusto deserunt at est, et nostrum modi quia ullam incidunt illum similique rerum recusandae
+                        repellat ducimus sint. Impedit quae soluta iure.
+                    </template>
+                </Alert>
+                <Alert type="error">
+                    <template #icon>
+                        <OctagonAlert class="size-5 text-brand-error" />
+                    </template>
+                    <template #title>
+                        Error
+                    </template>
+                    <template #description>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+                        iusto deserunt at est, et nostrum modi quia ullam incidunt illum similique rerum recusandae
+                        repellat ducimus sint. Impedit quae soluta iure.
+                    </template>
+                </Alert>
+                <Alert type="warning">
+                    <template #icon>
+                        <OctagonAlert class="size-5 text-brand-warning" />
+                    </template>
+                    <template #title>
+                        Warning
+                    </template>
+                    <template #description>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+                        iusto deserunt at est, et nostrum modi quia ullam incidunt illum similique rerum recusandae
+                        repellat ducimus sint. Impedit quae soluta iure.
+                    </template>
+                </Alert>
+                <Alert type="success">
+                    <template #icon>
+                        <Check class="size-5 text-brand-success" />
+                    </template>
+                    <template #title>
+                        Success
+                    </template>
+                    <template #description>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+                        iusto deserunt at est, et nostrum modi quia ullam incidunt illum similique rerum recusandae
+                        repellat ducimus sint. Impedit quae soluta iure.
+                    </template>
+                </Alert>
+                <Alert type="info">
+                    <template #icon>
+                        <Info class="size-5 text-brand-info" />
+                    </template>
+                    <template #title>
+                        Info
+                    </template>
+                    <template #description>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+                        iusto deserunt at est, et nostrum modi quia ullam incidunt illum similique rerum recusandae
+                        repellat ducimus sint. Impedit quae soluta iure.
+                    </template>
+                </Alert>
+            </div>
+
         </div>
     </GuestLayout>
 </template>
