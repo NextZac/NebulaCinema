@@ -109,15 +109,16 @@ const navLinks = [
 
         <footer class="flex mt-6 bg-brand-975 border-t border-brand-900 text-white px-[25px] py-[25px] text-center">
             <div class="flex w-full items-center gap-6">
-                <p class="text-brand-white/50 text-detail font-light">© 2024 Nebula Cinemas.</p>
-                <a :href="route('Home')"
+                <p class="text-brand-white/50 text-detail font-light">© {{ new Date().getFullYear() }} Nebula Cinemas.
+                </p>
+                <a :href="route('Terms')"
                     class="font-light text-brand-white/50 hover:text-brand-400 underline underline-offset-2">Terms</a>
-                <a :href="route('Home')"
+                <a :href="route('Privacy')"
                     class="font-light text-brand-white/50 hover:text-brand-400 underline underline-offset-2">Privacy</a>
             </div>
             <div class="flex w-full justify-end items-center gap-6">
-                <SelectOption :options="dropdownOptions.language" v-model="selectedLanguage"
-                    align="top" class="w-min rounded-lg"/>
+                <SelectOption :options="dropdownOptions.language" v-model="selectedLanguage" align="top"
+                    class="w-min rounded-lg" />
                 <div class="flex gap-2">
                     <a class="group" :href="route('Home')">
                         <svg class="w-6 h-6 text-brand-white/50 group-hover:text-brand-600"

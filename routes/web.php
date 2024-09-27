@@ -43,6 +43,14 @@ Route::get("/giftcards", function () {
     return Inertia::render("Giftcards");
 })->name("Giftcards");
 
+Route::get("/terms", function () {
+    return Inertia::render("Terms");
+})->name("Terms");
+
+Route::get("/privacy", function () {
+    return Inertia::render("Privacy");
+})->name("Privacy");
+
 Route::get("/dashboard", function () {
     return Inertia::render("Dashboard");
 })
