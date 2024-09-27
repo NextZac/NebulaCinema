@@ -1,5 +1,9 @@
 {
   "link": {
     "home": "Kodu"
+  },
+  "topMovie": {
+    "buy": "Osta Pilet",
+    "learn_more": "Uuri veel"
   }
 }
