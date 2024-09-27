@@ -79,7 +79,8 @@ const topMovies = [
     <Head title="Kinokava" />
 
     <GuestLayout>
-        <div class="py-2 px-[20rem] gap-[60px] w-full flex flex-col">
+        
+        <div class="gap-[60px] w-full flex flex-col">
             <Alert type="warning" class="justify-center items-center">
                 <template #description>
                     Kinokava koostatakse ette üheks nädalaks, sama nädala reedest järgmise nädala neljapäevani. Uue

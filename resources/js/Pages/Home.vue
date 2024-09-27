@@ -250,7 +250,7 @@ const upcomingMovies = [
   <Head title="Kodu" />
 
   <GuestLayout>
-    <div class="py-2 px-[20rem] flex flex-col gap-[60px]">
+    <div class="flex flex-col gap-[60px]">
 
       <!-- Top Movie -->
       <TopMovie

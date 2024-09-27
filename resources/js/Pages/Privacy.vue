@@ -85,34 +85,36 @@ const scrollToSection = (index) => {
     <Head title="Terms of Service" />
 
     <GuestLayout>
-        <main
-            class="flex flex-col p-8 gap-8 justify-center w-full max-w-4xl mx-auto bg-brand-975 rounded-lg text-brand-white">
-            <h1 class="text-3xl font-bold">Privacy Policy</h1>
+        <div class="flex flex-col gap-[60px]">
+            <main
+                class="flex flex-col p-8 gap-8 justify-center w-full max-w-4xl mx-auto bg-brand-975 rounded-lg text-brand-white">
+                <h1 class="text-3xl font-bold">Privacy Policy</h1>
 
-            <nav class="bg-brand-950 p-4 rounded-lg">
-                <h2 class="text-xl font-semibold mb-2">Table of Contents</h2>
-                <ul class="flex flex-wrap gap-4">
-                    <li v-for="(section, index) in terms" :key="index">
-                        <button @click="scrollToSection(index)"
-                            class="text-brand-400 hover:text-brand-500 transition-colors rounded px-2 py-1">
-                            {{ section.title }}
-                        </button>
-                    </li>
-                </ul>
-            </nav>
+                <nav class="bg-brand-950 p-4 rounded-lg">
+                    <h2 class="text-xl font-semibold mb-2">Table of Contents</h2>
+                    <ul class="flex flex-wrap gap-4">
+                        <li v-for="(section, index) in terms" :key="index">
+                            <button @click="scrollToSection(index)"
+                                class="text-brand-400 hover:text-brand-500 transition-colors rounded px-2 py-1">
+                                {{ section.title }}
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
 
-            <article class="space-y-12">
-                <section v-for="(section, index) in terms" :key="index" :ref="el => { if (el) sectionRefs[index] = el }"
-                    class="scroll-mt-8">
-                    <h2 class="text-2xl font-semibold mb-4">{{ section.title }}</h2>
-                    <p class="text-body text-pretty">{{ section.content }}</p>
-                </section>
-            </article>
+                <article class="space-y-12">
+                    <section v-for="(section, index) in terms" :key="index"
+                        :ref="el => { if (el) sectionRefs[index] = el }" class="scroll-mt-8">
+                        <h2 class="text-2xl font-semibold mb-4">{{ section.title }}</h2>
+                        <p class="text-body text-pretty">{{ section.content }}</p>
+                    </section>
+                </article>
 
-            <footer class="mt-8 text-sm text-brand-400 border-t border-brand-800 pt-4">
-                <p>Last updated: {{ new Date().toLocaleDateString() }}</p>
-                <p class="mt-2">© {{ new Date().getFullYear() }} Nebula Cinemas.</p>
-            </footer>
-        </main>
+                <footer class="mt-8 text-sm text-brand-400 border-t border-brand-800 pt-4">
+                    <p>Last updated: {{ new Date().toLocaleDateString() }}</p>
+                    <p class="mt-2">© {{ new Date().getFullYear() }} Nebula Cinemas.</p>
+                </footer>
+            </main>
+        </div>
     </GuestLayout>
 </template>

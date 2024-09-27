@@ -545,7 +545,7 @@ const movies = [
     <Head title="Components" />
 
     <GuestLayout>
-        <div class="py-2 w-full flex flex-col gap-12">
+        <div class="w-full flex flex-col gap-12">
 
             <!-- Breadcrumb -->
             <div class="flex gap-8 flex-col">

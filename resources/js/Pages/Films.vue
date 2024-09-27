@@ -9,6 +9,8 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
     <Head title="Filmid" />
 
     <GuestLayout>
+        <div class="flex flex-col gap-[60px]">
 
+        </div>
     </GuestLayout>
 </template>

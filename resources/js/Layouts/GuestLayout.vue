@@ -63,12 +63,17 @@ const navLinks = [
 
 <template>
     <div class="min-h-screen bg-brand-950">
+
+        <!-- Header -->
         <header
             class="flex sticky top-0 w-full items-center gap-[40px] px-[25px] py-[15px] bg-brand-975 border-b border-brand-900 z-50">
+
+            <!-- Logo (on Left side)-->
             <a :href="route('Home')" class="h-full">
                 <ApplicationLogo class="w-40 h-20" />
             </a>
 
+            <!-- Navigation Links (aka Left side) -->
             <template v-for="link in navLinks" :key="link.name">
                 <a v-if="link.route" :href="route(link.route)" :class="['text-subtitle hover:text-brand-400 select-none',
                     route().current(link.route) ? 'underline underline-offset-4 text-brand-400' : 'text-white']">
@@ -87,6 +92,7 @@ const navLinks = [
                 </div>
             </template>
 
+            <!-- Right side-->
             <div class="flex w-full justify-end items-center gap-[40px]">
                 <Input type="text" placeholder="Otsing">
                 <Search class="w-5 h-5 text-brand-white" />
@@ -101,13 +107,17 @@ const navLinks = [
             </div>
         </header>
 
+        <!-- Page Content -->
         <main class="flex sm:justify-center items-center pt-6 sm:pt-0 overflow-x-hidden">
-            <div class="w-full min-h-screen mx-4 mt-6 px-[25px] py-[15px] bg-brand-dark-darker sm:rounded-lg">
+            <div class="w-full min-h-screen mt-6 px-[350px] py-[30px]">
                 <slot />
             </div>
         </main>
 
+        <!-- Footer -->
         <footer class="flex mt-6 bg-brand-975 border-t border-brand-900 text-white px-[25px] py-[25px] text-center">
+
+            <!--Left side-->
             <div class="flex w-full items-center gap-6">
                 <p class="text-brand-white/50 text-detail font-light">© {{ new Date().getFullYear() }} Nebula Cinemas.
                 </p>
@@ -116,6 +126,8 @@ const navLinks = [
                 <a :href="route('Privacy')"
                     class="font-light text-brand-white/50 hover:text-brand-400 underline underline-offset-2">Privacy</a>
             </div>
+
+            <!--Right side-->
             <div class="flex w-full justify-end items-center gap-6">
                 <SelectOption :options="dropdownOptions.language" v-model="selectedLanguage" align="top"
                     class="w-min rounded-lg" />
