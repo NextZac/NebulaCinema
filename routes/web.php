@@ -31,6 +31,10 @@ Route::get("/components", function () {
     return Inertia::render("Components");
 })->name("Components");
 
+Route::get("/schedule", function () {
+    return Inertia::render("Schedule");
+})->name("Schedule");
+
 Route::get("/films", function () {
     return Inertia::render("Films");
 })->name("Films");

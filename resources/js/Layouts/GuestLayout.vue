@@ -52,11 +52,12 @@ if (htmlLang === 'et') {
 }
 
 const navLinks = [
-    { name: 'Kinokava', route: 'Components' },
+    { name: 'Kinokava', route: 'Schedule' },
     { name: 'Kinod', dropdown: 'kinod' },
     { name: 'Filmid', route: 'Films' },
     { name: 'Grupikülastus', dropdown: 'grupid' },
-    { name: 'Kinkekaardid', route: 'Giftcards' }
+    { name: 'Kinkekaardid', route: 'Giftcards' },
+    { name: 'Components', route: 'Components' },
 ];
 </script>
 
