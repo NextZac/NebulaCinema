@@ -72,6 +72,11 @@ const topMovies = [
     },
 ];
 
+const getTimeIndex = (time) => {
+    const [hours, minutes] = time.split(':').map(Number);
+    return Math.floor((hours * 60 + minutes) / 10);
+};
+
 </script>
 
 <template>
@@ -79,7 +84,7 @@ const topMovies = [
     <Head title="Kinokava" />
 
     <GuestLayout>
-        
+
         <div class="gap-[60px] w-full flex flex-col">
             <Alert type="warning" class="justify-center items-center">
                 <template #description>
@@ -89,9 +94,9 @@ const topMovies = [
             </Alert>
 
             <div class="flex flex-col gap-[30px]">
-                <MovieSchedule v-for="i in topMovies" :image="i.image" :title="i.title" :titleEng="i.titleEng" href="#"
-                    :startingTime="i.startingTime" :cinema="i.cinema" :cinemaRoom="i.cinemaRoom"
-                    :freeSeats="i.freeSeats" subtitles="Eesti, Vene" language="Eesti">
+                <MovieSchedule v-for="i in topMovies" :image=" i.image" :title="i.title"
+                    :titleEng="i.titleEng" href="#" :startingTime="i.startingTime" :cinema="i.cinema"
+                    :cinemaRoom="i.cinemaRoom" :freeSeats="i.freeSeats" subtitles="Eesti, Vene" language="Eesti" :style="`order: ${getTimeIndex(i.startingTime)};`">
                     <template #imageBadges>
                         <Badge type="solid"> {{ i.format }}</Badge>
                         <Badge> {{ i.rating }} </Badge>
