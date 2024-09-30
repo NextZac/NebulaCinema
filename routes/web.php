@@ -13,6 +13,10 @@ Route::get("/", function () {
     ]);
 })->name("Home");
 
+Route::get("/login", function () {
+    return Inertia::render("Login");
+})->name("Login");
+
 Route::get("/lang/{lang}", function ($language) {
     Session::put("locale", $language);
     return redirect()->back();
