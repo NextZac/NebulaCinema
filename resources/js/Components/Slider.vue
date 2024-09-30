@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
-import { ChevronLeft, ChevronRight } from 'lucide-vue-next';
+import { ArrowLeft, ArrowRight } from 'lucide-vue-next';
 
 const props = defineProps({
   length: {
@@ -72,11 +72,11 @@ const translateX = computed(() => {
       </div>
       <button @click="prevSlide" v-if="currentIndex > 0"
         class="absolute flex justify-center items-center z-20 -left-2 top-0 w-20 h-[100%] transition duration-100 group text-brand-white invisible group-hover/slider:visible bg-gradient-to-r from-black to-transparent">
-        <ChevronLeft class="size-10 transition duration-100 group-hover:scale-125 text-brand-white"></ChevronLeft>
+        <ArrowLeft class="size-10 transition duration-100 group-hover:scale-125 text-brand-white" />
       </button>
       <button @click="nextSlide" v-if="currentIndex < totalPages - 1"
         class="absolute flex justify-center items-center z-20 -right-2 top-0 w-20 h-[100%] transition duration-100 group text-brand-white invisible group-hover/slider:visible bg-gradient-to-l from-black to-transparent">
-        <ChevronRight class="size-10 transition duration-100 group-hover:scale-125 text-brand-white"></ChevronRight>
+        <ArrowRight class="size-10 transition duration-100 group-hover:scale-125 text-brand-white"/>
       </button>
     </div>
   </div>

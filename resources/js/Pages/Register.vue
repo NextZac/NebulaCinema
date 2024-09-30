@@ -16,8 +16,8 @@ import { ArrowRight } from 'lucide-vue-next';
             <main
                 class="flex flex-col p-12 gap-8 justify-center w-full max-w-4xl mx-auto bg-brand-975 rounded-lg text-brand-white">
                 <div class="flex flex-col gap-2 justify-center">
-                    <h1 class="text-3xl font-bold text-brand-white">Log in</h1>
-                    <p class="text-body text-brand-white/50">Enter your data to log in</p>
+                    <h1 class="text-3xl font-bold text-brand-white">Sign up</h1>
+                    <p class="text-body text-brand-white/50">Enter your data to sign up</p>
                 </div>
 
                 <!--Form and buttons -->
@@ -28,6 +28,8 @@ import { ArrowRight } from 'lucide-vue-next';
                         <div class="flex flex-col gap-4">
                             <Input type="email" name="email" label="Email" placeholder="Email" />
                             <Input type="password" name="password" label="Password" placeholder="Password" />
+                            <Input type="password" name="password_confirmation" label="Repeat password"
+                                placeholder="Repeat password" />
                         </div>
 
 
@@ -75,9 +77,7 @@ import { ArrowRight } from 'lucide-vue-next';
                         </Button>
                     </div>
 
-                    <a :href="route('Register')"
-                        class="text-brand-400 underline mt-4 hover:text-brand-600 w-min text-nowrap">Don't have an
-                        account?</a>
+                    <a :href="route('Login')" class="text-brand-400 underline mt-4 hover:text-brand-600 w-min text-nowrap">Already have an account?</a>
 
                 </div>
             </main>

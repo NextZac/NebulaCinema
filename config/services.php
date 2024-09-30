@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'harid' => [
+        'client_id' => env('HARID_CLIENT_ID'),
+        'client_secret' => env('HARID_CLIENT_SECRET'),
+        'redirect' => env('HARID_REDIRECT_URI'),
+        'use_test_idp' => false,
+    ],
+
 ];

@@ -2,7 +2,7 @@
 
 import { ref, computed } from 'vue';
 
-import { SquarePlay, ChevronRight } from 'lucide-vue-next';
+import { SquarePlay, ArrowRight } from 'lucide-vue-next';
 
 import Button from './Button.vue';
 
@@ -75,13 +75,13 @@ const props = defineProps({
                     <div class="flex gap-[15px] h-full z-10">
                         <Button color="brand-900" class="gap-2 font-semibold group/btn">
                             Vaata kava
-                            <ChevronRight
-                                class="w-4 h-4 text-brand-white group-hover/btn:translate-x-1 transition duration-100" />
+                            <ArrowRight
+                                class="w-4 h-4 text-brand-white group-hover/btn:translate-x-1 ease-out transition duration-300" />
                         </Button>
                         <Button class="gap-2 font-semibold group/btn">
                             Osta pilet
-                            <ChevronRight
-                                class="w-4 h-4 text-brand-white group-hover/btn:translate-x-1 transition duration-100" />
+                            <ArrowRight
+                                class="w-4 h-4 text-brand-white group-hover/btn:translate-x-1 ease-out transition duration-300" />
                         </Button>
                     </div>
                 </div>

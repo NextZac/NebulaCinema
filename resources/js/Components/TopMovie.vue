@@ -1,7 +1,7 @@
 <script setup>
 import Button from './Button.vue';
 
-import { ChevronRight } from 'lucide-vue-next';
+import { ArrowRight } from 'lucide-vue-next';
 
 const props = defineProps({
     image: String,
@@ -37,13 +37,13 @@ const props = defineProps({
             <div class="mt-4 flex gap-[25px] z-10">
                 <Button @click="router.visit(href)" class="gap-2 font-semibold group/btn">
                     {{__('topMovie.buy')}}
-                    <ChevronRight
-                        class="w-4 h-4 text-brand-white group-hover/btn:translate-x-1 transition duration-100" />
+                    <ArrowRight
+                        class="w-4 h-4 text-brand-white group-hover/btn:translate-x-1 ease-out transition duration-300" />
                 </Button>
                 <Button @click="router.visit(href)" color="brand-900" class="gap-2 font-semibold group/btn">
                     Uuri veel
-                    <ChevronRight
-                        class="w-4 h-4 text-brand-white group-hover/btn:translate-x-1 transition duration-100" />
+                    <ArrowRight
+                        class="w-4 h-4 text-brand-white group-hover/btn:translate-x-1 ease-out transition duration-300" />
                 </Button>
             </div>
         </div>

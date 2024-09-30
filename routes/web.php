@@ -17,6 +17,10 @@ Route::get("/login", function () {
     return Inertia::render("Login");
 })->name("Login");
 
+Route::get("/register", function () {
+    return Inertia::render("Register");
+})->name("Register");
+
 Route::get("/lang/{lang}", function ($language) {
     Session::put("locale", $language);
     return redirect()->back();
