@@ -33,7 +33,7 @@ import { ArrowRight } from 'lucide-vue-next';
                         </div>
 
 
-                        <Button type="submit" class="font-medium flex gap-3 justify-center w-[100%] group/btn">
+                        <Button type="submit" class="font-medium flex gap-3 justify-center !w-[100%] group/btn">
                             Log in
                             <ArrowRight
                                 class="w-4 h-4 text-brand-white transition duration-300 ease-out group-hover/btn:translate-x-2">
@@ -49,11 +49,11 @@ import { ArrowRight } from 'lucide-vue-next';
 
                     <!-- Buttons -->
                     <div class="flex gap-16 justify-between">
-                        <Button class="font-medium flex gap-3 justify-center w-[50%]" color="brand-900">
+                        <Button class="font-medium flex gap-3 justify-center !w-full" color="brand-900">
 
                             HarID
                         </Button>
-                        <Button class="font-medium flex gap-3 justify-center w-[50%]" color="brand-900">
+                        <Button class="font-medium flex gap-3 justify-center !w-full" color="brand-900">
                             <svg class="size-4" viewBox="-3 0 262 262" xmlns="http://www.w3.org/2000/svg"
                                 preserveAspectRatio="xMidYMid" fill="#000000">
                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
