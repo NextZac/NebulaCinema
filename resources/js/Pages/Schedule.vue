@@ -88,8 +88,7 @@ const getTimeIndex = (time) => {
         <div class="gap-[60px] w-full flex flex-col">
             <Alert type="warning" class="justify-center items-center">
                 <template #description>
-                    Kinokava koostatakse ette üheks nädalaks, sama nädala reedest järgmise nädala neljapäevani. Uue
-                    nädala kinokava avaldatakse hiljemalt <span class="font-medium">teisipäeva õhtuks.</span>
+                    {{ __('schedule.info') }} <span class="font-medium">{{ __('schedule.info_bold') }}</span>
                 </template>
             </Alert>
 

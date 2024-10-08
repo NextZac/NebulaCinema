@@ -41,7 +41,7 @@ const props = defineProps({
                         class="w-4 h-4 text-brand-white group-hover/btn:translate-x-1 ease-out transition duration-300" />
                 </Button>
                 <Button @click="router.visit(href)" color="brand-900" class="gap-2 font-semibold group/btn">
-                    Uuri veel
+                    {{__('topMovie.learn_more')}}
                     <ArrowRight
                         class="w-4 h-4 text-brand-white group-hover/btn:translate-x-1 ease-out transition duration-300" />
                 </Button>

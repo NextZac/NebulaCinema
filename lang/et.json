@@ -1,9 +1,65 @@
 {
   "link": {
-    "home": "Kodu"
+    "home": "Home"
+  },
+  "header": {
+    "kinokava": "Kinokava",
+    "kinod": "Kinod",
+    "filmid": "Filmid",
+    "grupid": {
+      "name": "Grupikülastus",
+      "privaatseanss": "Privaatseanss kinos",
+      "birthday": "Sünnipäev kinos",
+      "school": "Lasteaed/kool kinno"
+    },
+    "kinkekaardid": "Kinkekaardid",
+    "otsing": "Otsing",
+    "avatar": {
+      "profiil": "Profiil",
+      "ajalugu": "Ostu ajalugu",
+      "logout": "Logi välja"
+    }
+  },
+  "home": {
+    "top": "Top Filmid",
+    "current": "Hetkel Kinos",
+    "upcoming": "Varsti Kinos"
+  },
+  "footer": {
+    "privacy": "Privaatsus",
+    "terms": "Kodukord"
   },
   "topMovie": {
     "buy": "Osta Pilet",
     "learn_more": "Uuri veel"
+  },
+  "movieSchedule": {
+    "trailer": "Vaata treilerit",
+    "schedule": "Vaata kava",
+    "buy": "Osta pilet",
+    "free_seats": "Vabu kohti",
+    "language": "Keel",
+    "subtitles": "Subtiitrid"
+  },
+  "schedule": {
+    "info": "Kinokava koostatakse ette üheks nädalaks, sama nädala reedest järgmise nädala neljapäevani. Uue nädala kinokava avaldatakse hiljemalt ",
+    "info_bold": "teisipäeva õhtuks."
+  },
+  "login": {
+    "title": {
+      "login": "Logi sisse",
+      "register": "Registreeri"
+    },
+    "desc": {
+      "login": "Sisesta oma andmed, et sisse logida.",
+      "register": "Sisesta oma andmed, et registreerida."
+    },
+    "account": {
+      "login": "Pole kontot?",
+      "register": "Omad kontot?"
+    },
+    "password": "Parool",
+    "repeat": "Korda parool",
+    "divider": "VÕI"
   }
 }

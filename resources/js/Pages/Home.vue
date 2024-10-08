@@ -271,7 +271,7 @@ const upcomingMovies = [
 
       <!-- Top Movies -->
       <div class="flex flex-col gap-[15px]">
-        <p class="text-brand-white text-main1">Top Filmid</p>
+        <p class="text-brand-white text-main1">{{ __('home.top') }}</p>
         <Slider :length="topMovies.length">
           <template #cards>
             <MovieCard v-for="i in topMovies" :image="i.image" :title="i.title" :titleEng="i.titleEng" href="#">
@@ -289,7 +289,7 @@ const upcomingMovies = [
 
       <!-- Current Movies -->
       <div class="flex flex-col gap-[15px]">
-        <p class="text-brand-white text-main1">Hetkel Kinos</p>
+        <p class="text-brand-white text-main1">{{ __('home.current') }}</p>
         <Slider :length="topMovies.length">
           <template #cards>
             <MovieCard v-for="i in topMovies" :image="i.image" :title="i.title" :titleEng="i.titleEng"
@@ -308,7 +308,7 @@ const upcomingMovies = [
 
       <!-- Upcoming Movies -->
       <div class="flex flex-col gap-[15px]">
-        <p class="text-brand-white text-main1">Varsti Kinos</p>
+        <p class="text-brand-white text-main1">{{ __('home.upcoming') }}</p>
         <Slider :length="upcomingMovies.length">
           <template #cards>
             <MovieCard v-for="i in upcomingMovies" :image="i.image" :title="i.title" :titleEng="i.titleEng"

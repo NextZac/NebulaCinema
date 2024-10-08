@@ -16,8 +16,8 @@ import { ArrowRight } from 'lucide-vue-next';
             <main
                 class="flex flex-col p-12 gap-8 justify-center w-full max-w-4xl mx-auto bg-brand-975 rounded-lg text-brand-white">
                 <div class="flex flex-col gap-2 justify-center">
-                    <h1 class="text-3xl font-bold text-brand-white">Log in</h1>
-                    <p class="text-body text-brand-white/50">Enter your data to log in</p>
+                    <h1 class="text-3xl font-bold text-brand-white">{{__('login.title.login')}}</h1>
+                    <p class="text-body text-brand-white/50">{{__('login.desc.login')}}</p>
                 </div>
 
                 <!--Form and buttons -->
@@ -27,12 +27,12 @@ import { ArrowRight } from 'lucide-vue-next';
                     <form class="flex flex-col gap-12 w-full">
                         <div class="flex flex-col gap-4">
                             <Input type="email" name="email" label="Email" placeholder="Email" />
-                            <Input type="password" name="password" label="Password" placeholder="Password" />
+                            <Input type="password" name="password" label="Password" :placeholder="__('login.password')" />
                         </div>
 
 
                         <Button type="submit" class="font-medium flex gap-3 justify-center !w-[100%] group/btn">
-                            Log in
+                            {{__('login.title.login')}}
                             <ArrowRight
                                 class="w-4 h-4 text-brand-white transition duration-300 ease-out group-hover/btn:translate-x-2">
                             </ArrowRight>
@@ -43,7 +43,7 @@ import { ArrowRight } from 'lucide-vue-next';
                     <!-- Divider -->
                     <Divider
                         class="w-full before:!border-brand-white/50 after:!border-brand-white/50 !text-brand-white/50">
-                        OR</Divider>
+                        {{__('login.divider')}}</Divider>
 
                     <!-- Buttons -->
                     <div class="flex gap-16 justify-between">
@@ -75,8 +75,7 @@ import { ArrowRight } from 'lucide-vue-next';
                     </div>
 
                     <a :href="route('Register')"
-                        class="text-brand-400 underline mt-4 hover:text-brand-600 w-min text-nowrap">Don't have an
-                        account?</a>
+                        class="text-brand-400 underline mt-4 hover:text-brand-600 w-min text-nowrap">{{ __('login.account.login') }}</a>
 
                 </div>
             </main>

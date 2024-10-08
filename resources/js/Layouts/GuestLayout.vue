@@ -1,11 +1,14 @@
 <script setup>
-import { ref } from "vue";
+import { ref, getCurrentInstance } from "vue";
 import { ChevronDown, Search, Github } from "lucide-vue-next";
 
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Input from "@/Components/Input.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import SelectOption from "@/Components/SelectOption.vue";
+
+const instance = getCurrentInstance();
+const __ = instance.appContext.config.globalProperties.__;
 
 const dropdowns = ref({
     kinod: false,
@@ -26,14 +29,14 @@ const dropdownOptions = ref({
         { title: "Tasku Keskus", href: "#" },
     ],
     grupid: [
-        { title: "Privaatseanss kinos", href: "#" },
-        { title: "Sünnipäev kinos", href: "#" },
-        { title: "Lasteaed/kool kinno", href: "#" },
+        { title: __('header.grupid.privaatseanss'), href: "#" },
+        { title: __('header.grupid.birthday'), href: "#" },
+        { title: __('header.grupid.school'), href: "#" },
     ],
     avatar: [
-        { title: "Profiil", href: "#" },
-        { title: "Ostu ajalugu", href: "#" },
-        { title: "Logi välja", href: "#", color: "error" },
+        { title: __('header.avatar.profiil'), href: "#" },
+        { title: __('header.avatar.ajalugu'), href: "#" },
+        { title: __('header.avatar.logout'), href: "#", color: "error" },
     ],
     language: [
         { title: "Estonian", href: "/lang/et" },
@@ -52,11 +55,11 @@ if (htmlLang === 'et') {
 }
 
 const navLinks = [
-    { name: 'Kinokava', route: 'Schedule' },
-    { name: 'Kinod', dropdown: 'kinod' },
-    { name: 'Filmid', route: 'Films' },
-    { name: 'Grupikülastus', dropdown: 'grupid' },
-    { name: 'Kinkekaardid', route: 'Giftcards' },
+    { name: __('header.kinokava'), route: 'Schedule' },
+    { name: __('header.kinod'), dropdown: 'kinod' },
+    { name: __('header.filmid'), route: 'Films' },
+    { name: __('header.grupid.name'), dropdown: 'grupid' },
+    { name: __('header.kinkekaardid'), route: 'Giftcards' },
     { name: 'Components', route: 'Components' },
 ];
 </script>
@@ -75,14 +78,14 @@ const navLinks = [
 
             <!-- Navigation Links (aka Left side) -->
             <template v-for="link in navLinks" :key="link.name">
-                <a v-if="link.route" :href="route(link.route)" :class="['text-subtitle hover:text-brand-400 select-none',
+                <a v-if="link.route" :href="route(link.route)" :class="['text-subtitle hover:text-brand-400 select-none text-nowrap',
                     route().current(link.route) ? 'underline underline-offset-4 text-brand-400' : 'text-white']">
                     {{ link.name }}
                 </a>
                 <div v-else-if="link.dropdown" class="h-full">
                     <a @click="toggleDropdown(link.dropdown)"
                         :class="[dropdowns[link.dropdown] ? 'text-brand-400' : 'text-white',
-                            'group text-subtitle inline-flex items-center hover:text-brand-400 cursor-pointer select-none']">
+                            'group text-subtitle inline-flex items-center hover:text-brand-400 cursor-pointer select-none text-nowrap']">
                         {{ link.name }}
                         <ChevronDown :class="['w-4 h-4 ml-2 transition-transform duration-100',
                             dropdowns[link.dropdown] ? 'rotate-180' : '']" />
@@ -94,7 +97,7 @@ const navLinks = [
 
             <!-- Right side-->
             <div class="flex w-full justify-end items-center gap-[40px]">
-                <Input type="text" placeholder="Otsing">
+                <Input type="text" :placeholder="__('header.otsing')">
                 <Search class="w-5 h-5 text-brand-white" />
                 </Input>
                 <div class="flex-shrink-0">
@@ -122,9 +125,9 @@ const navLinks = [
                 <p class="text-brand-white/50 text-detail font-light">© {{ new Date().getFullYear() }} Nebula Cinemas.
                 </p>
                 <a :href="route('Terms')"
-                    class="font-light text-brand-white/50 hover:text-brand-400 underline underline-offset-2">Terms</a>
+                    class="font-light text-brand-white/50 hover:text-brand-400 underline underline-offset-2">{{ __('footer.terms') }}</a>
                 <a :href="route('Privacy')"
-                    class="font-light text-brand-white/50 hover:text-brand-400 underline underline-offset-2">Privacy</a>
+                    class="font-light text-brand-white/50 hover:text-brand-400 underline underline-offset-2">{{ __('footer.privacy') }}</a>
             </div>
 
             <!--Right side-->

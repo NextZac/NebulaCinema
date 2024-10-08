@@ -46,7 +46,7 @@ const props = defineProps({
                 </div>
                 <Button class="flex font-semibold justify-center gap-2 !w-full">
                     <SquarePlay class="w-4 h-4" />
-                    Vaata treilerit
+                    {{ __('movieSchedule.trailer') }}
                 </Button>
             </div>
 
@@ -74,12 +74,12 @@ const props = defineProps({
                     <!--Buttons-->
                     <div class="flex gap-[15px] h-full z-10">
                         <Button color="brand-900" class="gap-2 font-semibold group/btn">
-                            Vaata kava
+                            {{ __('movieSchedule.schedule') }}
                             <ArrowRight
                                 class="w-4 h-4 text-brand-white group-hover/btn:translate-x-1 ease-out transition duration-300" />
                         </Button>
                         <Button class="gap-2 font-semibold group/btn">
-                            Osta pilet
+                            {{ __('movieSchedule.buy') }}
                             <ArrowRight
                                 class="w-4 h-4 text-brand-white group-hover/btn:translate-x-1 ease-out transition duration-300" />
                         </Button>
@@ -89,15 +89,15 @@ const props = defineProps({
                 <!--Other info-->
                 <div class="flex flex-row w-full h-min items-center justify-between gap-[35px] pt-[15px]">
                     <span class="flex flex-col gap-1">
-                        <p class=" text-brand-white/50 text-subtitle">Vabu kohti</p>
+                        <p class=" text-brand-white/50 text-subtitle">{{ __('movieSchedule.free_seats') }}</p>
                         <p class=" text-brand-white text-title1" v-html="props.freeSeats"></p>
                     </span>
                     <span class="flex flex-col gap-1">
-                        <p class=" text-brand-white/50 text-subtitle">Keel</p>
+                        <p class=" text-brand-white/50 text-subtitle">{{ __('movieSchedule.language') }}</p>
                         <p class=" text-brand-white text-title1" v-html="props.language"></p>
                     </span>
                     <span class="flex flex-col gap-1">
-                        <p class=" text-brand-white/50 text-subtitle">Subtiitrid</p>
+                        <p class=" text-brand-white/50 text-subtitle">{{ __('movieSchedule.subtitles') }}</p>
                         <p class=" text-brand-white text-title1" v-html="props.subtitles"></p>
                     </span>
                 </div>
