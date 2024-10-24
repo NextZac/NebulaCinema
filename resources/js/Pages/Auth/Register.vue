@@ -16,36 +16,25 @@ import { ArrowRight } from 'lucide-vue-next';
             <main
                 class="flex flex-col p-12 gap-8 justify-center w-full max-w-4xl mx-auto bg-brand-975 rounded-lg text-brand-white">
                 <div class="flex flex-col gap-2 justify-center">
-                    <h1 class="text-3xl font-bold text-brand-white">{{ __('login.title.login') }}</h1>
-                    <p class="text-body text-brand-white/50">{{ __('login.desc.login') }}</p>
+                    <h1 class="text-3xl font-bold text-brand-white">{{__('login.title.register')}}</h1>
+                    <p class="text-body text-brand-white/50">{{__('login.desc.register')}}</p>
                 </div>
 
                 <!--Form and buttons -->
                 <div class="flex flex-col gap-4 w-full justify-center">
 
-                    <Alert type="error" class="my-8 mx-4" v-if="form.errors.password || form.errors.email">
-                        <template #icon>
-                            <OctagonAlert class="size-5 text-brand-error" />
-                        </template>
-                        <template #title> Error </template>
-                        <template #description>
-                            {{ form.errors.password }}<br />
-                            {{ form.errors.email }}
-                        </template>
-                    </Alert>
-
                     <!-- Form -->
-                    <form @submit.prevent="submitLogin" class="flex flex-col gap-12 w-full">
+                    <form class="flex flex-col gap-12 w-full">
                         <div class="flex flex-col gap-4">
-                            <Input type="text" name="email" label="Email" placeholder="__('login.email')"
-                                v-model="form.email" />
-                            <Input type="password" name="password" label="Password" :placeholder="__('login.password')"
-                                v-model="form.password" />
+                            <Input type="email" name="email" label="Email" placeholder="Email" />
+                            <Input type="password" name="password" label="Password" :placeholder="__('login.password')" />
+                            <Input type="password" name="password_confirmation" label="Repeat password"
+                                :placeholder="__('login.repeat')" />
                         </div>
 
 
                         <Button type="submit" class="font-medium flex gap-3 justify-center !w-[100%] group/btn">
-                            {{ __('login.title.login') }}
+                            {{__('login.title.register')}}
                             <ArrowRight
                                 class="w-4 h-4 text-brand-white transition duration-300 ease-out group-hover/btn:translate-x-2">
                             </ArrowRight>
@@ -56,11 +45,12 @@ import { ArrowRight } from 'lucide-vue-next';
                     <!-- Divider -->
                     <Divider
                         class="w-full before:!border-brand-white/50 after:!border-brand-white/50 !text-brand-white/50">
-                        {{ __('login.divider') }}</Divider>
+                        {{__('login.divider')}}</Divider>
 
                     <!-- Buttons -->
                     <div class="flex gap-16 justify-between">
                         <Button class="font-medium flex gap-3 justify-center !w-full" color="brand-900">
+
                             HarID
                         </Button>
                         <Button class="font-medium flex gap-3 justify-center !w-full" color="brand-900">
@@ -87,9 +77,7 @@ import { ArrowRight } from 'lucide-vue-next';
                         </Button>
                     </div>
 
-                    <a :href="route('auth')"
-                        class="text-brand-400 underline mt-4 hover:text-brand-600 w-min text-nowrap">{{
-                            __('login.account.login') }}</a>
+                    <a :href="route('Login')" class="text-brand-400 underline mt-4 hover:text-brand-600 w-min text-nowrap">{{__('login.account.register')}}</a>
 
                 </div>
             </main>

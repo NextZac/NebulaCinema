@@ -58,6 +58,7 @@
       "login": "Don't have an account?",
       "register": "Already have an account?"
     },
+    "email": "E-mail",
     "password": "Password",
     "repeat": "Repeat password",
     "divider": "OR"

@@ -62,6 +62,7 @@
       "login": "Pole kontot?",
       "register": "Omad kontot?"
     },
+    "email": "E-post",
     "password": "Parool",
     "repeat": "Korda parool",
     "divider": "VÕI"

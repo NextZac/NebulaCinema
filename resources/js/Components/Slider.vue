@@ -66,16 +66,16 @@ const translateX = computed(() => {
   <!-- Slider Container -->
   <div class="fader py-4">
     <div class="relative w-full group/slider" ref="sliderContainer">
-      <div class="flex w-full transition-transform duration-300 ease-in-out gap-[35px] mx-4"
+      <div class="flex w-full transition-transform duration-[400ms] ease-in-out gap-[35px] mx-4"
         :style="{ transform: translateX }">
         <slot name="cards" />
       </div>
       <button @click="prevSlide" v-if="currentIndex > 0"
-        class="absolute flex justify-center items-center z-20 -left-2 top-0 w-20 h-[100%] transition duration-100 group text-brand-white invisible group-hover/slider:visible bg-gradient-to-r from-black to-transparent">
+        class="absolute flex justify-center items-center z-20 -left-2 top-0 w-20 h-[100%] transition duration-100 group text-brand-white invisible group-hover/slider:visible bg-gradient-to-r from-brand-950 to-transparent">
         <ArrowLeft class="size-10 transition duration-100 group-hover:scale-125 text-brand-white" />
       </button>
       <button @click="nextSlide" v-if="currentIndex < totalPages - 1"
-        class="absolute flex justify-center items-center z-20 -right-2 top-0 w-20 h-[100%] transition duration-100 group text-brand-white invisible group-hover/slider:visible bg-gradient-to-l from-black to-transparent">
+        class="absolute flex justify-center items-center z-20 -right-2 top-0 w-20 h-[100%] transition duration-100 group text-brand-white invisible group-hover/slider:visible bg-gradient-to-l from-brand-950 to-transparent">
         <ArrowRight class="size-10 transition duration-100 group-hover:scale-125 text-brand-white"/>
       </button>
     </div>
