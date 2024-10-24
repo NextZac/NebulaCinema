@@ -2,15 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\LoginRequest;
 use Inertia\Inertia;
 use Inertia\Response;
 
-
 class AuthController extends Controller
 {
-    //
+    public function login()
+    {
+        return Inertia::render("Auth/Login");
+    }
+
+    public function store(LoginRequest $request): Response
+    {
+        $request->authenticate();
+
+        $request->session()->regenerate();
+
+        return response()->noContent();
+    }
 }

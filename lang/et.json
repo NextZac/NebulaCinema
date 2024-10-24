@@ -46,6 +46,10 @@
     "info_bold": "teisipäeva õhtuks."
   },
   "login": {
+    "input": {
+      "email": "E-post",
+      "password": "Parool"
+    },
     "title": {
       "login": "Logi sisse",
       "register": "Registreeri"

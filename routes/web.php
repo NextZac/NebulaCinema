@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -12,10 +12,6 @@ Route::get("/", function () {
         "phpVersion" => PHP_VERSION,
     ]);
 })->name("Home");
-
-Route::get("/login", function () {
-    return Inertia::render("Login");
-})->name("Login");
 
 Route::get("/register", function () {
     return Inertia::render("Register");
@@ -76,10 +72,8 @@ Route::middleware("auth")->group(function () {
     Route::delete("/profile", [ProfileController::class, "destroy"])->name(
         "profile.destroy"
     );
-    Route::get('/admin', [AdminController::class, 'index'])
-    ->name('admin');
+    Route::get("/admin", [AdminController::class, "index"])->name("admin");
 });
 
-
-
+require __DIR__ . "/admin.php";
 require __DIR__ . "/auth.php";
