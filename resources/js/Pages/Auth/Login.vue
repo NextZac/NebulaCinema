@@ -4,7 +4,7 @@ import Button from '@/Components/Button.vue';
 import Divider from '@/Components/Divider.vue';
 import Input from '@/Components/Input.vue';
 import Alert from "@/Components/Alert.vue";
-import { ArrowRight } from 'lucide-vue-next';
+import { ArrowRight, OctagonAlert } from 'lucide-vue-next';
 
 import { useForm } from "@inertiajs/vue3";
 
@@ -14,6 +14,8 @@ const form = useForm({
 });
 
 const submitLogin = () => {
+console.log("submitting")
+
     form.post("/login", {
         onError: () => {
             console.log("There were validation errors.");
@@ -27,9 +29,6 @@ const submitLogin = () => {
 </script>
 
 <template>
-
-    <Head title="Login" />
-
     <GuestLayout>
         <div class="flex flex-col gap-[60px]">
             <main
@@ -42,28 +41,30 @@ const submitLogin = () => {
                 <!--Form and buttons -->
                 <div class="flex flex-col gap-4 w-full justify-center">
 
-                    <Alert type="error" class="my-8 mx-4" v-if="form.errors.password || form.errors.email">
-                        <template #icon>
-                            <OctagonAlert class="size-5 text-brand-error" />
-                        </template>
-                        <template #title> Error </template>
-                        <template #description>
-                            {{ form.errors.password }}<br />
-                            {{ form.errors.email }}
-                        </template>
-                    </Alert>
-
                     <!-- Form -->
                     <form @submit.prevent="submitLogin" class="flex flex-col gap-12 w-full">
+                        <Alert type="error" v-if="form.errors.password || form.errors.email">
+                            <template #icon>
+                                <OctagonAlert class="size-5 text-brand-error" />
+                            </template>
+                            <template #title> Error </template>
+                            <template #description>
+                                <ul class="flex flex-col gap-1 list-disc">
+                                    <li v-if="form.errors.email"> {{ form.errors.email }} </li>
+                                    <li v-if="form.errors.password"> {{ form.errors.password }} </li>
+                                </ul>
+                            </template>
+                        </Alert>
+
                         <div class="flex flex-col gap-4">
-                            <Input type="text" name="email" label="Email" placeholder="__('login.email')"
+                            <Input type="email" name="email" label="Email" :placeholder="__('login.email')"
                                 v-model="form.email" />
                             <Input type="password" name="password" label="Password" :placeholder="__('login.password')"
                                 v-model="form.password" />
                         </div>
 
 
-                        <Button type="submit" class="font-medium flex gap-3 justify-center !w-[100%] group/btn">
+                        <Button :isSubmit="true" class="font-medium flex gap-3 justify-center !w-[100%] group/btn">
                             {{ __('login.title.login') }}
                             <ArrowRight
                                 class="w-4 h-4 text-brand-white transition duration-300 ease-out group-hover/btn:translate-x-2">
@@ -106,9 +107,9 @@ const submitLogin = () => {
                         </Button>
                     </div>
 
-                    <a :href="route('Auth')"
+                    <a :href="route('register')"
                         class="text-brand-400 underline mt-4 hover:text-brand-600 w-min text-nowrap">{{
-                            __('login.account.login') }}</a>
+                        __('login.account.login') }}</a>
 
                 </div>
             </main>

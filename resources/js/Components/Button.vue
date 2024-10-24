@@ -10,6 +10,10 @@ const props = defineProps({
         type: String,
         default: 'brand-600'
     },
+    isSubmit: {
+        type: Boolean,
+        default: false
+    },
     class: String
 });
 
@@ -88,7 +92,7 @@ const typeClass = computed(() => {
 </script>
 
 <template>
-    <button type="button"
+    <button :type="[isSubmit ? 'submit' : 'button']"
         :class="[typeClass, props.class, 'py-[14px] px-[16px] rounded w-min h-min flex content-center items-center text-center drop-shadow-lg text-nowrap disabled:opacity-50 disabled:pointer-events-none hover:scale-105 active:scale-100 transition duration-100']">
         <slot />
     </button>

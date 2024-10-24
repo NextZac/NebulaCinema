@@ -5,12 +5,17 @@ import Divider from '@/Components/Divider.vue';
 import Input from '@/Components/Input.vue';
 import { ArrowRight } from 'lucide-vue-next';
 
+import { useForm } from "@inertiajs/vue3";
+
+const form = useForm({
+    email: "",
+    password: "",
+    password_conf: "",
+});
+
 </script>
 
 <template>
-
-    <Head title="Login" />
-
     <GuestLayout>
         <div class="flex flex-col gap-[60px]">
             <main
@@ -24,16 +29,33 @@ import { ArrowRight } from 'lucide-vue-next';
                 <div class="flex flex-col gap-4 w-full justify-center">
 
                     <!-- Form -->
-                    <form class="flex flex-col gap-12 w-full">
+                    <form @submit.prevent="form.post(route('register'))" class="flex flex-col gap-12 w-full">
+
+                        <Alert type="error" v-if="form.errors.password || form.errors.email">
+                            <template #icon>
+                                <OctagonAlert class="size-5 text-brand-error" />
+                            </template>
+                            <template #title> Error </template>
+                            <template #description>
+                                <ul class="flex flex-col gap-1 list-disc">
+                                    <li v-if="form.errors.email"> {{ form.errors.email }} </li>
+                                    <li v-if="form.errors.password"> {{ form.errors.password }} </li>
+                                    <li v-if="form.errors.email"> {{ form.errors.password_conf }} </li>
+                                </ul>
+                            </template>
+                        </Alert>
+
                         <div class="flex flex-col gap-4">
-                            <Input type="email" name="email" label="Email" placeholder="Email" />
-                            <Input type="password" name="password" label="Password" :placeholder="__('login.password')" />
+                            <Input type="email" name="email" label="Email" :placeholder="__('login.email')"
+                                v-model="form.email" />
+                            <Input type="password" name="password" label="Password"
+                                :placeholder="__('login.password')" v-model="form.password" />
                             <Input type="password" name="password_confirmation" label="Repeat password"
-                                :placeholder="__('login.repeat')" />
+                                :placeholder="__('login.repeat')" v-model="form.password_conf" />
                         </div>
 
 
-                        <Button type="submit" class="font-medium flex gap-3 justify-center !w-[100%] group/btn">
+                        <Button :isSubmit="true" class="font-medium flex gap-3 justify-center !w-[100%] group/btn">
                             {{__('login.title.register')}}
                             <ArrowRight
                                 class="w-4 h-4 text-brand-white transition duration-300 ease-out group-hover/btn:translate-x-2">
@@ -77,7 +99,8 @@ import { ArrowRight } from 'lucide-vue-next';
                         </Button>
                     </div>
 
-                    <a :href="route('Login')" class="text-brand-400 underline mt-4 hover:text-brand-600 w-min text-nowrap">{{__('login.account.register')}}</a>
+                    <a :href="route('login')"
+                        class="text-brand-400 underline mt-4 hover:text-brand-600 w-min text-nowrap">{{__('login.account.register')}}</a>
 
                 </div>
             </main>
