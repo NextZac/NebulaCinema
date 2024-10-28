@@ -5,6 +5,7 @@ import { ref, computed } from 'vue';
 import { SquarePlay, ArrowRight } from 'lucide-vue-next';
 
 import Button from './Button.vue';
+import VideoModal from './VideoModal.vue';
 
 const props = defineProps({
     image: String,
@@ -18,8 +19,13 @@ const props = defineProps({
     freeSeats: String,
     subtitles: String,
     language: String,
+    videoUrl: String
 })
 
+const videoModalOpen = ref(false);
+const toggleVideoModal = () => {
+    videoModalOpen.value = !videoModalOpen.value;
+}
 
 </script>
 
@@ -44,10 +50,12 @@ const props = defineProps({
                     <p class=" text-brand-white text-title1" v-html="props.cinema"></p>
                     <p class=" text-brand-white/50 text-subtitle" v-html="props.cinemaRoom"></p>
                 </div>
-                <Button class="flex font-semibold justify-center gap-2 !w-full">
+                <Button class="flex font-semibold justify-center gap-2 !w-full" @click="toggleVideoModal">
                     <SquarePlay class="w-4 h-4" />
                     {{ __('movieSchedule.trailer') }}
                 </Button>
+                <VideoModal :videoUrl="props.videoUrl" v-model:isOpen="videoModalOpen" :title="`${props.title} Trailer`">
+                </VideoModal>
             </div>
 
             <!--Title and stuff-->
@@ -87,16 +95,16 @@ const props = defineProps({
                 </div>
 
                 <!--Other info-->
-                <div class="flex flex-row w-full h-min items-center justify-between gap-[35px] pt-[15px]">
-                    <span class="flex flex-col gap-1">
+                <div class="flex flex-row w-full h-min items-center justify-between pt-[15px]">
+                    <span class="flex flex-col gap-1 w-[20%]">
                         <p class=" text-brand-white/50 text-subtitle">{{ __('movieSchedule.free_seats') }}</p>
                         <p class=" text-brand-white text-title1" v-html="props.freeSeats"></p>
                     </span>
-                    <span class="flex flex-col gap-1">
+                    <span class="flex flex-col gap-1 w-[20%]">
                         <p class=" text-brand-white/50 text-subtitle">{{ __('movieSchedule.language') }}</p>
                         <p class=" text-brand-white text-title1" v-html="props.language"></p>
                     </span>
-                    <span class="flex flex-col gap-1">
+                    <span class="flex flex-col gap-1 w-[20%]">
                         <p class=" text-brand-white/50 text-subtitle">{{ __('movieSchedule.subtitles') }}</p>
                         <p class=" text-brand-white text-title1" v-html="props.subtitles"></p>
                     </span>

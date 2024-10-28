@@ -15,14 +15,20 @@ import Dropdown from "@/Components/Dropdown.vue";
 import SelectOption from "@/Components/SelectOption.vue";
 import MovieSchedule from "@/Components/MovieSchedule.vue";
 import Alert from "@/Components/Alert.vue";
+import VideoModal from "@/Components/VideoModal.vue";
 
 import { Search, Check, Info, OctagonAlert } from "lucide-vue-next";
 import { Head, usePage } from "@inertiajs/vue3";
 
 const modalOpen = ref(false);
+const videoModalOpen = ref(false);
 
 const toggleModal = () => {
     modalOpen.value = !modalOpen.value;
+}
+
+const toggleVideoModal = () => {
+    videoModalOpen.value = !videoModalOpen.value;
 }
 
 const dropdowns = ref({
@@ -707,6 +713,13 @@ const movies = [
                         <Button @click="toggleModal" class="py-[5px]">Close</Button>
                     </template>
                 </Modal>
+            </div>
+
+            <div class="flex gap-8 flex-col">
+                <h2 class="text-brand-white">Video Modal</h2>
+                <Button @click="toggleVideoModal">Show Video Modal</Button>
+                <VideoModal v-model:isOpen="videoModalOpen" title="Modal" videoUrl="https://www.youtube.com/embed/tgbNymZ7vqY">
+                </VideoModal>
             </div>
 
             <!-- Select Option -->

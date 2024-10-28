@@ -20,6 +20,9 @@ const topMovies = [
         cinema: "Nebula Ülemiste",
         cinemaRoom: "Room 1",
         freeSeats: "5",
+        trailer: "https://www.youtube.com/embed/CGbgaHoapFM",
+        subtitles: "Eesti",
+        language: "Eesti",
     },
     {
         categories: [
@@ -37,6 +40,9 @@ const topMovies = [
         cinema: "Nebula Ülemiste",
         cinemaRoom: "Room 4",
         freeSeats: "69",
+        trailer: "https://www.youtube.com/embed/uLtkt8BonwM",
+        subtitles: "Eesti, Vene",
+        language: "Inglise",
     },
     {
         categories: [
@@ -53,6 +59,9 @@ const topMovies = [
         cinema: "Nebula Tasku",
         cinemaRoom: "Room 2",
         freeSeats: "40",
+        trailer: "https://www.youtube.com/embed/JfVOs4VSpmA",
+        subtitles: "Eesti",
+        language: "Eesti",
     },
     {
         categories: [
@@ -69,6 +78,9 @@ const topMovies = [
         cinema: "Nebula Viru",
         cinemaRoom: "Room 1",
         freeSeats: "32",
+        trailer: "https://www.youtube.com/embed/4I8rVcSQbic",
+        subtitles: "Eesti, Vene",
+        language: "Eesti",
     },
 ];
 
@@ -95,7 +107,7 @@ const getTimeIndex = (time) => {
             <div class="flex flex-col gap-[30px]">
                 <MovieSchedule v-for="i in topMovies" :image=" i.image" :title="i.title"
                     :titleEng="i.titleEng" href="#" :startingTime="i.startingTime" :cinema="i.cinema"
-                    :cinemaRoom="i.cinemaRoom" :freeSeats="i.freeSeats" subtitles="Eesti, Vene" language="Eesti" :style="`order: ${getTimeIndex(i.startingTime)};`">
+                    :cinemaRoom="i.cinemaRoom" :freeSeats="i.freeSeats" :subtitles="i.subtitles" :language="i.language" :style="`order: ${getTimeIndex(i.startingTime)};`" :videoUrl="i.trailer">
                     <template #imageBadges>
                         <Badge type="solid"> {{ i.format }}</Badge>
                         <Badge> {{ i.rating }} </Badge>
