@@ -3,6 +3,7 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import Alert from '@/Components/Alert.vue';
 import MovieSchedule from '@/Components/MovieSchedule.vue';
 import Badge from '@/Components/Badge.vue';
+import ScheduleFilter from '@/Components/ScheduleFilter.vue';
 
 const topMovies = [
     {
@@ -103,6 +104,10 @@ const getTimeIndex = (time) => {
                     {{ __('schedule.info') }} <span class="font-medium">{{ __('schedule.info_bold') }}</span>
                 </template>
             </Alert>
+
+            <ScheduleFilter>
+                
+            </ScheduleFilter>
 
             <div class="flex flex-col gap-[30px]">
                 <MovieSchedule v-for="i in topMovies" :image=" i.image" :title="i.title"

@@ -644,7 +644,7 @@ const movies = [
                 <h2 class="text-brand-white">Movie Schedule</h2>
                 <MovieSchedule image="https://via.placeholder.com/300" title="Title" titleEng="Title English" href="#"
                     startingTime="10:00" cinema="Nebula Ülemiste" cinemaRoom="Room 1" freeSeats="5"
-                    subtitles="Eesti, Vene" language="Eesti">
+                    subtitles="Eesti, Vene" language="Eesti" videoUrl="https://www.youtube.com/embed/tgbNymZ7vqY">
                     <template #imageBadges>
                         <Badge type="solid">3D</Badge>
                         <Badge>12+</Badge>

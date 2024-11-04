@@ -273,7 +273,6 @@ const upcomingMovies = [
       <div class="flex flex-col gap-[15px]">
         <p class="text-brand-white text-main1">{{ __('home.top') }}</p>
         <Slider :length="topMovies.length">
-          <template #cards>
             <MovieCard v-for="i in topMovies" :image="i.image" :title="i.title" :titleEng="i.titleEng" href="#">
               <template #imageBadges>
                 <Badge>{{ i.rating }}</Badge>
@@ -283,7 +282,6 @@ const upcomingMovies = [
                 <Badge type="solid" v-for="cat in i.categories">{{ cat.name }}</Badge>
               </template>
             </MovieCard>
-          </template>
         </Slider>
       </div>
 
@@ -291,7 +289,6 @@ const upcomingMovies = [
       <div class="flex flex-col gap-[15px]">
         <p class="text-brand-white text-main1">{{ __('home.current') }}</p>
         <Slider :length="topMovies.length">
-          <template #cards>
             <MovieCard v-for="i in topMovies" :image="i.image" :title="i.title" :titleEng="i.titleEng"
               :starting="i.starting" href="#">
               <template #imageBadges>
@@ -302,7 +299,6 @@ const upcomingMovies = [
                 <Badge type="solid" v-for="cat in i.categories">{{ cat.name }}</Badge>
               </template>
             </MovieCard>
-          </template>
         </Slider>
       </div>
 
@@ -310,7 +306,6 @@ const upcomingMovies = [
       <div class="flex flex-col gap-[15px]">
         <p class="text-brand-white text-main1">{{ __('home.upcoming') }}</p>
         <Slider :length="upcomingMovies.length">
-          <template #cards>
             <MovieCard v-for="i in upcomingMovies" :image="i.image" :title="i.title" :titleEng="i.titleEng"
               :starting="i.starting" href="#">
               <template #imageBadges>
@@ -321,7 +316,6 @@ const upcomingMovies = [
                 <Badge type="solid" v-for="cat in i.categories">{{ cat.name }}</Badge>
               </template>
             </MovieCard>
-          </template>
         </Slider>
       </div>
 

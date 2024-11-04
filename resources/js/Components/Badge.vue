@@ -13,7 +13,7 @@ switch (props.type) {
         typeClass = "border border-brand-white bg-brand-975 "
         break;
     default:
-        typeClass = "bg-black/30 border border-brand-white "
+        typeClass = "bg-black/50 border border-brand-white "
 }
 
 </script>

@@ -7,6 +7,10 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  itemWidth: {
+    type: Number,
+    default: 365,
+  },
 });
 
 const sliderContainer = ref(null);
@@ -43,7 +47,7 @@ const prevSlide = () => {
 };
 
 const translateX = computed(() => {
-  const itemWidth = 365 + 35; // Card width + gap
+  const itemWidth = props.itemWidth + 35; // Card width + gap
   return `translateX(-${currentIndex.value * itemWidth * visibleMovies.value}px)`;
 });
 </script>
@@ -68,7 +72,7 @@ const translateX = computed(() => {
     <div class="relative w-full group/slider" ref="sliderContainer">
       <div class="flex w-full transition-transform duration-[400ms] ease-in-out gap-[35px] mx-4"
         :style="{ transform: translateX }">
-        <slot name="cards" />
+        <slot/>
       </div>
       <button @click="prevSlide" v-if="currentIndex > 0"
         class="absolute flex justify-center items-center z-20 -left-2 top-0 w-20 h-[100%] transition duration-100 group text-brand-white invisible group-hover/slider:visible bg-gradient-to-r from-brand-950 to-transparent">
