@@ -7,10 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get("/", function () {
-    return Inertia::render("Home", [
-        "laravelVersion" => Application::VERSION,
-        "phpVersion" => PHP_VERSION,
-    ]);
+    return Inertia::render("Home");
 })->name("Home");
 
 Route::get("/lang/{lang}", function ($language) {
@@ -52,11 +49,11 @@ Route::get("/privacy", function () {
     return Inertia::render("Privacy");
 })->name("Privacy");
 
-Route::get("/dashboard", function () {
-    return Inertia::render("Dashboard");
-})
-    ->middleware(["auth", "verified"])
-    ->name("dashboard");
+// Route::get("/dashboard", function () {
+//     return Inertia::render("Dashboard");
+// })
+//     ->middleware(["auth", "verified"])
+//     ->name("dashboard");
 
 Route::middleware("auth")->group(function () {
     Route::get("/profile", [ProfileController::class, "edit"])->name(
@@ -68,7 +65,6 @@ Route::middleware("auth")->group(function () {
     Route::delete("/profile", [ProfileController::class, "destroy"])->name(
         "profile.destroy"
     );
-    Route::get("/admin", [AdminController::class, "index"])->name("admin");
 });
 
 require __DIR__ . "/admin.php";

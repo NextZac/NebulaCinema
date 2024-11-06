@@ -9,7 +9,8 @@ use Inertia\Inertia;
 
 class AdminController extends Controller
 {
-    public function index() {
-        return Inertia::render('Admin/Home', ['user' => Auth::user()]);
+    public function index()
+    {
+        return Inertia::render("Admin/Home", ["user" => Auth::user()]);
     }
 }
