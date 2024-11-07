@@ -1,24 +1,41 @@
 <template>
-    <header class="header">
-      <h1>Admin Dashboard</h1>
-      <p>{{ user.name }}</p>
-      <p>Role: {{role}}</p>
-    </header>
-  </template>
-  
-  <script setup>
-  const props = defineProps({
-    user: Object,
-    role: String
-  })
-  </script>
-  
-  <style scoped>
-  .header {
-    background-color: #34495e;
-    color: white;
-    padding: 15px;
-    text-align: center;
-  }
-  </style>
-  
+    <div class="header">
+        <h1>Admin Dashboard</h1>
+        <div class="user-info">
+            <span>{{ user.name }}</span>
+            <!-- Add logout button or other user actions -->
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import { usePage } from "@inertiajs/vue3";
+
+const { props } = usePage();
+const user = ref(props.user);
+</script>
+
+<style>
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+</style>

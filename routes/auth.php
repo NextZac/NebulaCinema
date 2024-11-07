@@ -19,13 +19,17 @@ Route::middleware("guest")->group(function () {
     //     "register"
     // );
 
-    Route::get("register", [RegisteredUserControllerToTestShit::class, "register"])->name(
-        "register"
-    );
+    Route::get("register", [
+        RegisteredUserControllerToTestShit::class,
+        "register",
+    ])->name("register");
 
     // Route::post("register", [RegisteredUserController::class, "store"]);
 
-    Route::post("register", [RegisteredUserControllerToTestShit::class, "store"]);
+    Route::post("register", [
+        RegisteredUserControllerToTestShit::class,
+        "store",
+    ]);
 
     Route::get("login", [AuthController::class, "login"])->name("login");
 
@@ -50,6 +54,7 @@ Route::middleware("guest")->group(function () {
         NewPasswordController::class,
         "store",
     ])->name("password.store");
+    Route::post("logout", [AuthController::class, "destroy"])->name("logout");
 });
 
 // Route::middleware('auth')->group(function () {
