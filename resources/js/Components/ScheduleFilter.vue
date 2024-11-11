@@ -5,7 +5,7 @@ import Dropdown from './Dropdown.vue';
 import Checkbox from './Checkbox.vue';
 import { ChevronDown, Drama, Filter, MapPin } from 'lucide-vue-next';
 
-const DAYS_TO_SHOW = 7;
+const DAYS_TO_SHOW = 14;
 
 const props = defineProps({
     initialDate: {
@@ -122,10 +122,34 @@ const handleGenreChange = (genre) => {
     }
     emit('update:genres', Array.from(selectedGenres.value));
 };
+
+
+
+
+// State
+const scrollPosition = ref(0)
+const scrollAmount = 102 // Width of each date button + gap
+
+// Computed
+const isStartOfList = computed(() => scrollPosition.value <= 0)
+const isEndOfList = computed(() => {
+    const maxScroll = (dates.value.length - 7) * scrollAmount
+    return scrollPosition.value >= maxScroll
+})
+
+const scroll = (direction) => {
+    if (direction === 'left' && !isStartOfList.value) {
+        scrollPosition.value = Math.max(0, scrollPosition.value - scrollAmount)
+    } else if (direction === 'right' && !isEndOfList.value) {
+        const maxScroll = (dates.value.length - 7) * scrollAmount
+        scrollPosition.value = Math.min(maxScroll, scrollPosition.value + scrollAmount)
+    }
+}
+
 </script>
 
 <template>
-    <div class="flex flex-row items-stretch w-full bg-brand-975 p-4 rounded-[10px] gap-4">
+    <div class="flex flex-row max-4xl:flex-col items-stretch w-full bg-brand-975 p-4 rounded-[10px] gap-4">
         <!-- Left -->
         <div class="flex-1 flex items-center">
             <div class="h-full flex items-center relative">
@@ -148,9 +172,23 @@ const handleGenreChange = (genre) => {
         </div>
 
         <!-- Center -->
-        <div class="flex-[2] flex items-center justify-center">
-            <div class="flex flex-row gap-2">
-                <button v-for="(day, index) in dates" :key="index"
+        <div class="flex-[2] flex items-center overflow-hidden justify-center">
+            <div class="relative w-full">
+                <!-- Left scroll button -->
+                <button @click="scroll('left')"
+                    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-slate-800 hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    :disabled="isStartOfList">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+
+                <!-- Dates container -->
+                <div class="overflow-x-hidden w-full">
+                    <div ref="sliderContainer" class="flex flex-row gap-2 transition-transform duration-300"
+                        :style="{ transform: `translateX(-${scrollPosition}px)` }">
+                        <button v-for="(day, index) in dates" :key="index"
                     class="flex flex-col content-center gap-1 p-4 border border-brand-900 rounded-lg text-brand-white hover:bg-brand-600/20 hover:scale-105 scale-100 transition duration-100 h-full min-w-[100px]"
                     :class="{ '!text-brand-400': selectedDate === day.date }" @click="handleDateSelect(day.date)">
                     <div class="text-title1 font-medium" :class="{ '!text-brand-400': selectedDate === day.date }">
@@ -160,6 +198,18 @@ const handleGenreChange = (genre) => {
                         :class="{ '!text-brand-400/60': selectedDate === day.date }">
                         {{ day.date }}
                     </div>
+                </button>
+                    </div>
+                </div>
+
+                <!-- Right scroll button -->
+                <button @click="scroll('right')"
+                    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-slate-800 hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    :disabled="isEndOfList">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
                 </button>
             </div>
         </div>
