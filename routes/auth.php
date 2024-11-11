@@ -54,8 +54,8 @@ Route::middleware("guest")->group(function () {
         NewPasswordController::class,
         "store",
     ])->name("password.store");
-    Route::post("logout", [AuthController::class, "destroy"])->name("logout");
 });
+Route::post("logout", [AuthController::class, "destroy"])->name("logout");
 
 // Route::middleware('auth')->group(function () {
 //     Route::get('verify-email', EmailVerificationPromptController::class)

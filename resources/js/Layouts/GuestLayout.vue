@@ -45,7 +45,6 @@ const dropdownOptions = ref({
             ? [
                   {
                       title: __("header.avatar.logout"),
-                      href: "#",
                       action: "logout",
                       color: "error",
                   },
