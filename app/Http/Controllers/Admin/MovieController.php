@@ -12,7 +12,7 @@ class MovieController extends Controller
     public function index()
     {
         $movies = Movie::all();
-        return Inertia::render("Admin/Movies/Index", ["movies" => $posts]);
+        return Inertia::render("Admin/Movies/Index", ["movies" => $movies]);
     }
 
     public function create()

@@ -2,7 +2,7 @@
     <div class="admin-container">
         <Sidebar />
         <div class="main-content">
-            <Header :user="user" />
+            <Header :user="user.value" />
             <div class="content">
                 <slot></slot>
             </div>
@@ -14,10 +14,10 @@
 import { ref } from "vue";
 import Sidebar from "@/Components/Admin/Sidebar.vue";
 import Header from "@/Components/Admin/Header.vue";
-import { usePage } from "@inertiajs/vue3";
+import { usePage, router } from "@inertiajs/vue3";
 
 const { props } = usePage();
-const user = ref(props.user);
+const user = ref(router.page.props.auth.user);
 </script>
 
 <style>

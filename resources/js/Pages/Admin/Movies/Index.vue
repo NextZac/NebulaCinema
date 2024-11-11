@@ -1,9 +1,9 @@
 <template>
     <AdminLayout>
         <div class="posts">
-            <h2>Posts</h2>
-            <inertia-link href="/admin/posts/create" class="btn btn-primary"
-                >Create Post</inertia-link
+            <h2>Movies</h2>
+            <inertia-link href="/admin/movies/create" class="btn btn-primary"
+                >Create Movie</inertia-link
             >
             <table class="table">
                 <thead>
@@ -19,13 +19,13 @@
                         <td>{{ post.title }}</td>
                         <td>
                             <inertia-link
-                                :href="`/admin/posts/${post.id}/edit`"
-                                class="btn btn-warning"
+                                :href="`/admin/movies/${post.id}/edit`"
+                                class="btn btn-warning mx-4"
                                 >Edit</inertia-link
                             >
                             <button
                                 @click="deletePost(post.id)"
-                                class="btn btn-danger"
+                                class="btn btn-danger mx-4"
                             >
                                 Delete
                             </button>
@@ -39,15 +39,17 @@
 
 <script setup>
 import { ref } from "vue";
-import { usePage, Inertia } from "@inertiajs/vue3";
+import { usePage, router } from "@inertiajs/vue3";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 
 const { props } = usePage();
-const posts = ref(props.posts);
+const posts = ref(props.movies);
+
+console.log(posts.value);
 
 const deletePost = (id) => {
     if (confirm("Are you sure you want to delete this post?")) {
-        Inertia.delete(`/admin/posts/${id}`);
+        router.delete(`/admin/posts/${id}`);
     }
 };
 </script>

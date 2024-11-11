@@ -21,7 +21,8 @@
         "avatar": {
             "profiil": "Profile",
             "ajalugu": "Purchase History",
-            "logout": "Logout"
+            "logout": "Logout",
+            "login": "Login"
         }
     },
     "home": {

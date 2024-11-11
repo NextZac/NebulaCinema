@@ -1,5 +1,6 @@
 <script setup>
 import { ref, getCurrentInstance } from "vue";
+import { router } from "@inertiajs/vue3";
 import { ChevronDown, Search, Github } from "lucide-vue-next";
 
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
@@ -34,14 +35,30 @@ const dropdownOptions = ref({
         { title: __("header.grupid.school"), href: "#" },
     ],
     avatar: [
-        { title: __("header.avatar.profiil"), href: "#" },
-        { title: __("header.avatar.ajalugu"), href: "#" },
-        {
-            title: __("header.avatar.logout"),
-            href: "#",
-            action: "logout",
-            color: "error",
-        },
+        ...(router.page.props.auth.user
+            ? [{ title: __("header.avatar.profiil"), href: "#" }]
+            : []),
+        ...(router.page.props.auth.user
+            ? [{ title: __("header.avatar.ajalugu"), href: "#" }]
+            : []),
+        ...(router.page.props.auth.user
+            ? [
+                  {
+                      title: __("header.avatar.logout"),
+                      href: "#",
+                      action: "logout",
+                      color: "error",
+                  },
+              ]
+            : []),
+        ...(router.page.props.auth.user
+            ? []
+            : [
+                  {
+                      title: __("header.avatar.login"),
+                      href: route("login"),
+                  },
+              ]),
     ],
     language: [
         { title: "Estonian", href: "/lang/et" },
@@ -74,6 +91,15 @@ const logout = async () => {
         window.location.href = route("Home");
     } catch (error) {
         console.error("Logout failed:", error);
+    }
+};
+
+const parseDropdown = (event) => {
+    if (event.action === "logout") {
+        logout();
+    }
+    if (event.href) {
+        window.location.href = event.href;
     }
 };
 </script>
@@ -145,9 +171,7 @@ const logout = async () => {
                         class="top-[110%] right-5"
                         v-model:isOpen="dropdowns.avatar"
                         :options="dropdownOptions.avatar"
-                        @select="
-                            ($event) => $event.action === 'logout' && logout()
-                        "
+                        @select="parseDropdown"
                     />
                 </div>
             </div>

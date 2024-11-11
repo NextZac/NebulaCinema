@@ -21,7 +21,8 @@
         "avatar": {
             "profiil": "Profiil",
             "ajalugu": "Ostu ajalugu",
-            "logout": "Logi välja"
+            "logout": "Logi välja",
+            "login": "Logi sisse"
         }
     },
     "home": {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -13,16 +15,16 @@ class AuthController extends Controller
         return Inertia::render("Auth/Login");
     }
 
-    public function store(LoginRequest $request): Response
+    public function store(LoginRequest $request)
     {
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        return redirect()->route("admin");
+        return Inertia::location(route("admin"));
     }
 
-    public function destroy(Request $request): Response
+    public function destroy(Request $request)
     {
         Auth::guard("web")->logout();
 
