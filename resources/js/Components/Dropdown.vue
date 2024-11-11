@@ -4,7 +4,8 @@ import { ref, watch, computed, onMounted, onUnmounted } from "vue";
 const props = defineProps({
     options: {
         type: Array,
-        required: true,
+        default: [],
+        required: false,
     },
     isOpen: {
         type: Boolean,
@@ -155,7 +156,8 @@ onUnmounted(() => {
         ]"
         :style="dropdownStyle"
     >
-        <ul
+    <slot v-if="props.options.length === 0"></slot>
+        <ul v-if="props.options.length > 0"
             tabindex="-1"
             class="flex flex-col gap-[15px] p-[15px] pr-[50px] overflow-auto scroll-smooth scrollbar-hide"
         >
