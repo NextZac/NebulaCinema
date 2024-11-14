@@ -3,7 +3,7 @@ import { ref, computed } from 'vue';
 import SelectOption from './SelectOption.vue';
 import Dropdown from './Dropdown.vue';
 import Checkbox from './Checkbox.vue';
-import { ChevronDown, Drama, Filter, MapPin } from 'lucide-vue-next';
+import { ChevronDown, Drama, Filter, MapPin, ArrowRight, ArrowLeft } from 'lucide-vue-next';
 
 const DAYS_TO_SHOW = 14;
 
@@ -176,40 +176,36 @@ const scroll = (direction) => {
             <div class="relative w-full">
                 <!-- Left scroll button -->
                 <button @click="scroll('left')"
-                    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-slate-800 hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    :disabled="isStartOfList">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
+                    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full group/left"
+                    v-if="!isStartOfList">
+                    <ArrowLeft class="size-6 text-brand-white group-hover/left:text-brand-400 transition duration-100" />
                 </button>
 
                 <!-- Dates container -->
-                <div class="overflow-x-hidden w-full">
-                    <div ref="sliderContainer" class="flex flex-row gap-2 transition-transform duration-300"
+                <div class="fader w-full">
+                    <div ref="sliderContainer" class="flex flex-row gap-2 transition-transform duration-300 py-1"
                         :style="{ transform: `translateX(-${scrollPosition}px)` }">
                         <button v-for="(day, index) in dates" :key="index"
-                    class="flex flex-col content-center gap-1 p-4 border border-brand-900 rounded-lg text-brand-white hover:bg-brand-600/20 hover:scale-105 scale-100 transition duration-100 h-full min-w-[100px]"
-                    :class="{ '!text-brand-400': selectedDate === day.date }" @click="handleDateSelect(day.date)">
-                    <div class="text-title1 font-medium" :class="{ '!text-brand-400': selectedDate === day.date }">
-                        {{ day.dayOfWeek }}
-                    </div>
-                    <div class="text-detail text-brand-white/60"
-                        :class="{ '!text-brand-400/60': selectedDate === day.date }">
-                        {{ day.date }}
-                    </div>
-                </button>
+                            class="flex flex-col content-center gap-1 p-4 border border-brand-900 rounded-lg text-brand-white hover:bg-brand-600/20 hover:scale-105 scale-100 transition duration-100 h-full min-w-[100px]"
+                            :class="{ '!text-brand-400': selectedDate === day.date }"
+                            @click="handleDateSelect(day.date)">
+                            <div class="text-title1 font-medium"
+                                :class="{ '!text-brand-400': selectedDate === day.date }">
+                                {{ day.dayOfWeek }}
+                            </div>
+                            <div class="text-detail text-brand-white/60"
+                                :class="{ '!text-brand-400/60': selectedDate === day.date }">
+                                {{ day.date }}
+                            </div>
+                        </button>
                     </div>
                 </div>
 
                 <!-- Right scroll button -->
                 <button @click="scroll('right')"
-                    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-slate-800 hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    :disabled="isEndOfList">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
+                    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full group/right"
+                    v-if="!isEndOfList">
+                    <ArrowRight class="size-6 text-brand-white group-hover/right:text-brand-400 transition duration-100" />
                 </button>
             </div>
         </div>
@@ -277,3 +273,10 @@ const scroll = (direction) => {
         </div>
     </div>
 </template>
+
+<style scoped>
+.fader {
+    mask-image: linear-gradient(to right, transparent 0%, white 2%, white 98%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, white 2%, white 98%, transparent 100%);
+}
+</style>

@@ -91,9 +91,4 @@ const translateX = computed(() => {
   mask-image: linear-gradient(to right, transparent 0%, white 2%, white 98%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, white 2%, white 98%, transparent 100%);
 }
-
-.faderDown {
-  mask-image: linear-gradient(to bottom, transparent 0%, white 1%, white 90%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to top, transparent 0%, white 2%, white 98%, transparent 100%);
-}
 </style>
