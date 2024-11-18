@@ -13,14 +13,25 @@ class Movie extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    public function categories() {
-        return $this->belongsToMany(Category::class, 'movie_category');
+    public function categories()
+    {
+        return $this->belongsToMany(
+            Category::class,
+            "movie_category",
+            "movie_id",
+            "category_id"
+        );
     }
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('trailer')
-            ->singleFile();
-        $this->addMediaCollection('pictures');
+        $this->addMediaCollection("trailer")->singleFile();
+        $this->addMediaCollection("pictures");
+    }
+
+    public function getImagePathAttribute()
+    {
+        $media = $this->getFirstMedia("pictures");
+        return $media ? $media->getUrl() : null; // Return the URL of the first image, or null if not available
     }
 }

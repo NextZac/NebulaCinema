@@ -11,7 +11,10 @@ class Category extends Model
 {
     use HasFactory;
 
-    public function movies() {
-        return $this->belongsToMany(Movie::class, 'movie_category');
+    protected $table = "category";
+
+    public function movies()
+    {
+        return $this->belongsToMany(Movie::class, "movie_category");
     }
 }
