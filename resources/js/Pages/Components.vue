@@ -604,7 +604,8 @@ const movies = [
             <!-- Badges -->
             <div class="flex gap-8 flex-col">
                 <h2 class="text-brand-white">Badge</h2>
-                <Badge>Outline/Default</Badge>
+                <Badge>Default</Badge>
+                <Badge type="bordered">Outline</Badge>
                 <Badge type="solid">Solid</Badge>
             </div>
 

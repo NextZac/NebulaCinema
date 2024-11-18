@@ -152,7 +152,7 @@ onUnmounted(() => {
         :class="[
             props.class,
             alignmentClasses,
-            'absolute z-20 my-1 w-min bg-brand-975 border border-brand-900 shadow-lg rounded-md text-base sm:text-sm',
+            'absolute z-20 my-1 w-min bg-brand-975/80 border border-brand-900 shadow-lg backdrop-blur-md rounded-md text-base sm:text-sm',
         ]"
         :style="dropdownStyle"
     >

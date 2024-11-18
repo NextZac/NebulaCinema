@@ -6,6 +6,8 @@ import MovieSchedule from '@/Components/MovieSchedule.vue';
 import Badge from '@/Components/Badge.vue';
 import ScheduleFilter from '@/Components/ScheduleFilter.vue';
 
+import { AlertCircle } from 'lucide-vue-next';
+
 const topMovies = [
     {
         categories: [
@@ -161,7 +163,7 @@ const handleDateUpdate = (date, locale = 'et') => {
         const currentYear = new Date().getFullYear();
         const formattedDate = `${currentYear}-${months[monthName.toLowerCase()]}-${day.padStart(2, '0')}`;
         selectedDate.value = formattedDate;
-    } 
+    }
     // If the locale is 'en-US' (English US), handle the "MM/DD/YYYY" format
     else if (locale === 'en-US') {
         const [month, day, year] = date.split('/').map(str => str.trim());
@@ -220,7 +222,15 @@ onMounted(() => {
                         <Badge v-for="cat in i.categories">{{ cat.name }} </Badge>
                     </template>
                 </MovieSchedule>
-                <p v-if="filteredMovies.length === 0" class="text-brand-white text-main1"> No movies found </p>
+                <Alert v-if="filteredMovies.length === 0" type="error" class="justify-center items-center">
+                    <template #icon>
+                        <AlertCircle class="size-8 text-brand-error" />
+                    </template>
+
+                    <template #description>
+                        <span class="text-title1">No movies found with the selected filters.</span>
+                    </template>
+                </Alert>
             </div>
         </div>
     </GuestLayout>

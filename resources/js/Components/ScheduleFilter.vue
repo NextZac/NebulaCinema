@@ -186,8 +186,8 @@ const scroll = (direction) => {
                     <div ref="sliderContainer" class="flex flex-row gap-2 transition-transform duration-300 py-1"
                         :style="{ transform: `translateX(-${scrollPosition}px)` }">
                         <button v-for="(day, index) in dates" :key="index"
-                            class="flex flex-col content-center gap-1 p-4 border border-brand-900 rounded-lg text-brand-white hover:bg-brand-600/20 hover:scale-105 scale-100 transition duration-100 h-full min-w-[100px]"
-                            :class="{ '!text-brand-400': selectedDate === day.date }"
+                            class="flex flex-col content-center gap-1 p-4 border border-brand-900 rounded-lg text-brand-white hover:bg-brand-600/10 hover:scale-105 scale-100 transition duration-100 h-full min-w-[100px]"
+                            :class="{ '!text-brand-400 bg-brand-600/10': selectedDate === day.date }"
                             @click="handleDateSelect(day.date)">
                             <div class="text-title1 font-medium"
                                 :class="{ '!text-brand-400': selectedDate === day.date }">
@@ -252,7 +252,7 @@ const scroll = (direction) => {
                         dropdowns['filters'] ? 'rotate-180' : '',
                     ]" />
                 </a>
-                <Dropdown v-model:isOpen="dropdowns.filters" align="bottom" class="top-[110%] right-0">
+                <Dropdown v-model:isOpen="dropdowns.filters" align="bottom" class="top-[120%] right-0">
                     <div class="flex divide-x divide-brand-900">
                         <div v-for="(category, key) in filterCategories" :key="key" class="flex flex-col min-w-[200px]">
                             <h2 class="p-3 text-subtitle text-brand-white/60 border-b border-brand-900">
