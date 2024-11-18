@@ -2,13 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get("/", function () {
-    return Inertia::render("Home");
-})->name("Home");
+Route::get("/", [HomeController::class, "index"])->name("Home");
 
 Route::get("/lang/{lang}", function ($language) {
     Session::put("locale", $language);
