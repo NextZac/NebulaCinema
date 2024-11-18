@@ -14,7 +14,7 @@ const props = defineProps({
     },
     cinemas: {
         type: Array,
-        default: () => ['Nebula Ülemiste', 'Nebula T1', 'Nebula Viru', 'Nebula Tasku']
+        default: () => ['Kõik kinod', 'Nebula Ülemiste', 'Nebula T1', 'Nebula Viru', 'Nebula Tasku']
     }
 });
 
@@ -47,7 +47,7 @@ const dates = computed(() => {
         date.setDate(today.getDate() + i);
         result.push({
             dayOfWeek: date.toLocaleDateString('et', { weekday: 'short' }),
-            date: date.toLocaleDateString('et', { day: 'numeric', month: 'short' })
+            date: date.toLocaleDateString('et', { day: 'numeric', month: 'short' }),
         });
     }
     return result;

@@ -128,13 +128,13 @@ const parseDropdown = (event) => {
                 >
                     {{ link.name }}
                 </a>
-                <div v-else-if="link.dropdown" class="h-full">
+                <div v-else-if="link.dropdown" class="h-full cursor-pointer">
                     <a
                         @click="toggleDropdown(link.dropdown)"
                         :class="[
                             dropdowns[link.dropdown]
-                                ? 'text-brand-400'
-                                : 'text-white',
+                                ? 'text-brand-400 pointer-events-none'
+                                : 'text-white pointer-events-auto',
                             'group text-subtitle inline-flex items-center hover:text-brand-400 cursor-pointer select-none text-nowrap',
                         ]"
                     >
