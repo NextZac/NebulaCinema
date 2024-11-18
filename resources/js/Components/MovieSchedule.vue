@@ -27,6 +27,8 @@ const toggleVideoModal = () => {
     videoModalOpen.value = !videoModalOpen.value;
 }
 
+const htmlLang = document.querySelector('html').getAttribute('lang');
+
 </script>
 
 <template>
@@ -68,9 +70,9 @@ const toggleVideoModal = () => {
                     <div class="flex flex-col h-full w-full justify-between gap-[5px]">
                         <div class="flex flex-col gap-[15px]">
                             <a :href="props.href" class=" text-brand-white text-main1 font-medium underline hover:text-brand-400"
-                                v-html="props.title">
+                                v-html="htmlLang === 'et' ? props.title : props.titleEng">
                             </a>
-                            <p class="text-brand-white/50 text-title1 group-hover:text-brand-400/50"
+                            <p v-if="htmlLang === 'et'" class="text-brand-white/50 text-title1 group-hover:text-brand-400/50"
                                 v-html="props.titleEng"></p>
                         </div>
                         <!--Badges-->

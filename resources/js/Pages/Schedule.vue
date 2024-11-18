@@ -93,7 +93,8 @@ const selectedCinema = ref('');
 const selectedGenres = ref([]);
 const selectedFilters = ref({
     language: new Set(),
-    time: new Set(),
+    timeHours: new Set(),
+    timeMinutes: new Set(),
     subtitles: new Set(),
     format: new Set(),
     ageRating: new Set()
@@ -137,37 +138,53 @@ const filteredMovies = computed(() => {
             if (!selectedFilters.value.ageRating.has(movie.rating)) return false;
         }
 
+        if (selectedFilters.value.timeHours.size > 0 && selectedFilters.value.timeMinutes.size > 0) {
+            const selectedHour = Array.from(selectedFilters.value.timeHours)[0];
+            const selectedMinute = Array.from(selectedFilters.value.timeMinutes)[0];
+            
+            if (selectedHour !== '--' && selectedMinute !== '--') {
+                const selectedTime = new Date();
+                selectedTime.setHours(parseInt(selectedHour), parseInt(selectedMinute), 0, 0);
+                
+                const movieTime = movie.startingTime;
+                const timeDifference = Math.abs(movieTime.getHours() - selectedTime.getHours());
+                const minuteDifference = Math.abs(movieTime.getMinutes() - selectedTime.getMinutes());
+                
+                console.log(timeDifference, minuteDifference);
+                // Allow some flexibility, e.g., within 30 minutes
+                if (timeDifference > 0 || minuteDifference > 30) return false;
+            }
+        }
+
         // Filter by date
         if (selectedDate.value) {
             if (movie.startingTime.getDate() !== new Date(selectedDate.value).getDate()) return false;
-        }
-
-        // Filter by time
-        if (selectedFilters.value.time.size > 0) {
-            if (!selectedFilters.value.time.has(movie.startingTime)) return false;
         }
 
         return true;
     });
 });
 
-const handleDateUpdate = (date, locale = 'et') => {
+const htmlLang = document.documentElement.lang;
+
+const handleDateUpdate = (date) => {
     const months = {
         jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
         jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12'
     };
 
     // If the locale is 'et' (Estonian), handle the "19. nov" format
-    if (locale === 'et') {
+    if (htmlLang === 'et') {
         const [day, monthName] = date.split('.').map(str => str.trim());
         const currentYear = new Date().getFullYear();
         const formattedDate = `${currentYear}-${months[monthName.toLowerCase()]}-${day.padStart(2, '0')}`;
         selectedDate.value = formattedDate;
     }
     // If the locale is 'en-US' (English US), handle the "MM/DD/YYYY" format
-    else if (locale === 'en-US') {
-        const [month, day, year] = date.split('/').map(str => str.trim());
-        const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    else if (htmlLang === 'en') {
+        const [monthName, day] = date.split(' ').map(str => str.trim());
+        const currentYear = new Date().getFullYear();
+        const formattedDate = `${currentYear}-${months[monthName.toLowerCase()]}-${day.padStart(2, '0')}`;
         selectedDate.value = formattedDate;
     }
 };
@@ -182,6 +199,14 @@ const handleGenresUpdate = (genres) => {
 
 const handleFiltersUpdate = (filters) => {
     selectedFilters.value = filters;
+};
+
+const handleTimeHoursUpdate = (timeHours) => {
+    selectedFilters.value.timeHours = timeHours;
+};
+
+const handleTimeMinutesUpdate = (timeMinutes) => {
+    selectedFilters.value.timeMinutes = timeMinutes;
 };
 
 onMounted(() => {
@@ -205,7 +230,7 @@ onMounted(() => {
             </Alert>
 
             <ScheduleFilter @update:date="handleDateUpdate" @update:cinema="handleCinemaUpdate"
-                @update:genres="handleGenresUpdate" @update:filters="handleFiltersUpdate" />
+                @update:genres="handleGenresUpdate" @update:filters="handleFiltersUpdate" @update:timeHours="handleTimeHoursUpdate" @update:timeMinutes="handleTimeMinutesUpdate" />
 
             <div class="flex flex-col gap-[30px]">
                 <MovieSchedule v-for="i in filteredMovies" v-bind="i" :key="i.title" :image="i.image" :title="i.title"

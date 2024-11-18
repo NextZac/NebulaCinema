@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import SelectOption from './SelectOption.vue';
 import Dropdown from './Dropdown.vue';
 import Checkbox from './Checkbox.vue';
+import Input from './Input.vue';
 import { ChevronDown, Drama, Filter, MapPin, ArrowRight, ArrowLeft } from 'lucide-vue-next';
 
 const DAYS_TO_SHOW = 14;
@@ -18,16 +19,20 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits(['update:date', 'update:cinema', 'update:genres', 'update:filters']);
+const emit = defineEmits(['update:date', 'update:cinema', 'update:genres', 'update:filters', 'update:timeHours', 'update:timeMinutes']);
 
 // State management
 const dropdowns = ref({
     genres: false,
     filters: false,
-    cinemas: false
+    cinemas: false,
+    timeHours: false,
+    timeMinutes: false
 });
 
 const cinemaOption = ref(0);
+
+
 const selectedGenres = ref(new Set());
 const selectedFilters = ref({
     language: new Set(),
@@ -36,6 +41,8 @@ const selectedFilters = ref({
     format: new Set(),
     ageRating: new Set()
 });
+
+const htmlLang = document.documentElement.lang;
 
 // Computed properties
 const dates = computed(() => {
@@ -46,8 +53,8 @@ const dates = computed(() => {
         const date = new Date(today);
         date.setDate(today.getDate() + i);
         result.push({
-            dayOfWeek: date.toLocaleDateString('et', { weekday: 'short' }),
-            date: date.toLocaleDateString('et', { day: 'numeric', month: 'short' }),
+            dayOfWeek: date.toLocaleDateString(htmlLang, { weekday: 'short' }),
+            date: date.toLocaleDateString(htmlLang, { day: 'numeric', month: 'short' }),
         });
     }
     return result;
@@ -65,7 +72,7 @@ const filterCategories = {
     },
     time: {
         title: 'Aeg',
-        options: ['07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
+        options: [""]
     },
     subtitles: {
         title: 'Subtiitrid',
@@ -123,7 +130,15 @@ const handleGenreChange = (genre) => {
     emit('update:genres', Array.from(selectedGenres.value));
 };
 
+const handleHourChange = (hour) => {
+    timeHoursOption.value = hour === '' ? '--' : hour.padStart(2, '0');
+    emit('update:timeHours', timeHoursOption.value);
+}
 
+const handleMinuteChange = (minute) => {
+    timeMinutesOption.value = minute === '' ? '--' : minute.padStart(2, '0');
+    emit('update:timeMinutes', timeMinutesOption.value);
+}
 
 
 // State
@@ -178,7 +193,8 @@ const scroll = (direction) => {
                 <button @click="scroll('left')"
                     class="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full group/left"
                     v-if="!isStartOfList">
-                    <ArrowLeft class="size-6 text-brand-white group-hover/left:text-brand-400 transition duration-100" />
+                    <ArrowLeft
+                        class="size-6 text-brand-white group-hover/left:text-brand-400 transition duration-100" />
                 </button>
 
                 <!-- Dates container -->
@@ -205,7 +221,8 @@ const scroll = (direction) => {
                 <button @click="scroll('right')"
                     class="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full group/right"
                     v-if="!isEndOfList">
-                    <ArrowRight class="size-6 text-brand-white group-hover/right:text-brand-400 transition duration-100" />
+                    <ArrowRight
+                        class="size-6 text-brand-white group-hover/right:text-brand-400 transition duration-100" />
                 </button>
             </div>
         </div>
@@ -259,11 +276,30 @@ const scroll = (direction) => {
                                 {{ category.title }}
                             </h2>
                             <div class="p-4">
-                                <div v-for="option in category.options" :key="option" class="mb-3">
-                                    <Checkbox :id="key + '-' + option" :modelValue="selectedFilters[key].has(option)"
+                                <div v-for="option in category.options" :key="option" class="mb-3"
+                                    :class="key === 'time' ? 'mb-56' : ''">
+                                    <Checkbox v-if="key !== 'time'" :id="key + '-' + option"
+                                        :modelValue="selectedFilters[key].has(option)"
                                         @update:modelValue="() => handleFilterChange(key, option)">
                                         {{ option }}
                                     </Checkbox>
+                                    <div v-if="key === 'time'" class="flex flex-col gap-1">
+                                        <span class="flex flex-row w-min gap-2">
+                                            <span class="flex flex-col gap-1">
+                                                <label for="timeHours" class="text-brand-white">Tund</label>
+                                                <input type="number" min="0" max="23" placeholder="--" class="bg-transparent border-brand-900 rounded-lg px-3 py-2 text-brand-white w-min"
+                                                    @update:modelValue="handleHourChange($event.target.value)" />
+                                            </span>
+                                            <span
+                                                class="text-brand-white text-title1 text-center flex items-center pt-4">:</span>
+                                            <span class="flex flex-col gap-1">
+                                                <label for="timeMinutes" class="text-brand-white">Minut</label>
+                                                <input type="number" min="0" max="59" placeholder="--" class="bg-transparent border-brand-900 rounded-lg px-3 py-2 text-brand-white w-min"
+                                                    @update:modelValue="handleMinuteChange($event.target.value)" />
+                                            </span>
+                                        </span>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -278,5 +314,16 @@ const scroll = (direction) => {
 .fader {
     mask-image: linear-gradient(to right, transparent 0%, white 2%, white 98%, transparent 100%);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, white 2%, white 98%, transparent 100%);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Hide spin buttons in Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 </style>

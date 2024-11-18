@@ -23,7 +23,8 @@ const props = defineProps({
         type: Boolean,
         default: true
     },
-    class: String
+    class: String,
+    dropdownclass: String
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -210,7 +211,7 @@ onUnmounted(() => {
         <div ref="dropdownRef"
             :class="[alignmentClasses, 'absolute z-10 my-1 w-full bg-brand-975/80 border border-brand-900 shadow-lg backdrop-blur-md rounded-md text-base focus:outline-none']"
             :style="animationStyle">
-            <div class="w-full h-full max-h-60 scroll-smooth overflow-auto sm:text-sm scrollbar-hide">
+            <div :class="props.dropdownclass" class="w-full h-full max-h-60 scroll-smooth overflow-auto sm:text-sm scrollbar-hide">
                 <ul tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                     aria-activedescendant="listbox-option-0">
                     <li v-for="(option, index) in props.options" :key="index"
