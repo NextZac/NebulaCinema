@@ -32,6 +32,8 @@ const dropdowns = ref({
 
 const cinemaOption = ref(0);
 
+const timeHours = ref('');
+const timeMinutes = ref('');
 
 const selectedGenres = ref(new Set());
 const selectedFilters = ref({
@@ -130,15 +132,55 @@ const handleGenreChange = (genre) => {
     emit('update:genres', Array.from(selectedGenres.value));
 };
 
-const handleHourChange = (hour) => {
-    timeHoursOption.value = hour === '' ? '--' : hour.padStart(2, '0');
-    emit('update:timeHours', timeHoursOption.value);
-}
+const formattedHours = computed({
+    get: () => timeHours.value === '--' ? '' : timeHours.value,
+    set: (value) => {
+        if (value === '') {
+            timeHours.value = '--';
+            emit('update:timeHours', '--');
+            return;
+        }
 
-const handleMinuteChange = (minute) => {
-    timeMinutesOption.value = minute === '' ? '--' : minute.padStart(2, '0');
-    emit('update:timeMinutes', timeMinutesOption.value);
-}
+        let num = parseInt(value);
+        if (isNaN(num)) {
+            return;
+        }
+
+        // Ensure the number is between 0 and 23
+        num = Math.min(Math.max(num, 0), 23);
+        timeHours.value = num.toString().padStart(2, '0');
+        emit('update:timeHours', timeHours.value);
+    }
+});
+
+const formattedMinutes = computed({
+    get: () => timeMinutes.value === '--' ? '' : timeMinutes.value,
+    set: (value) => {
+        if (value === '') {
+            timeMinutes.value = '--';
+            emit('update:timeMinutes', '--');
+            return;
+        }
+
+        let num = parseInt(value);
+        if (isNaN(num)) {
+            return;
+        }
+
+        // Ensure the number is between 0 and 59
+        num = Math.min(Math.max(num, 0), 59);
+        timeMinutes.value = num.toString().padStart(2, '0');
+        emit('update:timeMinutes', timeMinutes.value);
+    }
+});
+
+const handleTimeInput = (value, type) => {
+    if (type === 'hours') {
+        formattedHours.value = value;
+    } else {
+        formattedMinutes.value = value;
+    }
+};
 
 
 // State
@@ -287,15 +329,19 @@ const scroll = (direction) => {
                                         <span class="flex flex-row w-min gap-2">
                                             <span class="flex flex-col gap-1">
                                                 <label for="timeHours" class="text-brand-white">Tund</label>
-                                                <input type="number" min="0" max="23" placeholder="--" class="bg-transparent border-brand-900 rounded-lg px-3 py-2 text-brand-white w-min"
-                                                    @update:modelValue="handleHourChange($event.target.value)" />
+                                                <input type="number" min="0" max="23" :value="formattedHours" @focus="$event.target.value = ''"
+                                                    @input="handleTimeInput($event.target.value, 'hours'); if(typeof $event.target.value === 'string') $event.target.value = $event.target.value.slice(0,2)"
+                                                    class="bg-transparent border-brand-900 rounded-lg px-3 py-2 text-brand-white w-min"
+                                                    placeholder="--" />
                                             </span>
                                             <span
                                                 class="text-brand-white text-title1 text-center flex items-center pt-4">:</span>
                                             <span class="flex flex-col gap-1">
                                                 <label for="timeMinutes" class="text-brand-white">Minut</label>
-                                                <input type="number" min="0" max="59" placeholder="--" class="bg-transparent border-brand-900 rounded-lg px-3 py-2 text-brand-white w-min"
-                                                    @update:modelValue="handleMinuteChange($event.target.value)" />
+                                                <input type="number" min="0" max="59" :value="formattedMinutes" @focus="$event.target.value = ''"
+                                                    @input="handleTimeInput($event.target.value, 'minutes'); if($event.target.value.length > 2) $event.target.value = $event.target.value.slice(0,2)"
+                                                    class="bg-transparent border-brand-900 rounded-lg px-3 py-2 text-brand-white w-min"
+                                                    placeholder="--" />
                                             </span>
                                         </span>
 
