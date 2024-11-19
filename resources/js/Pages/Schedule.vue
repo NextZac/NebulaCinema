@@ -138,22 +138,16 @@ const filteredMovies = computed(() => {
             if (!selectedFilters.value.ageRating.has(movie.rating)) return false;
         }
 
-        if (selectedFilters.value.timeHours.size > 0 && selectedFilters.value.timeMinutes.size > 0) {
-            const selectedHour = Array.from(selectedFilters.value.timeHours)[0];
-            const selectedMinute = Array.from(selectedFilters.value.timeMinutes)[0];
-            
-            if (selectedHour !== '--' && selectedMinute !== '--') {
-                const selectedTime = new Date();
-                selectedTime.setHours(parseInt(selectedHour), parseInt(selectedMinute), 0, 0);
-                
-                const movieTime = movie.startingTime;
-                const timeDifference = Math.abs(movieTime.getHours() - selectedTime.getHours());
-                const minuteDifference = Math.abs(movieTime.getMinutes() - selectedTime.getMinutes());
-                
-                console.log(timeDifference, minuteDifference);
-                // Allow some flexibility, e.g., within 30 minutes
-                if (timeDifference > 0 || minuteDifference > 30) return false;
-            }
+        // Filter by time
+        const timeHoursValue = selectedFilters.value.timeHours;
+        const timeMinutesValue = selectedFilters.value.timeMinutes;
+        
+        if (timeHoursValue !== '--' && timeMinutesValue !== '--' && selectedDate.value) {
+            const selectedTime = new Date(selectedDate.value);
+            selectedTime.setHours(timeHoursValue, timeMinutesValue, 0, 0);
+            const movieTime = movie.startingTime; 
+
+            if (movieTime < selectedTime) return false;
         }
 
         // Filter by date

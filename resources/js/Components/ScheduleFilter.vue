@@ -70,7 +70,7 @@ const selectedCinema = computed(() => props.cinemas[cinemaOption.value]);
 const filterCategories = {
     language: {
         title: 'Keel',
-        options: ['Eesti', 'English', 'Russian']
+        options: ['Eesti', 'Inglise', 'Vene']
     },
     time: {
         title: 'Aeg',
@@ -78,7 +78,7 @@ const filterCategories = {
     },
     subtitles: {
         title: 'Subtiitrid',
-        options: ['Eesti', 'English', 'Russian', 'None']
+        options: ['Eesti', 'Inglise', 'Vene', 'None']
     },
     format: {
         title: 'Formaat',
@@ -91,8 +91,8 @@ const filterCategories = {
 };
 
 const genreOptions = [
-    'Action', 'Comedy', 'Drama', 'Horror', 'Romance',
-    'Sci-Fi', 'Documentary', 'Animation', 'Thriller'
+    'Märul', 'Seiklus', 'Komöödia', 'Draama', 'Õudus', 'Romantika',
+    'Ulme & Fantaasia', 'Põnevus', 'Dokumentaal', 'Animatsioon', 'Triller'
 ];
 
 // Methods
@@ -114,12 +114,14 @@ const handleCinemaChange = (index) => {
 };
 
 const handleFilterChange = (category, option) => {
+    console.log(category, option);
     const filterSet = selectedFilters.value[category];
     if (filterSet.has(option)) {
         filterSet.delete(option);
     } else {
         filterSet.add(option);
     }
+    console.log(selectedFilters.value);
     emit('update:filters', { ...selectedFilters.value });
 };
 
@@ -133,11 +135,11 @@ const handleGenreChange = (genre) => {
 };
 
 const formattedHours = computed({
-    get: () => timeHours.value === '--' ? '' : timeHours.value,
+    get: () => timeHours.value === '' ? '' : timeHours.value,
     set: (value) => {
         if (value === '') {
-            timeHours.value = '--';
-            emit('update:timeHours', '--');
+            timeHours.value = '';
+            emit('update:timeHours', '');
             return;
         }
 
@@ -154,11 +156,11 @@ const formattedHours = computed({
 });
 
 const formattedMinutes = computed({
-    get: () => timeMinutes.value === '--' ? '' : timeMinutes.value,
+    get: () => timeMinutes.value === '' ? '' : timeMinutes.value,
     set: (value) => {
         if (value === '') {
-            timeMinutes.value = '--';
-            emit('update:timeMinutes', '--');
+            timeMinutes.value = '';
+            emit('update:timeMinutes', '');
             return;
         }
 
@@ -177,10 +179,30 @@ const formattedMinutes = computed({
 const handleTimeInput = (value, type) => {
     if (type === 'hours') {
         formattedHours.value = value;
+        if (formattedMinutes.value === '' && formattedHours.value !== '') {
+            formattedMinutes.value = '00';
+        } else if (formattedHours.value === '' && formattedMinutes.value !== '') {
+            formattedHours.value = '00';
+        }
+
+        if (formattedMinutes.value === '00' && formattedHours.value === '00') {
+            formattedHours.value = '';
+            formattedMinutes.value = '';
+        }
     } else {
         formattedMinutes.value = value;
-    }
-};
+        if (formattedHours.value === '' && formattedMinutes.value !== '') {
+            formattedHours.value = '00';
+        } else if (formattedMinutes.value === '' && formattedHours.value !== '') {
+            formattedMinutes.value = '00';
+        }
+
+        if (formattedMinutes.value === '00' && formattedHours.value === '00') {
+            formattedHours.value = '';
+            formattedMinutes.value = '';
+        }
+    };
+}
 
 
 // State
@@ -289,7 +311,7 @@ const scroll = (direction) => {
                     <div class="p-4 w-64">
                         <div v-for="genre in genreOptions" :key="genre" class="mb-3">
                             <Checkbox :id="'genre-' + genre" :modelValue="selectedGenres.has(genre)"
-                                @update:modelValue="() => handleGenreChange(genre)">
+                                @change="() => handleGenreChange(genre)">
                                 {{ genre }}
                             </Checkbox>
                         </div>
@@ -322,15 +344,17 @@ const scroll = (direction) => {
                                     :class="key === 'time' ? 'mb-56' : ''">
                                     <Checkbox v-if="key !== 'time'" :id="key + '-' + option"
                                         :modelValue="selectedFilters[key].has(option)"
-                                        @update:modelValue="() => handleFilterChange(key, option)">
+                                        @change="() => handleFilterChange(key, option)">
                                         {{ option }}
                                     </Checkbox>
                                     <div v-if="key === 'time'" class="flex flex-col gap-1">
                                         <span class="flex flex-row w-min gap-2">
                                             <span class="flex flex-col gap-1">
                                                 <label for="timeHours" class="text-brand-white">Tund</label>
-                                                <input type="number" min="0" max="23" :value="formattedHours" @focus="$event.target.value = ''"
-                                                    @input="handleTimeInput($event.target.value, 'hours'); if(typeof $event.target.value === 'string') $event.target.value = $event.target.value.slice(0,2)"
+                                                <input type="number" min="0" max="23" :value="formattedHours"
+                                                    @focus="$event.target.value = ''"
+                                                    @focusout="handleTimeInput($event.target.value, 'hours')"
+                                                    @input="handleTimeInput($event.target.value, 'hours'); if (typeof $event.target.value === 'string') $event.target.value = $event.target.value.slice(0, 2)"
                                                     class="bg-transparent border-brand-900 rounded-lg px-3 py-2 text-brand-white w-min"
                                                     placeholder="--" />
                                             </span>
@@ -338,8 +362,10 @@ const scroll = (direction) => {
                                                 class="text-brand-white text-title1 text-center flex items-center pt-4">:</span>
                                             <span class="flex flex-col gap-1">
                                                 <label for="timeMinutes" class="text-brand-white">Minut</label>
-                                                <input type="number" min="0" max="59" :value="formattedMinutes" @focus="$event.target.value = ''"
-                                                    @input="handleTimeInput($event.target.value, 'minutes'); if($event.target.value.length > 2) $event.target.value = $event.target.value.slice(0,2)"
+                                                <input type="number" min="0" max="59" :value="formattedMinutes"
+                                                    @focus="$event.target.value = ''"
+                                                    @focusout="handleTimeInput($event.target.value, 'minutes')"
+                                                    @input="handleTimeInput($event.target.value, 'minutes'); if ($event.target.value.length > 2) $event.target.value = $event.target.value.slice(0, 2)"
                                                     class="bg-transparent border-brand-900 rounded-lg px-3 py-2 text-brand-white w-min"
                                                     placeholder="--" />
                                             </span>
