@@ -21,6 +21,8 @@ return new class extends Migration
             $table->enum('cinema', ['ylemiste', 't1', 'viru', 'tasku']);
             $table->enum('room', ['1', '2', '3', '4', '5', '6']);
             $table->string('language');
+            $table->string('subtitles');
+            $table->string('format');
             $table->integer('seats');
             $table->timestamps();
         });

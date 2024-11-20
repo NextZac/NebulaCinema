@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MovieSessionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,9 +29,7 @@ Route::get("/components", function () {
     return Inertia::render("Components");
 })->name("Components");
 
-Route::get("/schedule", function () {
-    return Inertia::render("Schedule");
-})->name("Schedule");
+Route::get("/schedule", [MovieSessionController::class, "index"])->name("Schedule");
 
 Route::get("/films", function () {
     return Inertia::render("Films");

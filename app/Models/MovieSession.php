@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class MovieSession extends Model
 {
+    protected $table = 'movie_session';
+
     use HasFactory;
+
 }
