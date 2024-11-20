@@ -4,7 +4,8 @@ import SelectOption from './SelectOption.vue';
 import Dropdown from './Dropdown.vue';
 import Checkbox from './Checkbox.vue';
 import Input from './Input.vue';
-import { ChevronDown, Drama, Filter, MapPin, ArrowRight, ArrowLeft } from 'lucide-vue-next';
+import { ChevronDown, Drama, Filter, MapPin, ArrowRight, ArrowLeft, X } from 'lucide-vue-next';
+import Badge from './Badge.vue';
 
 const DAYS_TO_SHOW = 14;
 
@@ -114,14 +115,19 @@ const handleCinemaChange = (index) => {
 };
 
 const handleFilterChange = (category, option) => {
-    console.log(category, option);
+    if (category === '' && option === '') {
+        Object.values(selectedFilters.value).forEach(set => set.clear());
+        emit('update:filters', { ...selectedFilters.value });
+        return;
+    }
+
     const filterSet = selectedFilters.value[category];
     if (filterSet.has(option)) {
         filterSet.delete(option);
     } else {
         filterSet.add(option);
     }
-    console.log(selectedFilters.value);
+
     emit('update:filters', { ...selectedFilters.value });
 };
 
@@ -131,6 +137,11 @@ const handleGenreChange = (genre) => {
     } else {
         selectedGenres.value.add(genre);
     }
+
+    if (genre === '') {
+        selectedGenres.value.clear();
+    }
+
     emit('update:genres', Array.from(selectedGenres.value));
 };
 
@@ -225,6 +236,8 @@ const scroll = (direction) => {
     }
 }
 
+console.log(selectedFilters.value);
+
 </script>
 
 <template>
@@ -233,7 +246,10 @@ const scroll = (direction) => {
         <div class="flex-1 flex items-center">
             <div class="h-full flex items-center relative">
                 <a @click="toggleDropdown('cinemas')"
-                    class="group text-brand-white text-subtitle inline-flex items-center hover:text-brand-400 cursor-pointer select-none text-nowrap">
+                    class="group text-brand-white text-subtitle inline-flex items-center hover:text-brand-400 cursor-pointer select-none text-nowrap"
+                    :class="dropdowns['cinemas']
+                        ? 'pointer-events-none'
+                        : 'pointer-events-auto'">
                     <MapPin class="size-7 mr-3 text-brand-white/60 group-hover:text-brand-400/60" />
                     <span class="flex flex-col">
                         <p class="text-detail group-hover:text-brand-400/60 text-brand-white/60">Kino</p>
@@ -296,11 +312,22 @@ const scroll = (direction) => {
             <!-- Genres -->
             <div class="h-full flex items-center relative">
                 <a @click="toggleDropdown('genres')"
-                    class="group text-brand-white text-subtitle inline-flex items-center hover:text-brand-400 cursor-pointer select-none text-nowrap">
-                    <Drama class="size-7 mr-3 text-brand-white/60 group-hover:text-brand-400/60" />
+                    class="group text-brand-white text-subtitle inline-flex items-center hover:text-brand-400 cursor-pointer select-none text-nowrap"
+                    :class="dropdowns['genres']
+                        ? '!text-brand-400 pointer-events-none'
+                        : 'pointer-events-auto'">
+                    <Drama class="size-7 mr-3 text-brand-white/60 group-hover:text-brand-400/60"
+                        :class="dropdowns['genres'] ? '!text-brand-400/60' : ''" />
                     <span class="flex flex-col">
-                        <p class="text-detail group-hover:text-brand-400/60 text-brand-white/60">Genre</p>
-                        <p>Kõik</p>
+                        <p class="text-detail group-hover:text-brand-400/60 text-brand-white/60"
+                            :class="dropdowns['genres'] ? '!text-brand-400/60' : ''">Genre</p>
+                        <p v-if="selectedGenres.size <= 1"> {{ selectedGenres.size === 0 ? 'Kõik' :
+                            selectedGenres.values().next().value }}</p>
+                        <Badge :class="dropdowns['filters'] ? 'cursor-default' : 'cursor-pointer'" v-if="selectedGenres.size > 1" type="solid">{{ selectedGenres.size
+                            + ' valitud' }} <X
+                                class="size-4 ml-2 cursor-pointer hover:text-brand-error pointer-events-auto"
+                                @click="() => handleGenreChange('')"></X>
+                        </Badge>
                     </span>
                     <ChevronDown :class="[
                         'w-4 h-4 ml-2 transition-transform duration-100',
@@ -311,7 +338,7 @@ const scroll = (direction) => {
                     <div class="p-4 w-64">
                         <div v-for="genre in genreOptions" :key="genre" class="mb-3">
                             <Checkbox :id="'genre-' + genre" :modelValue="selectedGenres.has(genre)"
-                                @change="() => handleGenreChange(genre)">
+                                :checked="selectedGenres.has(genre)" @change="() => handleGenreChange(genre)">
                                 {{ genre }}
                             </Checkbox>
                         </div>
@@ -322,11 +349,29 @@ const scroll = (direction) => {
             <!-- Filters -->
             <div class="h-full flex items-center relative">
                 <a @click="toggleDropdown('filters')"
-                    class="group text-brand-white text-subtitle inline-flex items-center hover:text-brand-400 cursor-pointer select-none text-nowrap">
-                    <Filter class="size-7 mr-3 text-brand-white/60 group-hover:text-brand-400/60" />
+                    class="group text-brand-white text-subtitle inline-flex items-center hover:text-brand-400 cursor-pointer select-none text-nowrap" :class="dropdowns['filters']
+                        ? '!text-brand-400 pointer-events-none'
+                        : 'pointer-events-auto'">
+                    <Filter class="size-7 mr-3 text-brand-white/60 group-hover:text-brand-400/60" :class="dropdowns['filters'] ? '!text-brand-400/60' : ''" />
                     <span class="flex flex-col">
-                        <p class="text-detail group-hover:text-brand-400/60 text-brand-white/60">Filter</p>
-                        <p>Kõik</p>
+                        <p class="text-detail group-hover:text-brand-400/60 text-brand-white/60" :class="dropdowns['filters'] ? '!text-brand-400/60' : ''">Filter</p>
+                        <p
+                            v-if="Object.values(selectedFilters).reduce((sum, set) => sum + set.size, 0) + (timeHours.value || timeMinutes.value ? 1 : 0) <= 1">
+                            {{ Object.values(selectedFilters).reduce((sum, set) => sum + set.size, 0) + (timeHours.value
+                                || timeMinutes.value ? 1 : 0) === 0
+                                ? 'Kõik'
+                                : timeHours.value || timeMinutes.value
+                                    ? `${timeHours.value || '00'}:${timeMinutes.value || '00'}`
+                            : Object.values(selectedFilters).find(set => set.size > 0)?.values().next().value }}
+                        </p>
+                        <Badge :class="dropdowns['filters'] ? 'cursor-default' : 'cursor-pointer'"
+                            v-if="Object.values(selectedFilters).reduce((sum, set) => sum + set.size, 0) + (timeHours.value || timeMinutes.value ? 1 : 0) > 1"
+                            type="solid">
+                            {{ Object.values(selectedFilters).reduce((sum, set) => sum + set.size, 0) + (timeHours.value
+                                || timeMinutes.value ? 1 : 0) + ' valitud' }}
+                            <X class="size-4 ml-2 cursor-pointer hover:text-brand-error pointer-events-auto"
+                                @click="() => handleFilterChange('', '')"></X>
+                        </Badge>
                     </span>
                     <ChevronDown :class="[
                         'w-4 h-4 ml-2 transition-transform duration-100',
@@ -344,7 +389,8 @@ const scroll = (direction) => {
                                     :class="key === 'time' ? 'mb-56' : ''">
                                     <Checkbox v-if="key !== 'time'" :id="key + '-' + option"
                                         :modelValue="selectedFilters[key].has(option)"
-                                        @change="() => handleFilterChange(key, option)">
+                                        @change="() => handleFilterChange(key, option)"
+                                        :checked="selectedFilters[key].has(option)">
                                         {{ option }}
                                     </Checkbox>
                                     <div v-if="key === 'time'" class="flex flex-col gap-1">

@@ -19,7 +19,7 @@ switch (props.type) {
 </script>
 
 <template>
-    <span :class="[typeClass + 'text-brand-white px-[10px] py-[2px] rounded w-min h-min flex content-center drop-shadow-lg text-nowrap']">
+    <span :class="[typeClass + 'text-brand-white px-[10px] py-[2px] rounded w-min h-min flex content-center drop-shadow-lg text-nowrap flex items-center']">
         <slot></slot>
     </span>
 </template>
