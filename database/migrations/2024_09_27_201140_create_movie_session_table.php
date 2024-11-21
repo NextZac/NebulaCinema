@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('movie_id')->constrained()->onDelete('cascade');
             $table->dateTime('start_time');
-            $table->dateTime('end_time');
             $table->integer('main_price');
             $table->integer('vip_price');
             $table->enum('cinema', ['ylemiste', 't1', 'viru', 'tasku']);

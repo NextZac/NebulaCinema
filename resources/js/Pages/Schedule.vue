@@ -8,6 +8,11 @@ import ScheduleFilter from '@/Components/ScheduleFilter.vue';
 
 import { AlertCircle } from 'lucide-vue-next';
 
+const props = defineProps({
+    movie_session: Array,
+});
+
+/*
 const topMovies = [
     {
         categories: [
@@ -86,7 +91,7 @@ const topMovies = [
         subtitles: "Eesti, Vene",
         language: "Eesti",
     },
-];
+]; */
 
 const selectedDate = ref('');
 const selectedCinema = ref('');
@@ -100,113 +105,67 @@ const selectedFilters = ref({
     ageRating: new Set()
 });
 
-const getTimeIndex = (time) => {
-    const hours = time.getHours();
-    const minutes = time.getMinutes();
-    return Math.floor((hours * 60 + minutes) / 10);
-};
-
-const filteredMovies = computed(() => {
-    return topMovies.filter(movie => {
-        // Filter by cinema
-        if (selectedCinema.value && selectedCinema.value !== 'Kõik kinod' && movie.cinema !== selectedCinema.value) return false;
-
-        // Filter by genres
-        if (selectedGenres.value.length > 0) {
-            const movieGenres = movie.categories.map(cat => cat.name);
-            if (!selectedGenres.value.some(genre => movieGenres.includes(genre))) return false;
-        }
-
-        // Filter by format
-        if (selectedFilters.value.format.size > 0) {
-            if (!selectedFilters.value.format.has(movie.format)) return false;
-        }
-
-        // Filter by language
-        if (selectedFilters.value.language.size > 0) {
-            if (!selectedFilters.value.language.has(movie.language)) return false;
-        }
-
-        // Filter by subtitles
-        if (selectedFilters.value.subtitles.size > 0) {
-            const movieSubtitles = movie.subtitles.split(', ');
-            if (!Array.from(selectedFilters.value.subtitles).some(sub => movieSubtitles.includes(sub))) return false;
-        }
-
-        // Filter by age rating
-        if (selectedFilters.value.ageRating.size > 0) {
-            if (!selectedFilters.value.ageRating.has(movie.rating)) return false;
-        }
-
-        // Filter by time
-        const timeHoursValue = selectedFilters.value.timeHours;
-        const timeMinutesValue = selectedFilters.value.timeMinutes;
-        
-        if (timeHoursValue !== '--' && timeMinutesValue !== '--' && selectedDate.value) {
-            const selectedTime = new Date(selectedDate.value);
-            selectedTime.setHours(timeHoursValue, timeMinutesValue, 0, 0);
-            const movieTime = movie.startingTime; 
-
-            if (movieTime < selectedTime) return false;
-        }
-
-        // Filter by date
-        if (selectedDate.value) {
-            if (movie.startingTime.getDate() !== new Date(selectedDate.value).getDate()) return false;
-        }
-
-        return true;
-    });
-});
-
 const htmlLang = document.documentElement.lang;
 
 const handleDateUpdate = (date) => {
-    const months = {
-        jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
-        jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12'
-    };
-
-    // If the locale is 'et' (Estonian), handle the "19. nov" format
-    if (htmlLang === 'et') {
-        const [day, monthName] = date.split('.').map(str => str.trim());
-        const currentYear = new Date().getFullYear();
-        const formattedDate = `${currentYear}-${months[monthName.toLowerCase()]}-${day.padStart(2, '0')}`;
-        selectedDate.value = formattedDate;
-    }
-    // If the locale is 'en-US' (English US), handle the "MM/DD/YYYY" format
-    else if (htmlLang === 'en') {
-        const [monthName, day] = date.split(' ').map(str => str.trim());
-        const currentYear = new Date().getFullYear();
-        const formattedDate = `${currentYear}-${months[monthName.toLowerCase()]}-${day.padStart(2, '0')}`;
-        selectedDate.value = formattedDate;
-    }
+    selectedDate.value = date;
+    fetchMovies();
 };
 
 const handleCinemaUpdate = (cinema) => {
     selectedCinema.value = cinema;
+    fetchMovies();
 };
 
 const handleGenresUpdate = (genres) => {
     selectedGenres.value = genres;
+    fetchMovies();
 };
 
 const handleFiltersUpdate = (filters) => {
     selectedFilters.value = filters;
+    fetchMovies();
 };
 
 const handleTimeHoursUpdate = (timeHours) => {
     selectedFilters.value.timeHours = timeHours;
+    fetchMovies();
 };
 
 const handleTimeMinutesUpdate = (timeMinutes) => {
     selectedFilters.value.timeMinutes = timeMinutes;
+    fetchMovies();
 };
 
 onMounted(() => {
     const today = new Date();
     selectedDate.value = today.toISOString().split('T')[0];
+
+    selectedFilters.value.timeHours = ""
+    selectedFilters.value.timeMinutes = ""
+    fetchMovies();
 });
+
+const fetchMovies = () => {
+
+    axios.get(route('Schedule'), {
+        params: {
+            date: selectedDate.value,
+            cinema: selectedCinema.value,
+            genres: Array.from(selectedGenres.value),
+            language: Array.from(selectedFilters.value.language),
+            subtitles: Array.from(selectedFilters.value.subtitles),
+            format: Array.from(selectedFilters.value.format),
+            ageRating: Array.from(selectedFilters.value.ageRating),
+            timeHours: selectedFilters.value.timeHours,
+            timeMinutes: selectedFilters.value.timeMinutes
+        }
+    }).then(response => {
+        props.movie_session.value = response.data;
+    }).catch(error => {
+        console.error(error);
+    });
+};
 
 </script>
 
@@ -227,21 +186,21 @@ onMounted(() => {
                 @update:genres="handleGenresUpdate" @update:filters="handleFiltersUpdate" @update:timeHours="handleTimeHoursUpdate" @update:timeMinutes="handleTimeMinutesUpdate" />
 
             <div class="flex flex-col gap-[30px]">
-                <MovieSchedule v-for="i in filteredMovies" v-bind="i" :key="i.title" :image="i.image" :title="i.title"
-                    :titleEng="i.titleEng" href="#"
-                    :startingTime="i.startingTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })"
-                    :cinema="i.cinema" :cinemaRoom="i.cinemaRoom" :freeSeats="i.freeSeats" :subtitles="i.subtitles"
-                    :language="i.language" :style="`order: ${getTimeIndex(i.startingTime)};`" :videoUrl="i.trailer">
+                <MovieSchedule v-for="i in movie_session" v-bind="i" :key="i.movie.title" :image="i.movie.image" :title="i.movie.title"
+                    :titleEng="i.movie.titleEng" href="#"
+                    :startingTime="i.start_time"
+                    :cinema="i.cinema" :cinemaRoom="i.room" :freeSeats="i.seats" :subtitles="i.subtitles"
+                    :language="i.language"  :videoUrl="i.trailer">
                     <template #imageBadges>
                         <Badge type="solid"> {{ i.format }}</Badge>
-                        <Badge> {{ i.rating }} </Badge>
+                        <Badge> {{ age_rating }} </Badge>
                     </template>
 
                     <template #badges>
                         <Badge v-for="cat in i.categories">{{ cat.name }} </Badge>
                     </template>
                 </MovieSchedule>
-                <Alert v-if="filteredMovies.length === 0" type="error" class="justify-center items-center">
+                <Alert v-if="movie_session.length === 0" type="error" class="justify-center items-center">
                     <template #icon>
                         <AlertCircle class="size-8 text-brand-error" />
                     </template>
