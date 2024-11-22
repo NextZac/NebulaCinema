@@ -93,13 +93,17 @@ const topMovies = [
     },
 ]; */
 
+const movie_session = ref(props.movie_session);
+
+console.log(movie_session.value);
+
 const selectedDate = ref('');
 const selectedCinema = ref('');
 const selectedGenres = ref([]);
 const selectedFilters = ref({
     language: new Set(),
-    timeHours: new Set(),
-    timeMinutes: new Set(),
+    timeHours: '', // Default hours
+    timeMinutes: '', // Default minutes
     subtitles: new Set(),
     format: new Set(),
     ageRating: new Set()
@@ -123,32 +127,36 @@ const handleGenresUpdate = (genres) => {
 };
 
 const handleFiltersUpdate = (filters) => {
-    selectedFilters.value = filters;
+    console.log("First: ",selectedFilters.value.timeHours, selectedFilters.value.timeMinutes);
+
+    selectedFilters.value = {
+        ...selectedFilters.value, // Keep the existing values
+        ...filters, // Override with new filter values
+        timeHours: filters.timeHours !== undefined ? filters.timeHours : selectedFilters.value.timeHours,
+        timeMinutes: filters.timeMinutes !== undefined ? filters.timeMinutes : selectedFilters.value.timeMinutes,
+    };
+    console.log("Second", selectedFilters.value.timeHours, selectedFilters.value.timeMinutes);
     fetchMovies();
 };
 
-const handleTimeHoursUpdate = (timeHours) => {
-    selectedFilters.value.timeHours = timeHours;
-    fetchMovies();
-};
-
-const handleTimeMinutesUpdate = (timeMinutes) => {
-    selectedFilters.value.timeMinutes = timeMinutes;
+const handleTimeUpdate = (value, type) => {
+    if (type === 'hours') {
+        selectedFilters.value.timeHours = value;
+    } else {
+        selectedFilters.value.timeMinutes = value;
+    }
     fetchMovies();
 };
 
 onMounted(() => {
     const today = new Date();
     selectedDate.value = today.toISOString().split('T')[0];
-
-    selectedFilters.value.timeHours = ""
-    selectedFilters.value.timeMinutes = ""
     fetchMovies();
 });
 
 const fetchMovies = () => {
 
-    axios.get(route('Schedule'), {
+    axios.get(route('Schedule.update'), {
         params: {
             date: selectedDate.value,
             cinema: selectedCinema.value,
@@ -156,12 +164,14 @@ const fetchMovies = () => {
             language: Array.from(selectedFilters.value.language),
             subtitles: Array.from(selectedFilters.value.subtitles),
             format: Array.from(selectedFilters.value.format),
-            ageRating: Array.from(selectedFilters.value.ageRating),
+            age_rating: Array.from(selectedFilters.value.ageRating),
             timeHours: selectedFilters.value.timeHours,
             timeMinutes: selectedFilters.value.timeMinutes
         }
     }).then(response => {
-        props.movie_session.value = response.data;
+        console.log("first", movie_session.value);
+        movie_session.value = response.data;
+        console.log("second", movie_session);
     }).catch(error => {
         console.error(error);
     });
@@ -183,17 +193,17 @@ const fetchMovies = () => {
             </Alert>
 
             <ScheduleFilter @update:date="handleDateUpdate" @update:cinema="handleCinemaUpdate"
-                @update:genres="handleGenresUpdate" @update:filters="handleFiltersUpdate" @update:timeHours="handleTimeHoursUpdate" @update:timeMinutes="handleTimeMinutesUpdate" />
+                @update:genres="handleGenresUpdate" @update:filters="handleFiltersUpdate"
+                @update:timeHours="(value) => handleTimeUpdate(value, 'hours')" @update:timeMinutes="(value) => handleTimeUpdate(value, 'minutes')" />
 
             <div class="flex flex-col gap-[30px]">
-                <MovieSchedule v-for="i in movie_session" v-bind="i" :key="i.movie.title" :image="i.movie.image" :title="i.movie.title"
-                    :titleEng="i.movie.titleEng" href="#"
-                    :startingTime="i.start_time"
+                <MovieSchedule v-for="i in movie_session" v-bind="i" :key="i.movie.title" :image="i.image"
+                    :title="i.movie.title" :titleEng="i.movie.titleEng" href="#" :startingTime="i.start_time"
                     :cinema="i.cinema" :cinemaRoom="i.room" :freeSeats="i.seats" :subtitles="i.subtitles"
-                    :language="i.language"  :videoUrl="i.trailer">
+                    :language="i.language" :videoUrl="i.trailer">
                     <template #imageBadges>
                         <Badge type="solid"> {{ i.format }}</Badge>
-                        <Badge> {{ age_rating }} </Badge>
+                        <Badge> {{ i.movie.age_rating }} </Badge>
                     </template>
 
                     <template #badges>

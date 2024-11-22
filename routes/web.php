@@ -29,7 +29,8 @@ Route::get("/components", function () {
     return Inertia::render("Components");
 })->name("Components");
 
-Route::get("/schedule", [MovieSessionController::class, "index"])->name("Schedule");
+Route::get('/schedule', [MovieSessionController::class, 'index'])->name('Schedule');
+Route::get('/schedule/update', [MovieSessionController::class, 'filter'])->name('Schedule.update');
 
 Route::get("/films", function () {
     return Inertia::render("Films");

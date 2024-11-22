@@ -4,15 +4,71 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\MovieSession;
+use Carbon\Traits\ToStringFormat;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Log;
+
 class MovieSessionController extends Controller
 {
 
-    public function index(Request $request)
+    public function index()
     {
+        $query = MovieSession::with([
+            'movie' => function ($query) {
+                $query->select('id', 'title', 'titleEng', 'age_rating', 'length');
+            }
+        ]);
+
+
+        $movie_session = $query->get()->map(function ($session) {
+
+            if ($session->cinema === 't1') {
+                $session->cinema = 'Nebula T1';
+            } elseif ($session->cinema === 'viru') {
+                $session->cinema = 'Nebula Viru';
+            } elseif ($session->cinema === 'tasku') {
+                $session->cinema = 'Nebula Tasku';
+            } elseif ($session->cinema === 'ylemiste') {
+                $session->cinema = 'Nebula Ülemiste';
+            }
+
+            return [
+                'id' => $session->id,
+                'movie_id' => $session->movie_id,
+                'start_time' => $session->start_time,
+                'end_time' => $session->end_time,
+                'cinema' => $session->cinema,
+                'room' => "Room " . $session->room,
+                'language' => $session->language,
+                'subtitles' => $session->subtitles,
+                'format' => $session->format,
+                'seats' => $session->seats,
+                'main_price' => $session->main_price,
+                'vip_price' => $session->vip_price,
+                'categories' => $session->movie->categories->map(function ($category) {
+                    return ['name' => $category->name];
+                }),
+                'movie' => $session->movie ? [
+                    'title' => $session->movie->title,
+                    'titleEng' => $session->movie->titleEng,
+                    'age_rating' => $session->movie->age_rating,
+                    'length' => $session->movie->length,
+                ] : null
+            ];
+        });
+
+
+        return Inertia::render("Schedule", [
+            "movie_session" => $movie_session,
+        ]);
+    }
+
+    public function filter(Request $request)
+    {
+
         $query = MovieSession::with([
             'movie' => function ($query) {
                 $query->select('id', 'title', 'titleEng', 'age_rating', 'length');
@@ -21,8 +77,8 @@ class MovieSessionController extends Controller
 
         if ($request->has('date')) {
             // Get the date string from the request (for example, '1. dets')
-            $dateString = $request->date; 
-        
+            $dateString = $request->date;
+
             // Define a mapping of Estonian months to English months
             $monthMapping = [
                 'dets' => 'December',
@@ -38,7 +94,7 @@ class MovieSessionController extends Controller
                 'oktoober' => 'October',
                 'november' => 'November',
             ];
-        
+
             // Replace Estonian month name with English month name
             foreach ($monthMapping as $estonian => $english) {
                 // Replace 'dets' with 'December', etc.
@@ -47,18 +103,28 @@ class MovieSessionController extends Controller
                     break; // Stop after replacing the first match
                 }
             }
-        
+
             // Now parse the formatted date (e.g., '1 December')
             $date = Carbon::parse($dateString);
-        
+
             // Apply the parsed date to your query
             $query->whereDate('start_time', $date);
         }
-        
 
-        if ($request->has('cinema') && $request->input('cinema') !== 'Kõik kinod') {
+
+        if ($request->has('cinema') && ($request->input('cinema') !== 'Kõik kinod' || '')) {
             $query->where('cinema', $request->input('cinema'));
         }
+
+        log::info($request->input('cinema'));
+        log::info($request->input('language'));
+        log::info($request->input('subtitles'));
+        log::info($request->input('format'));
+        log::info($request->input('genres'));
+        log::info($request->input('age_rating'));
+        log::info($request->input('timeHours'));
+        log::info($request->input('timeMinutes'));
+    
 
         if ($request->has('language') && !empty($request->input('language'))) {
             $query->where('language', $request->input('language'));
@@ -94,16 +160,25 @@ class MovieSessionController extends Controller
             });
         }
 
-
-
         $movie_session = $query->get()->map(function ($session) {
+
+            if ($session->cinema === 't1') {
+                $session->cinema = 'Nebula T1';
+            } elseif ($session->cinema === 'viru') {
+                $session->cinema = 'Nebula Viru';
+            } elseif ($session->cinema === 'tasku') {
+                $session->cinema = 'Nebula Tasku';
+            } elseif ($session->cinema === 'ylemiste') {
+                $session->cinema = 'Nebula Ülemiste';
+            }
+
             return [
                 'id' => $session->id,
                 'movie_id' => $session->movie_id,
                 'start_time' => $session->start_time,
                 'end_time' => $session->end_time,
                 'cinema' => $session->cinema,
-                'room' => $session->room,
+                'room' => "Room " . $session->room,
                 'language' => $session->language,
                 'subtitles' => $session->subtitles,
                 'format' => $session->format,
@@ -122,8 +197,6 @@ class MovieSessionController extends Controller
             ];
         });
 
-        return Inertia::render("Schedule", [
-            "movie_session" => $movie_session,
-        ]);
+        return response()->json($movie_session);
     }
 }

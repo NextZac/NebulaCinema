@@ -16,7 +16,7 @@ const props = defineProps({
     startingTime: String,
     cinema: String,
     cinemaRoom: String,
-    freeSeats: String,
+    freeSeats: Number,
     subtitles: String,
     language: String,
     videoUrl: String

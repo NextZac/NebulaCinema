@@ -236,8 +236,6 @@ const scroll = (direction) => {
     }
 }
 
-console.log(selectedFilters.value);
-
 </script>
 
 <template>
