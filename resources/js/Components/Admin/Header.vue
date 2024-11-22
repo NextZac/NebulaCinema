@@ -14,7 +14,6 @@ import { usePage, router } from "@inertiajs/vue3";
 
 const { props } = usePage();
 const user = ref(router.page.props.auth.user);
-console.log(user.value.name);
 </script>
 
 <style>

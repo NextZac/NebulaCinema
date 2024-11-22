@@ -45,8 +45,6 @@ import AdminLayout from "@/Layouts/AdminLayout.vue";
 const { props } = usePage();
 const posts = ref(props.movies);
 
-console.log(posts.value);
-
 const deletePost = (id) => {
     if (confirm("Are you sure you want to delete this post?")) {
         router.delete(`/admin/posts/${id}`);

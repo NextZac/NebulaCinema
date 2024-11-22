@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->string("director");
             $table->string("age_rating");
             $table->date("release_date");
+            $table->string("trailer");
             $table->timestamps();
         });
     }
@@ -30,7 +31,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        // Schema::dropIfExists("movie_session");
-        // Schema::dropIfExists("movies");
+        Schema::dropIfExists("movies");
     }
 };

@@ -1,16 +1,13 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted, watchEffect } from 'vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import Alert from '@/Components/Alert.vue';
 import MovieSchedule from '@/Components/MovieSchedule.vue';
+import MovieScheduleSkeleton from '@/Components/MovieScheduleSkeleton.vue';
 import Badge from '@/Components/Badge.vue';
 import ScheduleFilter from '@/Components/ScheduleFilter.vue';
 
 import { AlertCircle } from 'lucide-vue-next';
-
-const props = defineProps({
-    movie_session: Array,
-});
 
 /*
 const topMovies = [
@@ -93,12 +90,13 @@ const topMovies = [
     },
 ]; */
 
-const movie_session = ref(props.movie_session);
+const movie_session = ref([]);
 
-console.log(movie_session.value);
+const isLoading = ref(false);
+const error = ref(null);
 
 const selectedDate = ref('');
-const selectedCinema = ref('');
+const selectedCinema = ref('Kõik kinod');
 const selectedGenres = ref([]);
 const selectedFilters = ref({
     language: new Set(),
@@ -113,30 +111,23 @@ const htmlLang = document.documentElement.lang;
 
 const handleDateUpdate = (date) => {
     selectedDate.value = date;
-    fetchMovies();
 };
 
 const handleCinemaUpdate = (cinema) => {
     selectedCinema.value = cinema;
-    fetchMovies();
 };
 
 const handleGenresUpdate = (genres) => {
     selectedGenres.value = genres;
-    fetchMovies();
 };
 
 const handleFiltersUpdate = (filters) => {
-    console.log("First: ",selectedFilters.value.timeHours, selectedFilters.value.timeMinutes);
-
     selectedFilters.value = {
         ...selectedFilters.value, // Keep the existing values
         ...filters, // Override with new filter values
         timeHours: filters.timeHours !== undefined ? filters.timeHours : selectedFilters.value.timeHours,
         timeMinutes: filters.timeMinutes !== undefined ? filters.timeMinutes : selectedFilters.value.timeMinutes,
     };
-    console.log("Second", selectedFilters.value.timeHours, selectedFilters.value.timeMinutes);
-    fetchMovies();
 };
 
 const handleTimeUpdate = (value, type) => {
@@ -145,7 +136,39 @@ const handleTimeUpdate = (value, type) => {
     } else {
         selectedFilters.value.timeMinutes = value;
     }
-    fetchMovies();
+};
+
+const fetchMovies = () => {
+    const params = {
+        date: selectedDate.value,
+        cinema: selectedCinema.value,
+        genres: Array.from(selectedGenres.value),
+        language: Array.from(selectedFilters.value.language),
+        subtitles: Array.from(selectedFilters.value.subtitles),
+        format: Array.from(selectedFilters.value.format),
+        age_rating: Array.from(selectedFilters.value.ageRating),
+        timeHours: selectedFilters.value.timeHours,
+        timeMinutes: selectedFilters.value.timeMinutes
+    };
+
+    isLoading.value = true;
+    error.value = null;
+
+    try {
+        axios.get(route('Schedule.update'), {
+            params
+        }).then(response => {
+            isLoading.value = false;
+            movie_session.value = response.data;
+        }).catch(error => {
+            console.error(error);
+        });
+    } catch (error) {
+        error.value = error;
+        isLoading.value = false;
+        movie_session.value = [];
+        console.error('Failed to fetch movies:', error);
+    }
 };
 
 onMounted(() => {
@@ -154,28 +177,16 @@ onMounted(() => {
     fetchMovies();
 });
 
-const fetchMovies = () => {
-
-    axios.get(route('Schedule.update'), {
-        params: {
-            date: selectedDate.value,
-            cinema: selectedCinema.value,
-            genres: Array.from(selectedGenres.value),
-            language: Array.from(selectedFilters.value.language),
-            subtitles: Array.from(selectedFilters.value.subtitles),
-            format: Array.from(selectedFilters.value.format),
-            age_rating: Array.from(selectedFilters.value.ageRating),
-            timeHours: selectedFilters.value.timeHours,
-            timeMinutes: selectedFilters.value.timeMinutes
-        }
-    }).then(response => {
-        console.log("first", movie_session.value);
-        movie_session.value = response.data;
-        console.log("second", movie_session);
-    }).catch(error => {
-        console.error(error);
+watchEffect(() => {
+    console.log('Dependencies changed:', {
+        date: selectedDate.value,
+        cinema: selectedCinema.value,
+        genres: selectedGenres.value,
+        filters: selectedFilters.value
     });
-};
+
+    fetchMovies();
+});
 
 </script>
 
@@ -194,29 +205,42 @@ const fetchMovies = () => {
 
             <ScheduleFilter @update:date="handleDateUpdate" @update:cinema="handleCinemaUpdate"
                 @update:genres="handleGenresUpdate" @update:filters="handleFiltersUpdate"
-                @update:timeHours="(value) => handleTimeUpdate(value, 'hours')" @update:timeMinutes="(value) => handleTimeUpdate(value, 'minutes')" />
+                @update:timeHours="(value) => handleTimeUpdate(value, 'hours')"
+                @update:timeMinutes="(value) => handleTimeUpdate(value, 'minutes')" />
 
             <div class="flex flex-col gap-[30px]">
-                <MovieSchedule v-for="i in movie_session" v-bind="i" :key="i.movie.title" :image="i.image"
-                    :title="i.movie.title" :titleEng="i.movie.titleEng" href="#" :startingTime="i.start_time"
-                    :cinema="i.cinema" :cinemaRoom="i.room" :freeSeats="i.seats" :subtitles="i.subtitles"
-                    :language="i.language" :videoUrl="i.trailer">
-                    <template #imageBadges>
-                        <Badge type="solid"> {{ i.format }}</Badge>
-                        <Badge> {{ i.movie.age_rating }} </Badge>
-                    </template>
+                <template v-if="isLoading">
+                    <!-- Multiple skeleton loaders -->
+                    <MovieScheduleSkeleton v-for="n in 6" :key="n" />
+                </template>
 
-                    <template #badges>
-                        <Badge v-for="cat in i.categories">{{ cat.name }} </Badge>
-                    </template>
-                </MovieSchedule>
-                <Alert v-if="movie_session.length === 0" type="error" class="justify-center items-center">
+                <template v-else-if="movie_session.length > 0 && !isLoading">
+                    <MovieSchedule v-for="(i, index) in movie_session" v-bind="i" :key="i.movie.title + index"
+                        :image="i.image" :title="i.movie.title" :titleEng="i.movie.titleEng" href="#"
+                        :startingTime="i.start_time" :cinema="i.cinema" :cinemaRoom="i.room" :freeSeats="i.seats"
+                        :subtitles="i.subtitles" :language="i.language" :videoUrl="i.movie.trailer">
+                        <template #imageBadges>
+                            <Badge type="solid">{{ i.format }}</Badge>
+                            <Badge>{{ i.movie.age_rating }}</Badge>
+                        </template>
+
+                        <template #badges>
+                            <Badge v-for="cat in i.categories" :key="cat.name">
+                                {{ cat.name }}
+                            </Badge>
+                        </template>
+                    </MovieSchedule>
+                </template>
+
+                <Alert v-else type="error" class="justify-center items-center">
                     <template #icon>
                         <AlertCircle class="size-8 text-brand-error" />
                     </template>
 
                     <template #description>
-                        <span class="text-title1">No movies found with the selected filters.</span>
+                        <span class="text-title1">
+                            {{ error?.message || 'No movies found with the selected filters.' }}
+                        </span>
                     </template>
                 </Alert>
             </div>

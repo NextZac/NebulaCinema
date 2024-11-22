@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Movie;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -21,14 +22,14 @@ class HomeController extends Controller
             ];
         });
 
-        $upcomingMovies = Movie::all()->map(function ($movie) {
+        $upcomingMovies = Movie::whereNotNull('release_date')->where('release_date', '>', Carbon::now())->get()->map(function ($movie) {
             return [
                 "id" => $movie->id,
                 "title" => $movie->title,
                 "titleEng" => $movie->titleEng,
                 "categories" => $movie->categories, // Ensure this is formatted properly
                 "rating" => $movie->age_rating,
-                "starting" => $movie->release_date, // Example field
+                "starting" => Carbon::parse($movie->release_date)->format('d.m.Y'), // Example field
                 "image" => $movie->image_path ?? null,
             ];
         });

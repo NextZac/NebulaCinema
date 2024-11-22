@@ -14,6 +14,7 @@ import Modal from "@/Components/Modal.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import SelectOption from "@/Components/SelectOption.vue";
 import MovieSchedule from "@/Components/MovieSchedule.vue";
+import MovieScheduleSkeleton from "@/Components/MovieScheduleSkeleton.vue";
 import Alert from "@/Components/Alert.vue";
 import VideoModal from "@/Components/VideoModal.vue";
 
@@ -40,7 +41,6 @@ const dropdowns = ref({
 
 const toggleDropdown = (key) => {
     dropdowns.value[key] = !dropdowns.value[key];
-    console.log(dropdowns.value[key]);
 };
 
 const dropdownOptions = {
@@ -657,6 +657,7 @@ const movies = [
                         <Badge>Animatsioon</Badge>
                     </template>
                 </MovieSchedule>
+                <MovieScheduleSkeleton />
             </div>
 
             <!-- Top Movie -->

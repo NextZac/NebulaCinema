@@ -31,7 +31,6 @@ const emit = defineEmits(['update:modelValue']);
 const isDropdownOpen = ref(props.isOpen);
 const dropdownRef = ref(null);
 
-console.log(isDropdownOpen.value);
 
 watch(
     () => props.isOpen,

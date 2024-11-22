@@ -12,7 +12,6 @@ const props = defineProps({
     upcomingMovies: Array,
 });
 
-console.log(props.upcomingMovies[0]);
 </script>
 
 <template>

@@ -22,7 +22,6 @@ const calendarDay = "m-px size-10 flex justify-center items-center border border
 const currentMonth = ref(currentDate.value.getMonth());
 const currentYear = ref(currentDate.value.getFullYear());
 
-console.log(currentMonth.value, currentYear.value)
 
 const calendarDays = computed(() => {
     const firstDay = new Date(currentYear.value, currentMonth.value, 1);
