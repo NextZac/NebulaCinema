@@ -62,13 +62,13 @@ class MovieSessionController extends Controller
 
 
         if ($request->has('cinema') && ($request->input('cinema') !== 'Kõik kinod')) {
-            if($request->input('cinema') === 'Nebula T1') {
+            if ($request->input('cinema') === 'Nebula T1') {
                 $query->where('cinema', 't1');
-            } elseif($request->input('cinema') === 'Nebula Viru') {
+            } elseif ($request->input('cinema') === 'Nebula Viru') {
                 $query->where('cinema', 'viru');
-            } elseif($request->input('cinema') === 'Nebula Tasku') {
+            } elseif ($request->input('cinema') === 'Nebula Tasku') {
                 $query->where('cinema', 'tasku');
-            } elseif($request->input('cinema') === 'Nebula Ülemiste') {
+            } elseif ($request->input('cinema') === 'Nebula Ülemiste') {
                 $query->where('cinema', 'ylemiste');
             }
         }
@@ -83,7 +83,7 @@ class MovieSessionController extends Controller
         log::info($request->input('timeHours'));
         log::info($request->input('timeMinutes')); 
         */
-    
+
 
         if ($request->has('language') && !empty($request->input('language'))) {
             $query->where('language', $request->input('language'));
@@ -153,7 +153,7 @@ class MovieSessionController extends Controller
                     'titleEng' => $session->movie->titleEng,
                     'age_rating' => $session->movie->age_rating,
                     'length' => $session->movie->length,
-                    'trailer'=> $session->movie->trailer,
+                    'trailer' => $session->movie->trailer,
                 ] : null
             ];
         })->sortBy(function ($session) {
@@ -162,5 +162,23 @@ class MovieSessionController extends Controller
         })->values(); // Reset the keys after sorting
 
         return response()->json($movie_session);
+    }
+
+    public function genres()
+    {
+        // Get all movie sessions with their related movies and categories
+        $movieSessions = MovieSession::with(['movie.categories'])
+            ->get()
+            ->pluck('movie.categories')
+            ->flatten()
+            ->unique('id')
+            ->values()
+            ->map(function ($category) {
+                return [
+                    'name' => $category->name
+                ];
+            });
+
+        return response()->json($movieSessions);
     }
 }

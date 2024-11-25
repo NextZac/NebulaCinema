@@ -6,7 +6,7 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 
 <template>
 
-    <Head title="Filmid" />
+    <Head title="Movies" />
 
     <GuestLayout>
         <div class="flex flex-col gap-[60px]">

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import SelectOption from './SelectOption.vue';
 import Dropdown from './Dropdown.vue';
 import Checkbox from './Checkbox.vue';
@@ -91,10 +91,25 @@ const filterCategories = {
     }
 };
 
-const genreOptions = [
-    'Märul', 'Seiklus', 'Komöödia', 'Draama', 'Õudus', 'Romantika',
-    'Ulme & Fantaasia', 'Põnevus', 'Dokumentaal', 'Animatsioon', 'Triller'
-];
+const fetchGenres = () => {
+    try {
+        axios.get(route('Schedule.genres'), {
+        }).then(response => {
+            console.log(response.data);
+            console.log(response.data[0].name);
+            genreOptions.value = response.data
+            console.log(genreOptions.value);
+        }).catch(error => {
+            console.error(error);
+        });
+    } catch (error) {
+        console.error('Failed to fetch movies:', error);
+        return [];
+    }
+};
+
+const genreOptions = ref(fetchGenres());
+
 
 // Methods
 const toggleDropdown = (key) => {
@@ -236,6 +251,7 @@ const scroll = (direction) => {
     }
 }
 
+
 </script>
 
 <template>
@@ -334,10 +350,10 @@ const scroll = (direction) => {
                 </a>
                 <Dropdown v-model:isOpen="dropdowns.genres" align="bottom" class="top-[110%]">
                     <div class="p-4 w-64">
-                        <div v-for="genre in genreOptions" :key="genre" class="mb-3">
-                            <Checkbox :id="'genre-' + genre" :modelValue="selectedGenres.has(genre)"
-                                :checked="selectedGenres.has(genre)" @change="() => handleGenreChange(genre)">
-                                {{ genre }}
+                        <div v-for="genre in genreOptions" :key="genre.name" class="mb-3">
+                            <Checkbox :id="'genre-' + genre.name" :modelValue="selectedGenres.has(genre.name)"
+                                :checked="selectedGenres.has(genre.name)" @change="() => handleGenreChange(genre.name)">
+                                {{ genre.name }}
                             </Checkbox>
                         </div>
                     </div>

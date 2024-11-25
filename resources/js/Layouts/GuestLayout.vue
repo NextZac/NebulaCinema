@@ -78,7 +78,7 @@ if (htmlLang === "et") {
 const navLinks = [
     { name: __("header.kinokava"), route: "Schedule" },
     { name: __("header.kinod"), dropdown: "kinod" },
-    { name: __("header.filmid"), route: "Films" },
+    { name: __("header.filmid"), route: "Movies" },
     { name: __("header.grupid.name"), dropdown: "grupid" },
     { name: __("header.kinkekaardid"), route: "Giftcards" },
     { name: "Components", route: "Components" },

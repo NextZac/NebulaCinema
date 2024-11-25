@@ -31,10 +31,11 @@ Route::get("/components", function () {
 
 Route::get('/schedule', [MovieSessionController::class, 'index'])->name('Schedule');
 Route::get('/schedule/update', [MovieSessionController::class, 'filter'])->name('Schedule.update');
+Route::get('/schedule/genres', [MovieSessionController::class, 'genres'])->name('Schedule.genres');
 
-Route::get("/films", function () {
-    return Inertia::render("Films");
-})->name("Films");
+Route::get("/movies", function () {
+    return Inertia::render("Movies");
+})->name("Movies");
 
 Route::get("/giftcards", function () {
     return Inertia::render("Giftcards");
