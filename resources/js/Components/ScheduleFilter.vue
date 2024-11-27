@@ -16,7 +16,7 @@ const props = defineProps({
     },
     cinemas: {
         type: Array,
-        default: () => ['Kõik kinod', 'Nebula Ülemiste', 'Nebula T1', 'Nebula Viru', 'Nebula Tasku']
+        default: () => ['all', 'ylemiste', 't1', 'viru', 'tasku']
     }
 });
 
@@ -230,6 +230,48 @@ const handleTimeInput = (value, type) => {
     };
 }
 
+const convertCinemaNames = (cinemas) => {
+
+    console.log(cinemas);
+    console.log(typeof cinemas);
+
+    if (typeof cinemas === 'object') {
+
+        return cinemas.map(c => {
+            switch (c) {
+                case 'ylemiste':
+                    return 'Nebula Ülemiste';
+                case 'tasku':
+                    return 'Nebula Tasku';
+                case 'viru':
+                    return 'Nebula Viru';
+                case 't1':
+                    return 'Nebula T1';
+                case 'all':
+                    return 'Kõik kinod';
+                default:
+                    return c; // Return original name if no match is found
+            }
+        });
+    } else {
+        switch (cinemas) {
+            case 'ylemiste':
+                return 'Nebula Ülemiste';
+            case 'tasku':
+                return 'Nebula Tasku';
+            case 'viru':
+                return 'Nebula Viru';
+            case 't1':
+                return 'Nebula T1';
+            case 'all':
+                return 'Kõik kinod';
+            default:
+                return cinemas; // Return original name if no match is found
+        }
+    }
+}
+
+console.log(convertCinemaNames(props.cinemas));
 
 // State
 const scrollPosition = ref(0)
@@ -267,16 +309,16 @@ const scroll = (direction) => {
                     <MapPin class="size-7 mr-3 text-brand-white/60 group-hover:text-brand-400/60" />
                     <span class="flex flex-col">
                         <p class="text-detail group-hover:text-brand-400/60 text-brand-white/60">Kino</p>
-                        <p> {{ selectedCinema }}</p>
+                        <p> {{ convertCinemaNames(selectedCinema) }}</p>
                     </span>
                     <ChevronDown :class="[
                         'w-4 h-4 ml-2 transition-transform duration-100',
                         dropdowns['cinemas'] ? 'rotate-180' : '',
                     ]" />
                 </a>
-                <SelectOption class="w-full rounded-lg" :options="props.cinemas" v-model:isOpen="dropdowns.cinemas"
-                    :modelValue="cinemaOption" @update:modelValue="handleCinemaChange" align="bottom"
-                    :withButton="false" />
+                <SelectOption class="w-full rounded-lg" :options="convertCinemaNames(props.cinemas)"
+                    v-model:isOpen="dropdowns.cinemas" :modelValue="cinemaOption"
+                    @update:modelValue="handleCinemaChange" align="bottom" :withButton="false" />
             </div>
         </div>
 
@@ -337,8 +379,9 @@ const scroll = (direction) => {
                             :class="dropdowns['genres'] ? '!text-brand-400/60' : ''">Genre</p>
                         <p v-if="selectedGenres.size <= 1"> {{ selectedGenres.size === 0 ? 'Kõik' :
                             selectedGenres.values().next().value }}</p>
-                        <Badge :class="dropdowns['filters'] ? 'cursor-default' : 'cursor-pointer'" v-if="selectedGenres.size > 1" type="solid">{{ selectedGenres.size
-                            + ' valitud' }} <X
+                        <Badge :class="dropdowns['filters'] ? 'cursor-default' : 'cursor-pointer'"
+                            v-if="selectedGenres.size > 1" type="solid">{{ selectedGenres.size
+                                + ' valitud' }} <X
                                 class="size-4 ml-2 cursor-pointer hover:text-brand-error pointer-events-auto"
                                 @click="() => handleGenreChange('')"></X>
                         </Badge>
@@ -363,12 +406,15 @@ const scroll = (direction) => {
             <!-- Filters -->
             <div class="h-full flex items-center relative">
                 <a @click="toggleDropdown('filters')"
-                    class="group text-brand-white text-subtitle inline-flex items-center hover:text-brand-400 cursor-pointer select-none text-nowrap" :class="dropdowns['filters']
+                    class="group text-brand-white text-subtitle inline-flex items-center hover:text-brand-400 cursor-pointer select-none text-nowrap"
+                    :class="dropdowns['filters']
                         ? '!text-brand-400 pointer-events-none'
                         : 'pointer-events-auto'">
-                    <Filter class="size-7 mr-3 text-brand-white/60 group-hover:text-brand-400/60" :class="dropdowns['filters'] ? '!text-brand-400/60' : ''" />
+                    <Filter class="size-7 mr-3 text-brand-white/60 group-hover:text-brand-400/60"
+                        :class="dropdowns['filters'] ? '!text-brand-400/60' : ''" />
                     <span class="flex flex-col">
-                        <p class="text-detail group-hover:text-brand-400/60 text-brand-white/60" :class="dropdowns['filters'] ? '!text-brand-400/60' : ''">Filter</p>
+                        <p class="text-detail group-hover:text-brand-400/60 text-brand-white/60"
+                            :class="dropdowns['filters'] ? '!text-brand-400/60' : ''">Filter</p>
                         <p
                             v-if="Object.values(selectedFilters).reduce((sum, set) => sum + set.size, 0) + (timeHours.value || timeMinutes.value ? 1 : 0) <= 1">
                             {{ Object.values(selectedFilters).reduce((sum, set) => sum + set.size, 0) + (timeHours.value
@@ -376,7 +422,7 @@ const scroll = (direction) => {
                                 ? 'Kõik'
                                 : timeHours.value || timeMinutes.value
                                     ? `${timeHours.value || '00'}:${timeMinutes.value || '00'}`
-                            : Object.values(selectedFilters).find(set => set.size > 0)?.values().next().value }}
+                                    : Object.values(selectedFilters).find(set => set.size > 0)?.values().next().value }}
                         </p>
                         <Badge :class="dropdowns['filters'] ? 'cursor-default' : 'cursor-pointer'"
                             v-if="Object.values(selectedFilters).reduce((sum, set) => sum + set.size, 0) + (timeHours.value || timeMinutes.value ? 1 : 0) > 1"

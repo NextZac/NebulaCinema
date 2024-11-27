@@ -97,7 +97,7 @@ const error = ref(null);
 
 const selectedDate = ref('');
 const selectedCinema = ref('Kõik kinod');
-const selectedGenres = ref([]);
+const selectedCategories = ref([]);
 const selectedFilters = ref({
     language: new Set(),
     timeHours: '', // Default hours
@@ -117,8 +117,8 @@ const handleCinemaUpdate = (cinema) => {
     selectedCinema.value = cinema;
 };
 
-const handleGenresUpdate = (genres) => {
-    selectedGenres.value = genres;
+const handleCategoriesUpdate = (categories) => {
+    selectedCategories.value = categories;
 };
 
 const handleFiltersUpdate = (filters) => {
@@ -142,7 +142,7 @@ const fetchMovies = () => {
     const params = {
         date: selectedDate.value,
         cinema: selectedCinema.value,
-        genres: Array.from(selectedGenres.value),
+        categories: Array.from(selectedCategories.value),
         language: Array.from(selectedFilters.value.language),
         subtitles: Array.from(selectedFilters.value.subtitles),
         format: Array.from(selectedFilters.value.format),
@@ -158,8 +158,8 @@ const fetchMovies = () => {
         axios.get(route('Schedule.update'), {
             params
         }).then(response => {
-            isLoading.value = false;
             movie_session.value = response.data;
+            isLoading.value = false;
         }).catch(error => {
             console.error(error);
         });
@@ -171,20 +171,30 @@ const fetchMovies = () => {
     }
 };
 
+const convertCinemaNames = (cinema) => {
+    switch (cinema) {
+        case 'ylemiste':
+            return 'Nebula Ülemiste';
+        case 'tasku':
+            return 'Nebula Tasku';
+        case 'viru':
+            return 'Nebula Viru';
+        case 't1':
+            return 'Nebula T1';
+        default:
+            return cinema;
+    }
+}
+
 onMounted(() => {
     const today = new Date();
     selectedDate.value = today.toISOString().split('T')[0];
-    fetchMovies();
 });
 
 watchEffect(() => {
-    console.log('Dependencies changed:', {
-        date: selectedDate.value,
-        cinema: selectedCinema.value,
-        genres: selectedGenres.value,
-        filters: selectedFilters.value
-    });
-
+    if(selectedDate.value === '') {
+        return;
+    }
     fetchMovies();
 });
 
@@ -204,7 +214,7 @@ watchEffect(() => {
             </Alert>
 
             <ScheduleFilter @update:date="handleDateUpdate" @update:cinema="handleCinemaUpdate"
-                @update:genres="handleGenresUpdate" @update:filters="handleFiltersUpdate"
+                @update:genres="handleCategoriesUpdate" @update:filters="handleFiltersUpdate"
                 @update:timeHours="(value) => handleTimeUpdate(value, 'hours')"
                 @update:timeMinutes="(value) => handleTimeUpdate(value, 'minutes')" />
 
@@ -217,7 +227,7 @@ watchEffect(() => {
                 <template v-else-if="movie_session.length > 0 && !isLoading">
                     <MovieSchedule v-for="(i, index) in movie_session" v-bind="i" :key="i.movie.title + index"
                         :image="i.image" :title="i.movie.title" :titleEng="i.movie.titleEng" href="#"
-                        :startingTime="i.start_time" :cinema="i.cinema" :cinemaRoom="i.room" :freeSeats="i.seats"
+                        :startingTime="i.start_time" :cinema="convertCinemaNames(i.cinema)" :cinemaRoom='htmlLang === "et" ? `Saal ${i.room}` : `Hall ${i.room}`' :freeSeats="i.seats"
                         :subtitles="i.subtitles" :language="i.language" :videoUrl="i.movie.trailer">
                         <template #imageBadges>
                             <Badge type="solid">{{ i.format }}</Badge>
