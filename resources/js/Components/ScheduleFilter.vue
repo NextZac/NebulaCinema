@@ -95,10 +95,7 @@ const fetchGenres = () => {
     try {
         axios.get(route('Schedule.genres'), {
         }).then(response => {
-            console.log(response.data);
-            console.log(response.data[0].name);
             genreOptions.value = response.data
-            console.log(genreOptions.value);
         }).catch(error => {
             console.error(error);
         });
@@ -270,8 +267,6 @@ const convertCinemaNames = (cinemas) => {
         }
     }
 }
-
-console.log(convertCinemaNames(props.cinemas));
 
 // State
 const scrollPosition = ref(0)

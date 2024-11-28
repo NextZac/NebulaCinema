@@ -17,6 +17,9 @@ import MovieSchedule from "@/Components/MovieSchedule.vue";
 import MovieScheduleSkeleton from "@/Components/MovieScheduleSkeleton.vue";
 import Alert from "@/Components/Alert.vue";
 import VideoModal from "@/Components/VideoModal.vue";
+import MovieFilter from "@/Components/MovieFilter.vue";
+import ScheduleFilter from "@/Components/ScheduleFilter.vue";
+import MovieCard2 from "@/Components/MovieCard2.vue";
 
 import { Search, Check, Info, OctagonAlert } from "lucide-vue-next";
 import { Head, usePage } from "@inertiajs/vue3";
@@ -36,7 +39,7 @@ const dropdowns = ref({
     test1: false,
     test2: false,
     test3: false,
-    test4: false
+    test4: false,
 });
 
 const toggleDropdown = (key) => {
@@ -70,7 +73,7 @@ const dropdownOptions = {
     ],
 };
 
-const options = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+const options = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const selectedOption = ref(0);
 
@@ -638,6 +641,17 @@ const movies = [
                         <Badge>Animatsioon</Badge>
                     </template>
                 </MovieCard>
+                <MovieCard2 image="https://via.placeholder.com/300" title="Title" titleEng="Title English" href="#">
+                    <template #imageBadges>
+                        <Badge>12+</Badge>
+                    </template>
+
+                    <template #badges>
+                        <Badge>Komöödia</Badge>
+                        <Badge>Seiklus</Badge>
+                        <Badge>Animatsioon</Badge>
+                    </template>
+                </MovieCard2>
             </div>
 
             <!-- Movie Schedule -->
@@ -720,7 +734,8 @@ const movies = [
             <div class="flex gap-8 flex-col">
                 <h2 class="text-brand-white">Video Modal</h2>
                 <Button @click="toggleVideoModal">Show Video Modal</Button>
-                <VideoModal v-model:isOpen="videoModalOpen" title="Modal" videoUrl="https://www.youtube.com/embed/tgbNymZ7vqY">
+                <VideoModal v-model:isOpen="videoModalOpen" title="Modal"
+                    videoUrl="https://www.youtube.com/embed/tgbNymZ7vqY">
                 </VideoModal>
             </div>
 
@@ -737,7 +752,13 @@ const movies = [
             <div class="flex gap-8 flex-col relative">
                 <h2 class="text-brand-white">Dropdown</h2>
                 <Button @click="toggleDropdown('test2')">Dropdown Top
-                    <Dropdown v-model:isOpen="dropdowns.test2" :options="dropdownOptions.test2" align="top" />
+                    <Dropdown v-model:isOpen="dropdowns.test2" align="top">
+                        <ul>
+                            <li>Option 1</li>
+                            <li>Option 2</li>
+                            <li>Option 3</li>
+                        </ul>
+                    </Dropdown>
                 </Button>
                 <Button @click="toggleDropdown('test3')">Dropdown Right
                     <Dropdown v-model:isOpen="dropdowns.test3" :options="dropdownOptions.test3" align="right" />
@@ -815,6 +836,18 @@ const movies = [
                         repellat ducimus sint. Impedit quae soluta iure.
                     </template>
                 </Alert>
+            </div>
+
+            <!-- ScheduleFilter -->
+            <div class="flex gap-8 flex-col">
+                <h2 class="text-brand-white">ScheduleFilter</h2>
+                <ScheduleFilter />
+            </div>
+
+            <!-- MovieFilter -->
+            <div class="flex gap-8 flex-col">
+                <h2 class="text-brand-white">ScheduleFilter</h2>
+                <MovieFilter />
             </div>
 
         </div>

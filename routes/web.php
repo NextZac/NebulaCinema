@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieSessionController;
+use App\Http\Controllers\MovieController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,9 +34,12 @@ Route::get('/schedule', [MovieSessionController::class, 'index'])->name('Schedul
 Route::get('/schedule/update', [MovieSessionController::class, 'filter'])->name('Schedule.update');
 Route::get('/schedule/genres', [MovieSessionController::class, 'genres'])->name('Schedule.genres');
 
-Route::get("/movies", function () {
-    return Inertia::render("Movies");
-})->name("Movies");
+Route::get("/movies", [MovieController::class, 'index'])->name("Movies");
+
+Route::get("/movies/{id}", function () {
+    return Inertia::render("Movie");
+})->name("Movie");
+
 
 Route::get("/giftcards", function () {
     return Inertia::render("Giftcards");
