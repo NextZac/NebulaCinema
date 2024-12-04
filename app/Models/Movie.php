@@ -34,4 +34,36 @@ class Movie extends Model implements HasMedia
         $media = $this->getFirstMedia("pictures");
         return $media ? $media->getUrl() : null; // Return the URL of the first image, or null if not available
     }
+
+    public function scopeFilter($query, array $filters)
+    {
+        foreach ($filters as $filter => $value) {
+            if (empty($value) || $value === 'all'){
+                continue;
+            }
+
+            switch ($filter) {
+                case 'cinema':
+                    $query->where('cinema', $value);
+                    break;
+
+                case 'categories':
+                    $query->whereHas('movie.categories', function ($q) use ($value) {
+                        $q->whereIn('name', $value);
+                    });
+                    break;
+
+                case 'age_rating':
+                    $query->whereHas('movie', function ($q) use ($value) {
+                        $q->whereIn('age_rating', $value);
+                    });
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        return $query;
+    }
 }

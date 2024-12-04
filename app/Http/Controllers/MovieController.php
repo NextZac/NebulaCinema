@@ -7,11 +7,38 @@ use Inertia\Inertia;
 use App\Models\Movie;
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Log;
+
 class MovieController extends Controller
 {
     public function index()
     {
+        log::info("Start First");
         return Inertia::render("Movies", []);
+    }
+
+    public function filter(Request $request)
+    {
+        log::info("Filtering Start");
+        $filters = array_filter([
+            "cinema"=> $request->input("cinema") !== "Kõik kinod" ? $request->input("cinema") : null,
+            "categories" => $request->input("categories"),
+            "age_rating" => $request->input("age_rating"),
+        ]);
+
+        $query = Movie::filter($filters);
+
+        log::info("Got Filters");
+
+        $movie = $query->get()
+            ->map(function ($session) {
+                return $session;
+            })
+            ->values();
+
+        log::info($movie);
+
+        return response()->json($movie);
     }
 
     public function search(Request $req)
@@ -48,31 +75,5 @@ class MovieController extends Controller
         });
 
         return response()->json($moviesWithHref);
-    }
-
-    public function filter(Request $request)
-    {
-        $filters = array_filter([
-            "categories" => $request->input("categories"),
-            "age_rating" => $request->input("age_rating"),
-        ]);
-
-        $query = Movie::all();
-
-        $movie_session = $query
-            ->get()
-            ->map(function ($session) {
-                $session->categories = $session->movie->categories;
-                return $session;
-            })
-            ->sortBy(function ($session) {
-                $session->start_time = Carbon::parse(
-                    $session->start_time
-                )->format("H:i");
-                return Carbon::createFromFormat("H:i", $session["start_time"]);
-            })
-            ->values();
-
-        return response()->json($movie_session);
     }
 }

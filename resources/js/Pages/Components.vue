@@ -23,6 +23,7 @@ import MovieCard2 from "@/Components/MovieCard2.vue";
 
 import { Search, Check, Info, OctagonAlert } from "lucide-vue-next";
 import { Head, usePage } from "@inertiajs/vue3";
+import MovieCard2Skeleton from "@/Components/MovieCard2Skeleton.vue";
 
 const modalOpen = ref(false);
 const videoModalOpen = ref(false);
@@ -652,6 +653,7 @@ const movies = [
                         <Badge>Animatsioon</Badge>
                     </template>
                 </MovieCard2>
+                <MovieCard2Skeleton />
             </div>
 
             <!-- Movie Schedule -->

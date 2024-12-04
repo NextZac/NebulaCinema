@@ -30,8 +30,6 @@ Route::get("/components", function () {
     return Inertia::render("Components");
 })->name("Components");
 
-Route::get("/movies", [MovieController::class, "index"])->name("Movies");
-
 Route::get("/movies/{id}", function () {
     return Inertia::render("Movie");
 })->name("Movie");
@@ -45,8 +43,16 @@ Route::get("/terms", function () {
 })->name("Terms");
 
 Route::get("/privacy", function () {
+    
     return Inertia::render("Privacy");
 })->name("Privacy");
+
+Route::get("/movies", [MovieController::class, "index"])->name("Movies");
+Route::get("/schedule", [MovieSessionController::class, "index"])->name(
+    "Schedule"
+);
+
+
 
 // Route::get("/dashboard", function () {
 //     return Inertia::render("Dashboard");
