@@ -46,7 +46,7 @@ const props = defineProps({
                         :image="i.image"
                         :title="i.title"
                         :titleEng="i.titleEng"
-                        href="#"
+                        :href="route('Movie', i.id)"
                     >
                         <template #imageBadges>
                             <Badge>{{ i.rating }}</Badge>
@@ -73,7 +73,7 @@ const props = defineProps({
                         :title="i.title"
                         :titleEng="i.titleEng"
                         :starting="i.starting"
-                        href="#"
+                        :href="route('Movie', i.id)"
                     >
                         <template #imageBadges>
                             <Badge>{{ i.rating }}</Badge>
@@ -100,7 +100,7 @@ const props = defineProps({
                         :title="i.title"
                         :titleEng="i.titleEng"
                         :starting="i.starting"
-                        href="#"
+                        :href="route('Movie', i.id)"
                     >
                         <template #imageBadges>
                             <Badge>{{ i.rating }}</Badge>
