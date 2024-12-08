@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Movie;
 use Carbon\Carbon;
+use App\Http\Resources\MovieSessionResource;
 
 use Illuminate\Support\Facades\Log;
 
@@ -13,8 +14,19 @@ class MovieController extends Controller
 {
     public function index()
     {
-        log::info("Start First");
+        
         return Inertia::render("Movies", []);
+    }
+
+    public function view(Movie $movie) 
+    {
+        //dd($movie->sessions()->first()->cinemaRoom->cinema);
+        
+        return Inertia::render("Movie", [
+            "movie" => $movie,
+            "image" => $movie->image_path ?? null,
+            "sessions" => MovieSessionResource::collection($movie->sessions) ?? null,
+        ]);
     }
 
     public function filter(Request $request)
@@ -75,5 +87,55 @@ class MovieController extends Controller
         });
 
         return response()->json($moviesWithHref);
+    }
+
+    public function edit(Movie $movie)
+    {
+        return Inertia::render("Admin/Movies/Edit", [
+            "movie" => $movie,
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $movie = Movie::create([
+            'title' => $request->title,
+            'titleEng' => $request->titleEng,
+            'description' => $request->description,
+            'length' => $request->length,
+            'cast' => json_encode($request->cast),
+            'author' => $request->author,
+            'director' => $request->director,
+            'age_rating' => $request->age_rating,
+            'release_date' => $request->release_date,
+            'trailer' => $request->trailer,
+        ]);
+
+        return new MovieResource($movie);
+    }
+
+    public function update(Request $request, Movie $movie)
+    {
+        $movie->update([
+            'title' => $request->title,
+            'titleEng' => $request->titleEng,
+            'description' => $request->description,
+            'length' => $request->length,
+            'cast' => json_encode($request->cast),
+            'author' => $request->author,
+            'director' => $request->director,
+            'age_rating' => $request->age_rating,
+            'release_date' => $request->release_date,
+            'trailer' => $request->trailer,
+        ]);
+
+        return new MovieResource($movie);
+    }
+
+    public function destroy(Movie $movie)
+    {
+        $movie->delete();
+
+        return response()->json(['message' => 'Movie deleted successfully.']);
     }
 }

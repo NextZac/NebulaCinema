@@ -50,6 +50,20 @@
         "info": "Kinokava koostatakse ette üheks nädalaks, sama nädala reedest järgmise nädala neljapäevani. Uue nädala kinokava avaldatakse hiljemalt ",
         "info_bold": "teisipäeva õhtuks."
     },
+    "movie": {
+        "director": "Režissöör",
+        "cast": "Osatäitjad",
+        "duration": "Kestvus",
+        "release": "Esilinastus",
+        "available_sessions": "Saadaolevad seansid",
+        "no_sessions": "Hetkel pole saadaolevaid seansse",
+        "room": "Saal",
+        "language": "Keel",
+        "subtitles": "Subtiitrid",
+        "available_seats": "Vabu kohti",
+        "pricing": "Hinnakiri",
+        "buy": "Osta pilet"
+    },
     "login": {
         "input": {
             "email": "E-post",

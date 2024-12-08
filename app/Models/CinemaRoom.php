@@ -9,4 +9,8 @@ class CinemaRoom extends Model
 {
     use HasFactory;
     protected $table = "cinema_room";
+
+    public function cinema() {
+        return $this->belongsTo(Cinema::class);
+    }
 }

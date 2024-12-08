@@ -16,6 +16,12 @@ class MovieSession extends Model
         return $this->belongsTo(Movie::class);
     }
 
+    public function cinemaRoom()
+    {
+        return $this->belongsTo(CinemaRoom::class, "room");
+    }
+
+
     protected static function booted()
     {
         static::creating(function ($movieSession) {

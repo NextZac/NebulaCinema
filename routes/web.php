@@ -30,9 +30,7 @@ Route::get("/components", function () {
     return Inertia::render("Components");
 })->name("Components");
 
-Route::get("/movies/{id}", function () {
-    return Inertia::render("Movie");
-})->name("Movie");
+Route::get("/movies/{movie}", [MovieController::class, 'view'])->name("Movie");
 
 Route::get("/giftcards", function () {
     return Inertia::render("Giftcards");

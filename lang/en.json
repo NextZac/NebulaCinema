@@ -50,6 +50,20 @@
         "info": "The cinema schedule is prepared one week in advance, from Friday of the current week to Thursday of the following week. The new week's cinema schedule is published no later than ",
         "info_bold": "Tuesday evening."
     },
+    "movie": {
+        "director": "Director",
+        "cast": "Cast",
+        "duration": "Duration",
+        "release": "Release",
+        "available_sessions": "Available Sessions",
+        "no_sessions": "Currently no available sessions",
+        "room": "Room",
+        "language": "Language",
+        "subtitles": "Subtitles",
+        "available_seats": "Available Seats",
+        "pricing": "Pricing",
+        "buy": "Buy Ticket"
+    },
     "login": {
         "title": {
             "login": "Login",

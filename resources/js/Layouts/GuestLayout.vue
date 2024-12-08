@@ -1,7 +1,7 @@
 <script setup>
 import { ref, getCurrentInstance } from "vue";
 import { router } from "@inertiajs/vue3";
-import { ChevronDown, Search, Github } from "lucide-vue-next";
+import { ChevronDown, Search, Github, User } from "lucide-vue-next";
 
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Input from "@/Components/Input.vue";
@@ -182,12 +182,19 @@ const parseDropdown = (event) => {
                     <Search class="w-5 h-5 text-brand-white" />
                 </Input>
                 <div class="flex-shrink-0">
-                    <img
+                    <img v-if="router.page.props.auth.user"
                         src="https://via.placeholder.com/40"
                         alt="User Avatar"
                         class="w-full h-full rounded-full border-2 border-gray-300 cursor-pointer transition duration-100 hover:scale-110 active:scale-100"
                         @click="toggleDropdown('avatar')"
                     />
+
+                    <User
+                        v-else
+                        class="w-6 h-6 text-brand-white cursor-pointer transition duration-100 hover:scale-110 active:scale-100"
+                        @click="toggleDropdown('avatar')"
+                    />
+
                     <Dropdown
                         class="top-[110%] right-5"
                         v-model:isOpen="dropdowns.avatar"

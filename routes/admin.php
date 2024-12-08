@@ -10,7 +10,10 @@ Route::group(
     ["prefix" => "admin", "middleware" => ["auth", Admin::class]],
     function () {
         Route::get("/", [AdminController::class, "index"])->name("admin");
-
-        Route::resource("movies", MovieController::class);
+        Route::get('/movies', [MovieController::class, 'index']);
+        Route::get('/movies/{movie}', [MovieController::class, 'edit']);
+        Route::post('/movies', [MovieController::class, 'store']);
+        Route::put('/movies/{movie}', [MovieController::class, 'update']);
+        Route::delete('/movies/{movie}', [MovieController::class, 'destroy']);
     }
 );
