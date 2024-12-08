@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             MovieSeeder::class,
             MovieSessionSeeder::class,
+            CinemaSeeder::class,
         ]);
     }
 }
