@@ -23,6 +23,7 @@
         "@heroicons/vue": "^2.1.5",
         "laravel-vue-i18n": "^2.7.7",
         "lucide-vue-next": "^0.441.0",
-        "preline": "^2.4.1"
+        "preline": "^2.4.1",
+        "vue-safe-teleport": "^0.1.2"
     }
 }

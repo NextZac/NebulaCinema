@@ -53,7 +53,7 @@ const toggleSeatSelection = (rowIndex, colIndex) => {
     <div class="seat-map-container">
         <!-- Screen -->
         <div class="screen">
-            <span>Screen</span>
+            <span>{{ __("checkout.screen") }}</span>
         </div>
 
         <!-- Seat Map -->

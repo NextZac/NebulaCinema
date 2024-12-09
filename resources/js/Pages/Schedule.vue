@@ -1,13 +1,14 @@
 <script setup>
-import { ref, onMounted, watchEffect } from 'vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import Alert from '@/Components/Alert.vue';
-import MovieSchedule from '@/Components/MovieSchedule.vue';
-import MovieScheduleSkeleton from '@/Components/MovieScheduleSkeleton.vue';
-import Badge from '@/Components/Badge.vue';
-import ScheduleFilter from '@/Components/ScheduleFilter.vue';
+import { ref, onMounted, watchEffect } from "vue";
+import { router } from "@inertiajs/vue3";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
+import Alert from "@/Components/Alert.vue";
+import MovieSchedule from "@/Components/MovieSchedule.vue";
+import MovieScheduleSkeleton from "@/Components/MovieScheduleSkeleton.vue";
+import Badge from "@/Components/Badge.vue";
+import ScheduleFilter from "@/Components/ScheduleFilter.vue";
 
-import { AlertCircle } from 'lucide-vue-next';
+import { AlertCircle } from "lucide-vue-next";
 
 /*
 const topMovies = [
@@ -95,16 +96,16 @@ const movie_session = ref([]);
 const isLoading = ref(false);
 const error = ref(null);
 
-const selectedDate = ref('');
-const selectedCinema = ref('Kõik kinod');
+const selectedDate = ref("");
+const selectedCinema = ref("Kõik kinod");
 const selectedCategories = ref([]);
 const selectedFilters = ref({
     language: new Set(),
-    timeHours: '', // Default hours
-    timeMinutes: '', // Default minutes
+    timeHours: "", // Default hours
+    timeMinutes: "", // Default minutes
     subtitles: new Set(),
     format: new Set(),
-    ageRating: new Set()
+    ageRating: new Set(),
 });
 
 const htmlLang = document.documentElement.lang;
@@ -125,13 +126,19 @@ const handleFiltersUpdate = (filters) => {
     selectedFilters.value = {
         ...selectedFilters.value, // Keep the existing values
         ...filters, // Override with new filter values
-        timeHours: filters.timeHours !== undefined ? filters.timeHours : selectedFilters.value.timeHours,
-        timeMinutes: filters.timeMinutes !== undefined ? filters.timeMinutes : selectedFilters.value.timeMinutes,
+        timeHours:
+            filters.timeHours !== undefined
+                ? filters.timeHours
+                : selectedFilters.value.timeHours,
+        timeMinutes:
+            filters.timeMinutes !== undefined
+                ? filters.timeMinutes
+                : selectedFilters.value.timeMinutes,
     };
 };
 
 const handleTimeUpdate = (value, type) => {
-    if (type === 'hours') {
+    if (type === "hours") {
         selectedFilters.value.timeHours = value;
     } else {
         selectedFilters.value.timeMinutes = value;
@@ -148,75 +155,84 @@ const fetchMovies = () => {
         format: Array.from(selectedFilters.value.format),
         age_rating: Array.from(selectedFilters.value.ageRating),
         timeHours: selectedFilters.value.timeHours,
-        timeMinutes: selectedFilters.value.timeMinutes
+        timeMinutes: selectedFilters.value.timeMinutes,
     };
 
     isLoading.value = true;
     error.value = null;
 
     try {
-        axios.get(route('Schedule.update'), {
-            params
-        }).then(response => {
-            movie_session.value = response.data;
-            isLoading.value = false;
-        }).catch(error => {
-            console.error(error);
-        });
+        axios
+            .get(route("Schedule.update"), {
+                params,
+            })
+            .then((response) => {
+                movie_session.value = response.data;
+                isLoading.value = false;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     } catch (error) {
         error.value = error;
         isLoading.value = false;
         movie_session.value = [];
-        console.error('Failed to fetch movies:', error);
+        console.error("Failed to fetch movies:", error);
     }
 };
 
 const convertCinemaNames = (cinema) => {
     switch (cinema) {
-        case 'ylemiste':
-            return 'Nebula Ülemiste';
-        case 'tasku':
-            return 'Nebula Tasku';
-        case 'viru':
-            return 'Nebula Viru';
-        case 't1':
-            return 'Nebula T1';
+        case "ylemiste":
+            return "Nebula Ülemiste";
+        case "tasku":
+            return "Nebula Tasku";
+        case "viru":
+            return "Nebula Viru";
+        case "t1":
+            return "Nebula T1";
         default:
             return cinema;
     }
-}
+};
 
 onMounted(() => {
     const today = new Date();
-    selectedDate.value = today.toISOString().split('T')[0];
+    selectedDate.value = today.toISOString().split("T")[0];
 });
 
 watchEffect(() => {
-    if(selectedDate.value === '') {
+    if (selectedDate.value === "") {
         return;
     }
     fetchMovies();
 });
-
 </script>
 
 <template>
-
     <Head title="Kinokava" />
 
     <GuestLayout>
-
         <div class="gap-[60px] w-full flex flex-col">
             <Alert type="warning" class="justify-center items-center">
                 <template #description>
-                    {{ __('schedule.info') }} <span class="font-medium">{{ __('schedule.info_bold') }}</span>
+                    {{ __("schedule.info") }}
+                    <span class="font-medium">{{
+                        __("schedule.info_bold")
+                    }}</span>
                 </template>
             </Alert>
 
-            <ScheduleFilter @update:date="handleDateUpdate" @update:cinema="handleCinemaUpdate"
-                @update:genres="handleCategoriesUpdate" @update:filters="handleFiltersUpdate"
+            <ScheduleFilter
+                @update:date="handleDateUpdate"
+                @update:cinema="handleCinemaUpdate"
+                @update:genres="handleCategoriesUpdate"
+                @update:filters="handleFiltersUpdate"
                 @update:timeHours="(value) => handleTimeUpdate(value, 'hours')"
-                @update:timeMinutes="(value) => handleTimeUpdate(value, 'minutes')" />
+                @update:timeMinutes="
+                    (value) => handleTimeUpdate(value, 'minutes')
+                "
+            />
 
             <div class="flex flex-col gap-[30px]">
                 <template v-if="isLoading">
@@ -225,10 +241,27 @@ watchEffect(() => {
                 </template>
 
                 <template v-else-if="movie_session.length > 0 && !isLoading">
-                    <MovieSchedule v-for="(i, index) in movie_session" v-bind="i" :key="i.movie.title + index"
-                        :image="i.image" :title="i.movie.title" :titleEng="i.movie.titleEng" href="#"
-                        :startingTime="i.start_time" :cinema="convertCinemaNames(i.cinema)" :cinemaRoom='htmlLang === "et" ? `Saal ${i.room}` : `Hall ${i.room}`' :freeSeats="i.seats"
-                        :subtitles="i.subtitles" :language="i.language" :videoUrl="i.movie.trailer">
+                    <MovieSchedule
+                        v-for="(i, index) in movie_session"
+                        v-bind="i"
+                        :key="i.movie.title + index"
+                        :href="route('Movie', i.movie.id)"
+                        :ticketHref="route('BuyTickets', i.id)"
+                        :image="i.image"
+                        :title="i.movie.title"
+                        :titleEng="i.movie.titleEng"
+                        :startingTime="i.start_time"
+                        :cinema="convertCinemaNames(i.cinema)"
+                        :cinemaRoom="
+                            htmlLang === 'et'
+                                ? `Saal ${i.room}`
+                                : `Hall ${i.room}`
+                        "
+                        :freeSeats="i.seats"
+                        :subtitles="i.subtitles"
+                        :language="i.language"
+                        :videoUrl="i.movie.trailer"
+                    >
                         <template #imageBadges>
                             <Badge type="solid">{{ i.format }}</Badge>
                             <Badge>{{ i.movie.age_rating }}</Badge>
@@ -249,7 +282,7 @@ watchEffect(() => {
 
                     <template #description>
                         <span class="text-title1">
-                            {{ error?.message || 'No movies found with the selected filters.' }}
+                            {{ error?.message || __("movie.none_found") }}
                         </span>
                     </template>
                 </Alert>

@@ -14,7 +14,6 @@ class Movie extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-
     public function categories()
     {
         return $this->belongsToMany(
@@ -25,9 +24,8 @@ class Movie extends Model implements HasMedia
         );
     }
 
-    
     public function sessions()
-    {  
+    {
         return $this->hasMany(MovieSession::class);
     }
 
@@ -46,24 +44,24 @@ class Movie extends Model implements HasMedia
     public function scopeFilter($query, array $filters)
     {
         foreach ($filters as $filter => $value) {
-            if (empty($value) || $value === 'all'){
+            if (empty($value) || $value === "all") {
                 continue;
             }
 
             switch ($filter) {
-                case 'cinema':
-                    $query->where('cinema', $value);
+                case "cinema":
+                    $query->where("cinema", $value);
                     break;
 
-                case 'categories':
-                    $query->whereHas('movie.categories', function ($q) use ($value) {
-                        $q->whereIn('name', $value);
+                case "categories":
+                    $query->whereHas("categories", function ($q) use ($value) {
+                        $q->whereIn("name", $value);
                     });
                     break;
 
-                case 'age_rating':
-                    $query->whereHas('movie', function ($q) use ($value) {
-                        $q->whereIn('age_rating', $value);
+                case "age_rating":
+                    $query->whereHas("movie", function ($q) use ($value) {
+                        $q->whereIn("age_rating", $value);
                     });
                     break;
 

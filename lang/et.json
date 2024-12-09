@@ -62,7 +62,17 @@
         "subtitles": "Subtiitrid",
         "available_seats": "Vabu kohti",
         "pricing": "Hinnakiri",
-        "buy": "Osta pilet"
+        "buy": "Osta pilet",
+        "none_found": "Ühtegi filmi ei leitud"
+    },
+    "checkout": {
+        "choose_tickets": "Vali piletid",
+        "price": "Hind",
+        "next": "Järgmine samm",
+        "previous": "Eelmine samm",
+        "choose_seats": "Vali istekohad",
+        "screen": "Ekraan",
+        "choose_payment": "Vali makseviis"
     },
     "login": {
         "input": {

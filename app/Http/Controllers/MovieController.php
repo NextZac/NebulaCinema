@@ -14,18 +14,18 @@ class MovieController extends Controller
 {
     public function index()
     {
-        
         return Inertia::render("Movies", []);
     }
 
-    public function view(Movie $movie) 
+    public function view(Movie $movie)
     {
         //dd($movie->sessions()->first()->cinemaRoom->cinema);
-        
+
         return Inertia::render("Movie", [
             "movie" => $movie,
             "image" => $movie->image_path ?? null,
-            "sessions" => MovieSessionResource::collection($movie->sessions) ?? null,
+            "sessions" =>
+                MovieSessionResource::collection($movie->sessions) ?? null,
         ]);
     }
 
@@ -33,7 +33,10 @@ class MovieController extends Controller
     {
         log::info("Filtering Start");
         $filters = array_filter([
-            "cinema"=> $request->input("cinema") !== "Kõik kinod" ? $request->input("cinema") : null,
+            "cinema" =>
+                $request->input("cinema") !== "Kõik kinod"
+                    ? $request->input("cinema")
+                    : null,
             "categories" => $request->input("categories"),
             "age_rating" => $request->input("age_rating"),
         ]);
@@ -42,8 +45,11 @@ class MovieController extends Controller
 
         log::info("Got Filters");
 
-        $movie = $query->get()
+        $movie = $query
+            ->get()
             ->map(function ($session) {
+                // $session->image = $session->movie->image_path;
+                $session->image = $session->image_path;
                 return $session;
             })
             ->values();
@@ -99,16 +105,16 @@ class MovieController extends Controller
     public function store(Request $request)
     {
         $movie = Movie::create([
-            'title' => $request->title,
-            'titleEng' => $request->titleEng,
-            'description' => $request->description,
-            'length' => $request->length,
-            'cast' => json_encode($request->cast),
-            'author' => $request->author,
-            'director' => $request->director,
-            'age_rating' => $request->age_rating,
-            'release_date' => $request->release_date,
-            'trailer' => $request->trailer,
+            "title" => $request->title,
+            "titleEng" => $request->titleEng,
+            "description" => $request->description,
+            "length" => $request->length,
+            "cast" => json_encode($request->cast),
+            "author" => $request->author,
+            "director" => $request->director,
+            "age_rating" => $request->age_rating,
+            "release_date" => $request->release_date,
+            "trailer" => $request->trailer,
         ]);
 
         return new MovieResource($movie);
@@ -117,16 +123,16 @@ class MovieController extends Controller
     public function update(Request $request, Movie $movie)
     {
         $movie->update([
-            'title' => $request->title,
-            'titleEng' => $request->titleEng,
-            'description' => $request->description,
-            'length' => $request->length,
-            'cast' => json_encode($request->cast),
-            'author' => $request->author,
-            'director' => $request->director,
-            'age_rating' => $request->age_rating,
-            'release_date' => $request->release_date,
-            'trailer' => $request->trailer,
+            "title" => $request->title,
+            "titleEng" => $request->titleEng,
+            "description" => $request->description,
+            "length" => $request->length,
+            "cast" => json_encode($request->cast),
+            "author" => $request->author,
+            "director" => $request->director,
+            "age_rating" => $request->age_rating,
+            "release_date" => $request->release_date,
+            "trailer" => $request->trailer,
         ]);
 
         return new MovieResource($movie);
@@ -136,6 +142,6 @@ class MovieController extends Controller
     {
         $movie->delete();
 
-        return response()->json(['message' => 'Movie deleted successfully.']);
+        return response()->json(["message" => "Movie deleted successfully."]);
     }
 }

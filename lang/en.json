@@ -62,7 +62,8 @@
         "subtitles": "Subtitles",
         "available_seats": "Available Seats",
         "pricing": "Pricing",
-        "buy": "Buy Ticket"
+        "buy": "Buy Ticket",
+        "none_found": "No movies found"
     },
     "login": {
         "title": {
