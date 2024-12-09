@@ -95,6 +95,7 @@ class MovieSessionController extends Controller
 
     public function buy(MovieSession $session)
     {
-        return Inertia::render("BuyTicket", []);
+        $cinemaRoom = $session->cinemaRoom;
+        return Inertia::render("BuyTicket", ["session" => $session, "movie" => $session->movie, "cinema_room" => $cinemaRoom]);
     }
 }

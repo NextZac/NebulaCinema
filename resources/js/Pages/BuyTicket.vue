@@ -7,6 +7,11 @@ import NumberInput from "@/Components/NumberInput.vue";
 
 const steps = ref(1);
 
+const props = defineProps({
+    cinema_room: Object,
+    movie: Object,
+})
+
 // Ticket selection
 const ticketTypes = ref([
     { type: "Standard", price: 10, selected: 0 },
@@ -18,11 +23,13 @@ const totalTickets = computed(() => {
 });
 
 // Seat selection
-const seatRows = 10;
-const seatColumns = 10;
+const seatRows = props.cinema_room.rows;
+const seatColumns = props.cinema_room.columns;
 const seats = ref(
     Array.from({ length: seatRows }, () => Array(seatColumns).fill(1)),
 );
+
+const chosenSeats = ref({});
 
 // Payment method
 const paymentMethods = ref(["Credit Card", "PayPal", "Apple Pay"]);
@@ -107,7 +114,7 @@ const prevStep = () => {
                     :seats="seats"
                     :selectedSeatAmount="totalTickets"
                     @seatSelected="
-                        (selectedSeats) => console.log(selectedSeats)
+                        (selectedSeats) => chosenSeats.value = selectedSeats
                     "
                 />
             </div>
@@ -121,6 +128,10 @@ const prevStep = () => {
                     {{ __("checkout.choose_payment") }}
                 </h2>
                 <div class="flex flex-col gap-4">
+                    <div v-for="seat in chosenSeats.value">
+                        <p class="text-brand-white">Valitud Iste -> Rida {{ seat.row + 1 }}, Iste {{ seat.col + 1 }}</p>
+                    </div>
+
                     <div
                         v-for="method in paymentMethods"
                         :key="method"

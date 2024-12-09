@@ -49,7 +49,7 @@ Route::get("/schedule", [MovieSessionController::class, "index"])->name(
     "Schedule"
 );
 
-Route::get("/buy-tickets/{movie_session}", [
+Route::get("/buy-tickets/{session}", [
     MovieSessionController::class,
     "buy",
 ])->name("BuyTickets");
