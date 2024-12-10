@@ -30,24 +30,20 @@ const buyTicket = (sessionId) => {
 </script>
 
 <template>
+
     <Head :title="movie.title" />
 
     <GuestLayout>
         <div class="w-full flex flex-col gap-[60px]">
             <!-- Movie Header with Image -->
             <div class="relative w-full h-[400px] md:h-[500px] drop-shadow-lg">
-                <img
-                    :src="image"
-                    class="w-full h-full object-cover object-center rounded-lg"
-                />
-                <div class="absolute inset-0 bg-black/50 flex items-end p-6">
-                    <div>
-                        <h1
-                            class="text-4xl md:text-5xl font-bold text-brand-white"
-                        >
+                <img :src="image" alt="Movie Poster" class="w-full h-full object-cover object-center rounded-lg" />
+                <div class="absolute inset-0 bg-black/30 rounded-lg flex items-end p-6">
+                    <div class="flex flex-col gap-4">
+                        <h1 class="text-display1 font-semibold text-brand-white">
                             {{ movie.title }}
                         </h1>
-                        <h2 class="text-xl text-brand-white/50 italic">
+                        <h2 class="text-title2 text-brand-white/50">
                             {{ movie.titleEng }}
                         </h2>
                     </div>
@@ -55,52 +51,62 @@ const buyTicket = (sessionId) => {
             </div>
 
             <!-- Movie Details Section -->
-            <div class="bg-brand-975 shadow-md rounded-lg p-6">
-                <div class="flex flex-col gap-4">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <h1 class="text-3xl font-semibold text-brand-white">
+            <div class="flex gap-4">
+                <iframe class="w-[100%] min-h-[100%] rounded-b-lg"
+                    :src="`${movie.trailer}?autoplay=1&mute=1&frameborder=0`"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    :allowfullscreen="true">
+                </iframe>
+                <div class="flex flex-row bg-brand-975 w-full shadow-md rounded-lg p-6 gap-4 border border-brand-900 justify-between">
+                    <div class="flex flex-col gap-4">
+                        <span class="flex flex-col gap-3">
+
+                            <h1 class="text-main2 font-semibold text-brand-white">
                                 {{ movie.title }}
                             </h1>
-                            <h2 class="text-lg text-brand-white/50 italic">
+
+
+                            <h2 class="text-title1 text-brand-white/50">
                                 {{ movie.titleEng }}
                             </h2>
-                        </div>
-                        <Badge>{{ movie.age_rating }}</Badge>
-                    </div>
+                        </span>
 
-                    <p class="text-gray-600 mt-2">{{ movie.description }}</p>
-
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
+                        <span class="flex gap-2">
+                            <Badge v-for="cat in movie.categories" :key="cat.name">{{ cat.name }}</Badge>
+                        </span>
+                        <p class="text-brand-white mt-2 text-body">{{ movie.description }}</p>
+                        <span class="flex justify-between">
+                            <div>
+                                <span class="text-detail font-semibold text-gray-500">{{
+                                    __("movie.director")
+                                    }}</span>
+                                <p class="text-brand-white">{{ movie.director }}</p>
+                            </div>
+                            <div>
+                                <span class="text-detail font-semibold text-gray-500">{{
+                                    __("movie.duration")
+                                    }}</span>
+                                <p class="text-brand-white">{{ movie.length }}</p>
+                            </div>
+                            <div>
+                                <span class="text-detail font-semibold text-gray-500">{{
+                                    __("movie.release")
+                                    }}</span>
+                                <p class="text-brand-white">
+                                    {{ formatDate(movie.release_date) }}
+                                </p>
+                            </div>
+                        </span>
                         <div>
-                            <span class="text-sm font-semibold text-gray-500">{{
-                                __("movie.director")
-                            }}</span>
-                            <p class="text-brand-white">{{ movie.director }}</p>
-                        </div>
-                        <div>
-                            <span class="text-sm font-semibold text-gray-500">{{
+                            <span class="text-detail font-semibold text-gray-500">{{
                                 __("movie.cast")
                             }}</span>
                             <p class="text-brand-white">
                                 {{ JSON.parse(movie.cast).join(", ") }}
                             </p>
                         </div>
-                        <div>
-                            <span class="text-sm font-semibold text-gray-500">{{
-                                __("movie.release")
-                            }}</span>
-                            <p class="text-brand-white">
-                                {{ formatDate(movie.release_date) }}
-                            </p>
-                        </div>
-                        <div>
-                            <span class="text-sm font-semibold text-gray-500">{{
-                                __("movie.duration")
-                            }}</span>
-                            <p class="text-brand-white">{{ movie.length }}</p>
-                        </div>
                     </div>
+                        <Badge>{{ movie.age_rating }}</Badge>
                 </div>
             </div>
 
@@ -111,16 +117,11 @@ const buyTicket = (sessionId) => {
                 </h2>
                 <div class="flex flex-col gap-6">
                     <template v-if="sessions?.length > 0">
-                        <div
-                            v-for="session in sessions"
-                            :key="session.id"
-                            class="rounded-lg bg-brand-850 p-4 shadow-md hover:shadow-lg transition border border-brand-900"
-                        >
+                        <div v-for="session in sessions" :key="session.id"
+                            class="rounded-lg bg-brand-850 p-4 shadow-md hover:shadow-lg transition border border-brand-900">
                             <div class="flex justify-between items-center mb-4">
                                 <div>
-                                    <p
-                                        class="text-lg font-bold text-brand-white"
-                                    >
+                                    <p class="text-lg font-bold text-brand-white">
                                         {{ session.cinema_name }}
                                     </p>
                                     <p class="text-sm text-gray-400">
@@ -175,13 +176,9 @@ const buyTicket = (sessionId) => {
                                     </p>
                                 </div>
                                 <a
-                                    class="px-4 py-2 bg-brand-primary text-white text-sm font-semibold rounded-lg shadow hover:bg-brand-primary-light transition"
-                                >
-                                    <Button
-                                        color="brand-900"
-                                        class="flex font-semibold justify-center gap-2 !w-full"
-                                        @click="buyTicket(session.id)"
-                                    >
+                                    class="px-4 py-2 bg-brand-primary text-white text-sm font-semibold rounded-lg shadow hover:bg-brand-primary-light transition">
+                                    <Button color="brand-900" class="flex font-semibold justify-center gap-2 !w-full"
+                                        @click="buyTicket(session.id)">
                                         <ShoppingBasket class="w-4 h-4" />
                                         {{ __("movie.buy") }}
                                     </Button>
@@ -189,11 +186,7 @@ const buyTicket = (sessionId) => {
                             </div>
                         </div>
                     </template>
-                    <Alert
-                        v-else
-                        type="error"
-                        class="flex items-center justify-center"
-                    >
+                    <Alert v-else type="error" class="flex items-center justify-center">
                         <template #icon>
                             <AlertCircle class="size-8 text-brand-error" />
                         </template>

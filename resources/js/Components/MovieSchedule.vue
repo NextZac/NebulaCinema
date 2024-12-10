@@ -36,7 +36,7 @@ const htmlLang = document.querySelector("html").getAttribute("lang");
         <!--Image with badge-->
         <div class="flex justify-end align-end drop-shadow-lg">
             <img
-                class="rounded-l-[10px] w-full h-[300px] object-cover"
+                class="rounded-l-[10px] w-full h-[300px] object-cover bg-brand-900"
                 :src="props.image"
                 alt="Movie Poster"
             />
@@ -122,7 +122,7 @@ const htmlLang = document.querySelector("html").getAttribute("lang");
                         <Button
                             color="brand-900"
                             class="gap-2 font-semibold group/btn"
-                            @click="router.visit(href)"
+                            @click="router.visit(props.href)"
                         >
                             {{ __("movieSchedule.schedule") }}
                             <ArrowRight

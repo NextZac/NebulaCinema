@@ -96,7 +96,7 @@ watchEffect(() => {
                         :image="i.image"
                         :title="i.title"
                         :titleEng="i.titleEng"
-                        href="#"
+                        :href="route('Movie', i.id)"
                         :videoUrl="i.trailer"
                     >
                         <template #imageBadges>

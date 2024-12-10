@@ -209,7 +209,7 @@ const parseDropdown = (event) => {
         <main
             class="flex sm:justify-center items-center pt-6 sm:pt-0 overflow-x-hidden"
         >
-            <div class="w-full min-h-screen mt-6 px-[350px] py-[30px]">
+            <div class="w-full min-h-screen mt-6 px-[300px] py-[30px]">
                 <slot />
             </div>
         </main>

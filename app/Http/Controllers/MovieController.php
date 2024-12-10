@@ -23,6 +23,7 @@ class MovieController extends Controller
 
         return Inertia::render("Movie", [
             "movie" => $movie,
+            "categories" => json_decode($movie->categories),
             "image" => $movie->image_path ?? null,
             "sessions" =>
                 MovieSessionResource::collection($movie->sessions) ?? null,
@@ -50,6 +51,8 @@ class MovieController extends Controller
             ->map(function ($session) {
                 // $session->image = $session->movie->image_path;
                 $session->image = $session->image_path;
+                $session->href = route("Movie", $session->id);
+                $session->categories = json_decode($session->categories);
                 return $session;
             })
             ->values();
