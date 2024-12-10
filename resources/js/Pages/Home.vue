@@ -11,7 +11,6 @@ const props = defineProps({
     topMovies: Array,
     upcomingMovies: Array,
 });
-
 </script>
 
 <template>
@@ -21,19 +20,20 @@ const props = defineProps({
         <div class="flex flex-col gap-[60px]">
             <!-- Top Movie -->
             <TopMovie
-                image="https://r4.wallpaperflare.com/wallpaper/59/28/989/monsters-inc-sulley-pixar-animation-wallpaper-7a099957313565bcca9656ffe8da0319.jpg"
-                engTitle="Monsters, INC."
-                title="Kollide Kompanii"
+                :image="topMovies[0].image"
+                :engTitle="topMovies[0].titleEng"
+                :title="topMovies[0].title"
             >
                 <template #badges>
-                    <Badge type="solid">Komöödia</Badge>
-                    <Badge type="solid">Seiklus</Badge>
-                    <Badge type="solid">Animatsioon</Badge>
+                    <Badge
+                        v-for="category in topMovies[0].categories"
+                        type="solid"
+                        >{{ category.name }}</Badge
+                    >
                 </template>
 
                 <template #description>
-                    Animeeritud film mis avastab Monstropolise maailma, kus
-                    koletised toodavad linna energiat hirmutades lapsi öösel.
+                    {{ topMovies[0].description }}
                 </template>
             </TopMovie>
 

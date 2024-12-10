@@ -19,8 +19,7 @@ class MovieController extends Controller
 
     public function view(Movie $movie)
     {
-        //dd($movie->sessions()->first()->cinemaRoom->cinema);
-
+        $movie->increment("views");
         return Inertia::render("Movie", [
             "movie" => $movie,
             "image" => $movie->image_path ?? null,
