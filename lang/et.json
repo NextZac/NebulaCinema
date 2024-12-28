@@ -72,7 +72,12 @@
         "previous": "Eelmine samm",
         "choose_seats": "Vali istekohad",
         "screen": "Ekraan",
-        "choose_payment": "Vali makseviis"
+        "choose_payment": "Vali makseviis",
+        "selected_seats": "Valitud istekohad",
+        "accept_terms": "Nõustun tingimustega",
+        "login_or_guest": "Logi sisse või jätka külalisena",
+        "purchase_email": "Kinnituskirja e-posti aadress",
+        "continue_as_guest": "Jätka külalisena"
     },
     "login": {
         "input": {
