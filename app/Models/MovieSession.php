@@ -40,17 +40,17 @@ class MovieSession extends Model
         // Month mapping for Estonian to English translation
         $monthMapping = [
             "dets" => "December",
-            "jaanuar" => "January",
-            "veebruar" => "February",
+            "jaan" => "January",
+            "veebr" => "February",
             "märts" => "March",
-            "aprill" => "April",
+            "apr" => "April",
             "mai" => "May",
             "juuni" => "June",
             "juuli" => "July",
-            "august" => "August",
-            "september" => "September",
-            "oktoober" => "October",
-            "november" => "November",
+            "aug" => "August",
+            "sept" => "September",
+            "okt" => "October",
+            "nov" => "November",
         ];
 
         foreach ($filters as $filter => $value) {
