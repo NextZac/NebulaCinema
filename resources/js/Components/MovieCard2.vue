@@ -52,7 +52,7 @@ const props = defineProps({
                 <slot name="badges"></slot>
             </div>
 
-            <div class="flex gap-2 h-full z-10 mt-auto">
+            <div class="flex gap-2 h-full mt-auto">
                 <Button color="brand-900" class="flex font-semibold justify-center gap-2 !w-full" @click="toggleVideoModal">
                     <SquarePlay class="w-4 h-4" />
                     {{ __('movieSchedule.trailer') }}

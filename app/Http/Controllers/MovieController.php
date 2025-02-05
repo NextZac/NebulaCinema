@@ -35,8 +35,8 @@ class MovieController extends Controller
         $filters = array_filter([
             "cinema" =>
                 $request->input("cinema") !== "Kõik kinod"
-                    ? $request->input("cinema")
-                    : null,
+                ? $request->input("cinema")
+                : null,
             "categories" => $request->input("categories"),
             "age_rating" => $request->input("age_rating"),
         ]);
@@ -63,14 +63,15 @@ class MovieController extends Controller
 
     public function search(Request $req)
     {
-        $movies = Movie::where(
-            "title",
-            "like",
-            "%" . $req->query("query") . "%"
-        )
-            ->orWhere("titleEng", "like", "%" . $req->query("query") . "%")
-            ->orderByRaw(
-                "
+        if ($req->query("query") != null) {
+            $movies = Movie::where(
+                "title",
+                "like",
+                $req->query("query") . "%"
+            )
+                ->orWhere("titleEng", "like", $req->query("query") . "%")
+                ->orderByRaw(
+                    "
                 CASE
                     WHEN title LIKE ? THEN 1
                     WHEN titleEng LIKE ? THEN 1
@@ -78,23 +79,26 @@ class MovieController extends Controller
                     WHEN titleEng LIKE ? THEN 2
                     ELSE 3
                 END
-            ",
-                [
-                    $req->query("query"),
-                    $req->query("query"),
-                    "%" . $req->query("query") . "%",
-                    "%" . $req->query("query") . "%",
-                ]
-            )
-            ->take(3)
-            ->get();
+                ",
+                    [
+                        $req->query("query") . "%",
+                        $req->query("query") . "%",
+                        "%" . $req->query("query") . "%",
+                        "%" . $req->query("query") . "%",
+                    ]
+                )
+                ->take(3)
+                ->get();
 
-        $moviesWithHref = $movies->map(function ($movie) {
-            $movie->href = route("Movie", $movie->id);
-            return $movie;
-        });
+            log::info($movies);
 
-        return response()->json($moviesWithHref);
+            $moviesWithHref = $movies->map(function ($movie) {
+                $movie->href = route("Movie", $movie->id);
+                return $movie;
+            });
+
+            return response()->json($moviesWithHref);
+        }
     }
 
     public function edit(Movie $movie)
