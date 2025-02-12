@@ -12,30 +12,30 @@ const props = defineProps({
         type: String,
         default: "",
     },
-    cinemas: {
+    showtime: {
         type: Array,
-        default: () => ["upcoming", "current"],
+        default: () => ["all", "current", "upcoming"],
     },
 });
 
-const emit = defineEmits(["update:cinema", "update:genres"]);
+const emit = defineEmits(["update:showtime", "update:genres"]);
 
 // State management
 const dropdowns = ref({
     genres: false,
     filters: false,
-    cinemas: false,
+    showtime: false,
     timeHours: false,
     timeMinutes: false,
 });
 
-const cinemaOption = ref(0);
+const showtimeOption = ref(0);
 
 const selectedGenres = ref(new Set());
 
 const htmlLang = document.documentElement.lang;
 
-const selectedCinema = computed(() => props.cinemas[cinemaOption.value]);
+const selectedShowtime = computed(() => props.showtime[showtimeOption.value]);
 
 const fetchGenres = () => {
     try {
@@ -63,9 +63,9 @@ const toggleDropdown = (key) => {
     dropdowns.value[key] = !dropdowns.value[key];
 };
 
-const handleCinemaChange = (index) => {
-    cinemaOption.value = index;
-    emit("update:cinema", props.cinemas[index]);
+const handleShowtimeChange = (index) => {
+    showtimeOption.value = index;
+    emit("update:showtime", props.showtime[index]);
 };
 
 const handleGenreChange = (genre) => {
@@ -82,84 +82,69 @@ const handleGenreChange = (genre) => {
     emit("update:genres", Array.from(selectedGenres.value));
 };
 
-const convertCinemaNames = (cinemas) => {
-    console.log(cinemas);
-    console.log(typeof cinemas);
+const convertShowtimeNames = (showtime) => {
     const instance = getCurrentInstance();
     const __ = instance?.proxy?.__; // Access the global translation function
 
     if (!__) {
         console.error("Translation function '__' is not available.");
-        return cinemas;
+        return showtime;
     }
 
-    if (typeof cinemas === "object") {
-        return cinemas.map((c) => {
+    if (typeof showtime === "object") {
+        return showtime.map((c) => {
             switch (c) {
                 case "current":
                     return __("home.current");
                 case "upcoming":
                     return __("home.upcoming");
+                case "all":
+                    return __("home.all");
                 default:
                     return c;
             }
         });
     } else {
-        switch (cinemas) {
+        switch (showtime) {
             case "current":
                 return __("home.current");
             case "upcoming":
                 return __("home.upcoming");
+            case "all":
+                return __("home.all");
             default:
-                return cinemas;
+                return showtime;
         }
     }
 };
 </script>
 
 <template>
-    <div
-        class="flex flex-row max-4xl:flex-col items-stretch w-full bg-brand-975 p-4 rounded-[10px] gap-4"
-    >
+    <div class="flex flex-row max-4xl:flex-col items-stretch w-full bg-brand-975 p-4 rounded-[10px] gap-4">
         <!-- Left -->
         <div class="flex-1 flex items-center">
             <div class="h-full flex items-center relative">
-                <a
-                    @click="toggleDropdown('cinemas')"
+                <a @click="toggleDropdown('showtime')"
                     class="group text-brand-white text-subtitle inline-flex items-center hover:text-brand-400 cursor-pointer select-none text-nowrap"
-                    :class="
-                        dropdowns['cinemas']
+                    :class="dropdowns['showtime']
                             ? 'pointer-events-none'
                             : 'pointer-events-auto'
-                    "
-                >
-                    <Calendar
-                        class="size-7 mr-3 text-brand-white/60 group-hover:text-brand-400/60"
-                    />
+                        ">
+                    <Calendar class="size-7 mr-3 text-brand-white/60 group-hover:text-brand-400/60" />
                     <span class="flex flex-col">
-                        <p
-                            class="text-detail group-hover:text-brand-400/60 text-brand-white/60"
-                        >
+                        <p class="text-detail group-hover:text-brand-400/60 text-brand-white/60">
                             Linastusaeg
                         </p>
-                        <p>{{ convertCinemaNames(selectedCinema) }}</p>
+                        <p>{{ convertShowtimeNames(selectedShowtime) }}</p>
                     </span>
-                    <ChevronDown
-                        :class="[
-                            'w-4 h-4 ml-2 transition-transform duration-100',
-                            dropdowns['cinemas'] ? 'rotate-180' : '',
-                        ]"
-                    />
+                    <ChevronDown :class="[
+                        'w-4 h-4 ml-2 transition-transform duration-100',
+                        dropdowns['showtime'] ? 'rotate-180' : '',
+                    ]" />
                 </a>
-                <SelectOption
-                    class="w-full rounded-lg"
-                    :options="convertCinemaNames(props.cinemas)"
-                    v-model:isOpen="dropdowns.cinemas"
-                    :modelValue="cinemaOption"
-                    @update:modelValue="handleCinemaChange"
-                    align="bottom"
-                    :withButton="false"
-                />
+                <SelectOption class="w-full rounded-lg" :options="convertShowtimeNames(props.showtime)"
+                    v-model:isOpen="dropdowns.showtime" :modelValue="showtimeOption"
+                    @update:modelValue="handleShowtimeChange" align="bottom" :withButton="false" />
             </div>
         </div>
 
@@ -167,26 +152,17 @@ const convertCinemaNames = (cinemas) => {
         <div class="flex-1 flex items-center justify-end gap-16">
             <!-- Genres -->
             <div class="h-full flex items-center relative">
-                <a
-                    @click="toggleDropdown('genres')"
+                <a @click="toggleDropdown('genres')"
                     class="group text-brand-white text-subtitle inline-flex items-center hover:text-brand-400 cursor-pointer select-none text-nowrap"
-                    :class="
-                        dropdowns['genres']
+                    :class="dropdowns['genres']
                             ? '!text-brand-400 pointer-events-none'
                             : 'pointer-events-auto'
-                    "
-                >
-                    <Drama
-                        class="size-7 mr-3 text-brand-white/60 group-hover:text-brand-400/60"
-                        :class="dropdowns['genres'] ? '!text-brand-400/60' : ''"
-                    />
+                        ">
+                    <Drama class="size-7 mr-3 text-brand-white/60 group-hover:text-brand-400/60"
+                        :class="dropdowns['genres'] ? '!text-brand-400/60' : ''" />
                     <span class="flex flex-col">
-                        <p
-                            class="text-detail group-hover:text-brand-400/60 text-brand-white/60"
-                            :class="
-                                dropdowns['genres'] ? '!text-brand-400/60' : ''
-                            "
-                        >
+                        <p class="text-detail group-hover:text-brand-400/60 text-brand-white/60" :class="dropdowns['genres'] ? '!text-brand-400/60' : ''
+                            ">
                             Genre
                         </p>
                         <p v-if="selectedGenres.size <= 1">
@@ -196,45 +172,24 @@ const convertCinemaNames = (cinemas) => {
                                     : selectedGenres.values().next().value
                             }}
                         </p>
-                        <Badge
-                            :class="
-                                dropdowns['filters']
-                                    ? 'cursor-default'
-                                    : 'cursor-pointer'
-                            "
-                            v-if="selectedGenres.size > 1"
-                            type="solid"
-                            >{{ selectedGenres.size + " valitud" }}
-                            <X
-                                class="size-4 ml-2 cursor-pointer hover:text-brand-error pointer-events-auto"
-                                @click="() => handleGenreChange('')"
-                            ></X>
+                        <Badge :class="dropdowns['filters']
+                                ? 'cursor-default'
+                                : 'cursor-pointer'
+                            " v-if="selectedGenres.size > 1" type="solid">{{ selectedGenres.size + " valitud" }}
+                            <X class="size-4 ml-2 cursor-pointer hover:text-brand-error pointer-events-auto"
+                                @click="() => handleGenreChange('')"></X>
                         </Badge>
                     </span>
-                    <ChevronDown
-                        :class="[
-                            'w-4 h-4 ml-2 transition-transform duration-100',
-                            dropdowns['genres'] ? 'rotate-180' : '',
-                        ]"
-                    />
+                    <ChevronDown :class="[
+                        'w-4 h-4 ml-2 transition-transform duration-100',
+                        dropdowns['genres'] ? 'rotate-180' : '',
+                    ]" />
                 </a>
-                <Dropdown
-                    v-model:isOpen="dropdowns.genres"
-                    align="bottom"
-                    class="top-[110%]"
-                >
+                <Dropdown v-model:isOpen="dropdowns.genres" align="bottom" class="top-[110%]">
                     <div class="p-4 w-64">
-                        <div
-                            v-for="genre in genreOptions"
-                            :key="genre.name"
-                            class="mb-3"
-                        >
-                            <Checkbox
-                                :id="'genre-' + genre.name"
-                                :modelValue="selectedGenres.has(genre.name)"
-                                :checked="selectedGenres.has(genre.name)"
-                                @change="() => handleGenreChange(genre.name)"
-                            >
+                        <div v-for="genre in genreOptions" :key="genre.name" class="mb-3">
+                            <Checkbox :id="'genre-' + genre.name" :modelValue="selectedGenres.has(genre.name)"
+                                :checked="selectedGenres.has(genre.name)" @change="() => handleGenreChange(genre.name)">
                                 {{ genre.name }}
                             </Checkbox>
                         </div>
@@ -247,20 +202,16 @@ const convertCinemaNames = (cinemas) => {
 
 <style scoped>
 .fader {
-    mask-image: linear-gradient(
-        to right,
-        transparent 0%,
-        white 2%,
-        white 98%,
-        transparent 100%
-    );
-    -webkit-mask-image: linear-gradient(
-        to right,
-        transparent 0%,
-        white 2%,
-        white 98%,
-        transparent 100%
-    );
+    mask-image: linear-gradient(to right,
+            transparent 0%,
+            white 2%,
+            white 98%,
+            transparent 100%);
+    -webkit-mask-image: linear-gradient(to right,
+            transparent 0%,
+            white 2%,
+            white 98%,
+            transparent 100%);
 }
 
 input::-webkit-outer-spin-button,

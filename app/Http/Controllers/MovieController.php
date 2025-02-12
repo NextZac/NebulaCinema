@@ -33,9 +33,9 @@ class MovieController extends Controller
     {
         log::info("Filtering Start");
         $filters = array_filter([
-            "cinema" =>
-                $request->input("cinema") !== "Kõik kinod"
-                ? $request->input("cinema")
+            "" =>
+                $request->input("showtime") !== "all"
+                ? $request->input("showtime")
                 : null,
             "categories" => $request->input("categories"),
             "age_rating" => $request->input("age_rating"),

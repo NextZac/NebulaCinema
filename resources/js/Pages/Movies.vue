@@ -15,10 +15,7 @@ const isLoading = ref(false);
 const error = ref(null);
 
 const selectedCategories = ref([]);
-const selectedCinema = ref("Kõik kinod");
-const selectedFilters = ref({
-    ageRating: new Set(),
-});
+const selectedShowtime = ref("all");
 
 const htmlLang = document.documentElement.lang;
 
@@ -28,9 +25,8 @@ const handleCategoriesUpdate = (categories) => {
 
 const fetchMovies = () => {
     const params = {
-        cinema: selectedCinema.value,
+        showtime: selectedShowtime.value,
         categories: Array.from(selectedCategories.value),
-        age_rating: Array.from(selectedFilters.value.ageRating),
     };
 
     isLoading.value = true;
@@ -73,7 +69,7 @@ watchEffect(() => {
         <div class="gap-[60px] w-full flex flex-col">
             <MovieFilter
                 @update:date="handleDateUpdate"
-                @update:cinema="handleCinemaUpdate"
+                @update:showtime="handleCinemaUpdate"
                 @update:genres="handleCategoriesUpdate"
                 @update:filters="handleFiltersUpdate"
                 @update:timeHours="(value) => handleTimeUpdate(value, 'hours')"
@@ -98,6 +94,7 @@ watchEffect(() => {
                         :titleEng="i.titleEng"
                         :href="route('Movie', i.id)"
                         :videoUrl="i.trailer"
+                        :starting="new Date(i.release_date) >= new Date() ? i.release_date : null"
                     >
                         <template #imageBadges>
                             <Badge>{{ i.age_rating }}</Badge>

@@ -28,7 +28,8 @@
     "home": {
         "top": "Top Filmid",
         "current": "Hetkel Kinos",
-        "upcoming": "Varsti Kinos"
+        "upcoming": "Varsti Kinos",
+        "all": "Kõik"
     },
     "footer": {
         "privacy": "Privaatsus",

@@ -28,7 +28,8 @@
     "home": {
         "top": "Top Movies",
         "current": "Currently in Cinemas",
-        "upcoming": "Upcoming Movies"
+        "upcoming": "Upcoming Movies",
+        "all": "All"
     },
     "footer": {
         "privacy": "Privacy",
