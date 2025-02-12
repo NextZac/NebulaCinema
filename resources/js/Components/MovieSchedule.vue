@@ -36,7 +36,7 @@ const htmlLang = document.querySelector("html").getAttribute("lang");
         <!--Image with badge-->
         <div class="flex justify-end align-end drop-shadow-lg">
             <img
-                class="rounded-l-[10px] w-full h-[300px] object-cover bg-brand-900"
+                class="rounded-l-[10px] w-full min-w-[200px] max-w-[200px] h-full object-cover bg-brand-900"
                 :src="props.image"
                 alt="Movie Poster"
             />

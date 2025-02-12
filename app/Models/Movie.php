@@ -38,7 +38,13 @@ class Movie extends Model implements HasMedia
     public function getImagePathAttribute()
     {
         $media = $this->getFirstMedia("pictures");
-        return $media ? $media->getUrl() : null; // Return the URL of the first image, or null if not available
+        \Log::info('Media debug:', [
+            'exists' => $media ? 'yes' : 'no',
+            'path' => $media ? $media->getPath() : null,
+            'url' => $media ? $media->getUrl() : null,
+            'full_media' => $media
+        ]);
+        return $media ? $media->getUrl() : null;
     }
 
     public function scopeFilter($query, array $filters)

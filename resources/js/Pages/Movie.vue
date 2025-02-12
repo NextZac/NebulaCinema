@@ -52,7 +52,7 @@ const buyTicket = (sessionId) => {
 
             <!-- Movie Details Section -->
             <div class="flex gap-4">
-                <iframe class="w-[100%] min-h-[100%] rounded-b-lg"
+                <iframe class="w-[100%] min-h-[100%] rounded-lg"
                     :src="`${movie.trailer}?autoplay=1&mute=1&frameborder=0`"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     :allowfullscreen="true">
