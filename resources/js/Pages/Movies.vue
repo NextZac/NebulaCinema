@@ -23,6 +23,10 @@ const handleCategoriesUpdate = (categories) => {
     selectedCategories.value = categories;
 };
 
+const handleShowtimeUpdate = (showtime) => {
+    selectedShowtime.value = showtime;
+};
+
 const fetchMovies = () => {
     const params = {
         showtime: selectedShowtime.value,
@@ -59,6 +63,7 @@ onMounted(() => {
 
 watchEffect(() => {
     fetchMovies();
+    console.log(selectedShowtime.value);
 });
 </script>
 
@@ -68,17 +73,11 @@ watchEffect(() => {
     <GuestLayout>
         <div class="gap-[60px] w-full flex flex-col">
             <MovieFilter
-                @update:date="handleDateUpdate"
-                @update:showtime="handleCinemaUpdate"
+                @update:showtime="handleShowtimeUpdate"
                 @update:genres="handleCategoriesUpdate"
-                @update:filters="handleFiltersUpdate"
-                @update:timeHours="(value) => handleTimeUpdate(value, 'hours')"
-                @update:timeMinutes="
-                    (value) => handleTimeUpdate(value, 'minutes')
-                "
             />
 
-            <div class="flex flex flex-wrap justify-between gap-[30px]">
+            <div class="flex flex flex-wrap justify-between content-start gap-[30px]">
                 <template v-if="isLoading">
                     <!-- Multiple skeleton loaders -->
                     <MovieCard2Skeleton v-for="n in 12" :key="n" />

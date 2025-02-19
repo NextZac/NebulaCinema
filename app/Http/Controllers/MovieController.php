@@ -22,6 +22,9 @@ class MovieController extends Controller
         $movie->increment("views");
         return Inertia::render("Movie", [
             "movie" => $movie,
+            "release_date" => Carbon::parse(
+                $movie->release_date
+            )->format("d.m.Y"),
             "categories" => json_decode($movie->categories),
             "image" => $movie->image_path ?? null,
             "sessions" =>
@@ -31,19 +34,17 @@ class MovieController extends Controller
 
     public function filter(Request $request)
     {
-        log::info("Filtering Start");
         $filters = array_filter([
-            "" =>
-                $request->input("showtime") !== "all"
-                ? $request->input("showtime")
+            "release_date" => $request->input("showtime") !== "all"
+                ? ($request->input("showtime") == "current" 
+                    ? ['<=', Carbon::now()] 
+                    : ['>', Carbon::now()])
                 : null,
             "categories" => $request->input("categories"),
-            "age_rating" => $request->input("age_rating"),
         ]);
+        
 
         $query = Movie::filter($filters);
-
-        log::info("Got Filters");
 
         $movie = $query
             ->get()

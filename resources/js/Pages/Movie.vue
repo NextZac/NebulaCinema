@@ -9,11 +9,15 @@ import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
     movie: Object,
+    release_date: String,
     sessions: Object,
     image: String,
 });
 
-const formatDate = (dateString) => new Date(dateString).toLocaleDateString();
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("et-EE", { day: "2-digit", month: "2-digit", year: "numeric" }).replace("-", ".");
+}
 const formatTime = (timeString) =>
     new Date(timeString).toLocaleTimeString([], {
         hour: "2-digit",
@@ -93,7 +97,7 @@ const buyTicket = (sessionId) => {
                                     __("movie.release")
                                     }}</span>
                                 <p class="text-brand-white">
-                                    {{ formatDate(movie.release_date) }}
+                                    {{ release_date }}
                                 </p>
                             </div>
                         </span>

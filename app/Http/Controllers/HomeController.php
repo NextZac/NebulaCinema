@@ -22,6 +22,8 @@ class HomeController extends Controller
                 "image_path",
                 "views",
             ])
+                ->whereNotNull("release_date")
+                ->where("release_date", "<=", Carbon::now())
                 ->with("categories:id,name")
                 ->orderBy("views", "desc")
                 ->get()
@@ -49,7 +51,7 @@ class HomeController extends Controller
                 "release_date",
             ])
                 ->whereNotNull("release_date")
-                ->where("release_date", ">", Carbon::now())
+                ->where("release_date", ">=", Carbon::now())
                 ->with("categories:id,name")
                 ->get()
                 ->map(function ($movie) {

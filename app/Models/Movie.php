@@ -38,44 +38,19 @@ class Movie extends Model implements HasMedia
     public function getImagePathAttribute()
     {
         $media = $this->getFirstMedia("pictures");
-        \Log::info('Media debug:', [
-            'exists' => $media ? 'yes' : 'no',
-            'path' => $media ? $media->getPath() : null,
-            'url' => $media ? $media->getUrl() : null,
-            'full_media' => $media
-        ]);
         return $media ? $media->getUrl() : null;
     }
-
-    public function scopeFilter($query, array $filters)
+    public function scopeFilter($query, $filters)
     {
-        foreach ($filters as $filter => $value) {
-            if (empty($value) || $value === "all") {
-                continue;
-            }
-
-            switch ($filter) {
-                case "cinema":
-                    $query->where("cinema", $value);
-                    break;
-
-                case "categories":
-                    $query->whereHas("categories", function ($q) use ($value) {
-                        $q->whereIn("name", $value);
-                    });
-                    break;
-
-                case "age_rating":
-                    $query->whereHas("movie", function ($q) use ($value) {
-                        $q->whereIn("age_rating", $value);
-                    });
-                    break;
-
-                default:
-                    break;
-            }
+        if (isset($filters['release_date'])) {
+            $query->whereDate("release_date", $filters['release_date'][0], $filters['release_date'][1]);
         }
-
+    
+        if (!empty($filters["categories"])) {
+            $query->where("categories", $filters["categories"]);
+        }
+    
         return $query;
     }
+    
 }
