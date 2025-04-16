@@ -18,6 +18,11 @@ jobs:
         run: |
           php artisan migrate --seed --force
 
+      - name: Build frontend assets
+        run: |
+          npm install
+          npm run build
+
       - name: Prepare Laravel Application
         run: |
           cp .env.ci .env
