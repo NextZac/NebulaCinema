@@ -13,8 +13,10 @@ jobs:
       - name: Install composer dependencies
         run: |
           composer install --no-scripts
+
       - name: Migrate Database
-        run: php artisan migrate --force && php artisan db:seed
+        run: |
+          php artisan migrate --seed --force
 
       - name: Prepare Laravel Application
         run: |
