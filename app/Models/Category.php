@@ -13,6 +13,8 @@ class Category extends Model
 
     protected $table = "category";
 
+    protected $fillable = ["name", "nameEng"];
+
     public function movies()
     {
         return $this->belongsToMany(Movie::class, "movie_category");

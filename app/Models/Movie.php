@@ -14,6 +14,21 @@ class Movie extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
+    protected $fillable = [
+        "title",
+        "titleEng",
+        "description",
+        "release_date",
+        "trailer",
+        "duration",
+        "length",
+        "age_rating",
+        "author",
+        "director",
+        "trailerUrl",
+        "cast",
+    ];
+
     public function categories()
     {
         return $this->belongsToMany(
@@ -42,15 +57,18 @@ class Movie extends Model implements HasMedia
     }
     public function scopeFilter($query, $filters)
     {
-        if (isset($filters['release_date'])) {
-            $query->whereDate("release_date", $filters['release_date'][0], $filters['release_date'][1]);
+        if (isset($filters["release_date"])) {
+            $query->whereDate(
+                "release_date",
+                $filters["release_date"][0],
+                $filters["release_date"][1]
+            );
         }
-    
+
         if (!empty($filters["categories"])) {
             $query->where("categories", $filters["categories"]);
         }
-    
+
         return $query;
     }
-    
 }
