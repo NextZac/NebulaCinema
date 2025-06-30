@@ -16,10 +16,12 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->roles->isNotEmpty()) {
+        if (Auth::check() && Auth::user()->can('access admin panel')) {
             return $next($request);
         }
 
-        return redirect("/");
+        // Optionally, redirect to a specific 'unauthorized' page or back with an error
+        // For now, redirecting to home.
+        return redirect("/")->with('error', 'You do not have permission to access this page.');
     }
 }

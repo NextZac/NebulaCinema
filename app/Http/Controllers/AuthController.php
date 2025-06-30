@@ -21,7 +21,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return Inertia::location(route("admin"));
+        return Inertia::location(route("admin.dashboard"));
     }
 
     public function destroy(Request $request)

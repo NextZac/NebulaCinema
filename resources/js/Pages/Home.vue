@@ -19,7 +19,7 @@ const props = defineProps({
     <GuestLayout>
         <div class="flex flex-col gap-[60px]">
             <!-- Top Movie -->
-            <TopMovie
+            <TopMovie v-if="topMovies.length > 0"
                 :image="topMovies[0].image"
                 :engTitle="topMovies[0].titleEng"
                 :title="topMovies[0].title"

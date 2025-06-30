@@ -19,14 +19,20 @@ class Movie extends Model implements HasMedia
         "titleEng",
         "description",
         "release_date",
-        "trailer",
-        "duration",
-        "length",
+        // "trailer", // replaced by trailer_url
+        "duration", // Correctly using duration now
+        // "length", // Removed, replaced by duration
         "age_rating",
         "author",
         "director",
-        "trailerUrl",
+        "trailer_url", // Aligned with migration
         "cast",
+    ];
+
+    protected $casts = [
+        'release_date' => 'date',
+        'duration' => 'integer',
+        // 'cast' => 'array', // If you decide to store cast as JSON and use text column
     ];
 
     public function categories()

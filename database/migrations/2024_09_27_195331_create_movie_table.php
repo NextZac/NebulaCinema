@@ -13,15 +13,15 @@ return new class extends Migration {
         Schema::create("movies", function (Blueprint $table) {
             $table->id();
             $table->string("title");
-            $table->string("titleEng");
-            $table->string("description");
-            $table->time("length");
-            $table->json("cast");
-            $table->string("author");
-            $table->string("director");
-            $table->string("age_rating");
-            $table->date("release_date");
-            $table->string("trailer");
+            $table->string("titleEng")->nullable();
+            $table->text("description"); // Changed from string to text for potentially longer descriptions
+            $table->integer("duration")->nullable(); // Changed from length (time) to duration (integer, minutes)
+            $table->text("cast")->nullable(); // Changed from json to text, assuming comma-separated string
+            $table->string("author")->nullable();
+            $table->string("director")->nullable();
+            $table->string("age_rating")->nullable();
+            $table->date("release_date")->nullable();
+            $table->string("trailer_url", 500)->nullable(); // Changed from trailer to trailer_url, increased length
             $table->timestamps();
         });
     }

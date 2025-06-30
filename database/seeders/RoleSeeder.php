@@ -16,8 +16,10 @@ class RoleSeeder extends Seeder
         Role::create([
             "name" => "Super Admin",
             "display_name" => "Super Administraator",
+            "guard_name" => "web",
         ]);
-        Role::create(["name" => "Admin", "display_name" => "Administraator"]);
-        Role::create(["name" => "Moderator", "display_name" => "Moderaator"]);
+        Role::create(["name" => "Admin", "display_name" => "Administraator", "guard_name" => "web"]);
+        Role::create(["name" => "Moderator", "display_name" => "Moderaator", "guard_name" => "web"]);
+        Role::create(["name" => "Customer", "display_name" => "Klient", "guard_name" => "web"]);
     }
 }

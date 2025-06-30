@@ -11,6 +11,16 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return Inertia::render("Admin/Home", ["user" => Auth::user()]);
+        // In a real application, you would fetch these stats from the database.
+        $stats = [
+            'users' => \App\Models\User::count(),
+            'movies' => \App\Models\Movie::count(),
+            'activeSessions' => \App\Models\MovieSession::where('start_time', '>', now())->count(),
+        ];
+
+        return Inertia::render("Admin/Home", [
+            "user" => Auth::user(),
+            "stats" => $stats
+        ]);
     }
 }
